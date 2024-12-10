@@ -1,36 +1,36 @@
 <app-nav></app-nav>
 <div class="d-flex">
   <app-vertical-nav></app-vertical-nav>
-  
+
   <div class="container mt-5">
     <table class="table table-bordered table-striped tabla-estilizada">
       <thead>
         <tr>
-          <th>Imagen</th> <!-- Nueva columna para la imagen -->
+          <th>Imagen</th>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Teléfono</th>
-          <th>Rol</th>
+          <th>Mercancía</th>
+          <th>Razón de Devolución</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios">
+        <tr *ngFor="let devolucion of devoluciones">
           <td>
-            <img src="imagenes/icono usuario.avif" alt="Usuario" width="30" height="30" />
+            <img src="imagenes/icono-devolucion.avif" alt="Devolución" width="30" height="30" />
           </td>
-          <td>{{ usuario.id }}</td>
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.telefono }}</td>
-          <td>{{ usuario.rol }}</td>
+          <td>{{ devolucion.id }}</td>
+          <td>{{ devolucion.nombre }}</td>
+          <td>{{ devolucion.mercancia }}</td>
+          <td>{{ devolucion.razon }}</td>
           <td>
-            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(usuario)">
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(devolucion)">
               <i class="fa fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger me-2" (click)="eliminarUsuario(usuario.id)">
+            <button class="btn btn-danger me-2" (click)="eliminarDevolucion(devolucion.id)">
               <i class="fa fa-trash"></i>
             </button>
-            <button class="btn btn-info" (click)="consultarUsuario(usuario.id)">
+            <button class="btn btn-info" (click)="consultarDevolucion(devolucion.id)">
               <i class="fa fa-eye"></i>
             </button>
           </td>
@@ -38,13 +38,13 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Usuario</button>
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Devolución</button>
       <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
     </div>
   </div>
 </div>
 
-<!-- Modal para crear un usuario -->
+<!-- Modal para crear una devolución -->
 <div
   class="modal fade"
   id="createModal"
@@ -55,7 +55,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Crear Usuario</h5>
+        <h5 class="modal-title" id="createModalLabel">Crear Devolución</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -65,28 +65,24 @@
             <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" />
           </div>
           <div class="mb-3">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" placeholder="Ingrese el teléfono" />
+            <label for="mercancia" class="form-label">Mercancía</label>
+            <input type="text" class="form-control" id="mercancia" placeholder="Ingrese la mercancía" />
           </div>
           <div class="mb-3">
-            <label for="rol" class="form-label">Rol</label>
-            <select class="form-select" id="rol">
-              <option value="Administrador">Administrador</option>
-              <option value="Bodeguero">Bodeguero</option>
-              <option value="Conductor">Conductor</option>
-            </select>
+            <label for="razon" class="form-label">Razón de Devolución</label>
+            <textarea class="form-control" id="razon" rows="3" placeholder="Ingrese la razón de la devolución"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Usuario</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Devolución</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal para editar un usuario (ya existente) -->
+<!-- Modal para editar una devolución -->
 <div
   class="modal fade"
   id="editModal"
@@ -97,26 +93,22 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
+        <h5 class="modal-title" id="editModalLabel">Editar Devolución</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
             <label for="editNombre" class="form-label">Editar Nombre</label>
-            <input type="text" class="form-control" id="editNombre" [value]="usuarioSeleccionado.nombre" readonly />
+            <input type="text" class="form-control" id="editNombre" [value]="devolucionSeleccionada.nombre" readonly />
           </div>
           <div class="mb-3">
-            <label for="editTelefono" class="form-label">Editar Teléfono</label>
-            <input type="text" class="form-control" id="editTelefono" [value]="usuarioSeleccionado.telefono" readonly />
+            <label for="editMercancia" class="form-label">Editar Mercancía</label>
+            <input type="text" class="form-control" id="editMercancia" [value]="devolucionSeleccionada.mercancia" readonly />
           </div>
           <div class="mb-3">
-            <label for="editRol" class="form-label">Editar Rol</label>
-            <select class="form-select" id="editRol" [value]="usuarioSeleccionado.rol" disabled>
-              <option value="Administrador">Administrador</option>
-              <option value="Bodeguero">Bodeguero</option>
-              <option value="Conductor">Conductor</option>
-            </select>
+            <label for="editRazon" class="form-label">Editar Razón de Devolución</label>
+            <textarea class="form-control" id="editRazon" rows="3" [value]="devolucionSeleccionada.razon" readonly></textarea>
           </div>
         </form>
       </div>
@@ -127,3 +119,4 @@
     </div>
   </div>
 </div>
+

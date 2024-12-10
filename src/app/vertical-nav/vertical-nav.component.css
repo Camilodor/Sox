@@ -1,0 +1,15 @@
+.navbar {
+    background-color: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+    width: 200px; /* Ajusta el ancho según tus necesidades */
+  }
+  .nav-link {
+    color: white !important;
+    padding: 0.75rem 1rem; /* Aumenta el padding para más espacio alrededor del texto */
+  }
+  .nav-link:hover {
+    color: #cccccc !important; /* Color al pasar el mouse */
+  }
+  .nav-item {
+    margin-bottom: 1rem; /* Espacio inferior entre los elementos */
+}

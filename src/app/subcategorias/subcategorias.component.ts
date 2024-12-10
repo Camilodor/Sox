@@ -1,36 +1,47 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavComponent } from '../nav/nav.component';
+import { VerticalNavComponent } from '../vertical-nav/vertical-nav.component';
 
 @Component({
   selector: 'app-subcategorias',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,NavComponent,VerticalNavComponent],
   templateUrl: './subcategorias.component.html',
   styleUrl: './subcategorias.component.css'
 })
 export class SubcategoriasComponent {
   subcategorias = [
-    { id_subcategoria: 1, nombre: 'Teléfonos', id_categoria: 1 },
-    { id_subcategoria: 2, nombre: 'Computadoras', id_categoria: 1 },
-    { id_subcategoria: 3, nombre: 'Camisetas', id_categoria: 2 },
-    { id_subcategoria: 4, nombre: 'Pantalones', id_categoria: 2 },
-    { id_subcategoria: 5, nombre: 'Cereales', id_categoria: 3 },
-    { id_subcategoria: 6, nombre: 'Lácteos', id_categoria: 3 },
-    { id_subcategoria: 7, nombre: 'Sofás', id_categoria: 4 },
-    { id_subcategoria: 8, nombre: 'Mesas', id_categoria: 4 },
-    { id_subcategoria: 9, nombre: 'Muñecas', id_categoria: 5 },
-    { id_subcategoria: 10, nombre: 'Juegos de mesa', id_categoria: 5 }
+    { id: 1, nombre: 'Teléfonos', },
+    { id: 2, nombre: 'Computadoras',  },
+    { id: 3, nombre: 'Camisetas',  },
+    { id: 4, nombre: 'Pantalones',  },
+    { id: 5, nombre: 'Cereales',  },
+    { id: 6, nombre: 'Lácteos',  },
+    { id: 7, nombre: 'Sofás',  },
+    { id: 8, nombre: 'Mesas', },
+    { id: 9, nombre: 'Muñecas',  },
+    { id: 10, nombre: 'Juegos de mesa', }
   ];
 
-  editarSubcategoria(id: number) {
-    alert(`Editar subcategoría con ID: ${id}`);
+  subcategoriaSeleccionada: any;
+
+  abrirFormularioEditar(subcategoria: any) {
+    this.subcategoriaSeleccionada = subcategoria;
   }
 
   eliminarSubcategoria(id: number) {
-    alert(`Eliminar subcategoría con ID: ${id}`);
+    alert(`Subcategoría con ID: ${id} eliminada`);
+   
   }
 
   consultarSubcategoria(id: number) {
     alert(`Consultar subcategoría con ID: ${id}`);
+   
+  }
+
+  guardarCambios() {
+    alert('Cambios guardados correctamente');
+   
   }
 }

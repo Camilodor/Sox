@@ -1,0 +1,117 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+  
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Mercancía</th>
+          <th>Vehículo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let despacho of despachos">
+          <td>{{ despacho.id }}</td>
+          <td>{{ despacho.fecha }}</td>
+          <td>{{ despacho.mercancia }}</td>
+          <td>{{ despacho.vehiculo }}</td>
+          <td>
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(despacho)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2" (click)="eliminarDespacho(despacho.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info" (click)="consultarDespacho(despacho.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Despacho</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para crear un despacho -->
+<div
+  class="modal fade"
+  id="createModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Crear Despacho</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="fecha" />
+          </div>
+          <div class="mb-3">
+            <label for="mercancia" class="form-label">Mercancía</label>
+            <input type="text" class="form-control" id="mercancia" placeholder="Ingrese la mercancía" />
+          </div>
+          <div class="mb-3">
+            <label for="vehiculo" class="form-label">Vehículo</label>
+            <input type="text" class="form-control" id="vehiculo" placeholder="Ingrese el vehículo" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Despacho</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para editar un despacho (ya existente) -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Despacho</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="editFecha" class="form-label">Editar Fecha</label>
+            <input type="date" class="form-control" id="editFecha" [value]="despachoSeleccionado.fecha" />
+          </div>
+          <div class="mb-3">
+            <label for="editMercancia" class="form-label">Editar Mercancía</label>
+            <input type="text" class="form-control" id="editMercancia" [value]="despachoSeleccionado.mercancia" />
+          </div>
+          <div class="mb-3">
+            <label for="editVehiculo" class="form-label">Editar Vehículo</label>
+            <input type="text" class="form-control" id="editVehiculo" [value]="despachoSeleccionado.vehiculo" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

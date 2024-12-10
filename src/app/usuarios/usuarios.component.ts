@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importa CommonModule
-import { NavusuariosComponent } from '../navusuarios/navusuarios.component';
+import { NavComponent } from '../nav/nav.component';
+import { VerticalNavComponent } from '../vertical-nav/vertical-nav.component';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule,NavusuariosComponent],
+  imports: [CommonModule, NavComponent, VerticalNavComponent],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css'],
 })
@@ -25,7 +26,7 @@ export class UsuariosComponent {
   usuarioSeleccionado: any = {};
 
   abrirFormularioEditar(usuario: any) {
-    this.usuarioSeleccionado = { ...usuario }; // Copiar el usuario seleccionado
+    this.usuarioSeleccionado = { ...usuario }; 
   }
 
   crearUsuario() {

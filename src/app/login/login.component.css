@@ -1,7 +1,7 @@
 
 .card {
     min-height: 100px; /* Ajusta este valor según sea necesario */
-    background-color: #8a989c;
+    background-color: #000000;
   }
 
   .usuario-card {
@@ -57,3 +57,16 @@
 .alertas-card:hover {
     background-color: #495057; /* Color más claro al pasar el mouse */
 }
+
+.card-tamaño {
+  height: 80px; /* Altura personalizada */
+  width: 200px; /* Ancho personalizado */
+  margin: 0 auto; /* Centrado en su contenedor */
+  font-size: 0.9rem; /* Ajustar el texto */
+}
+
+.card-tamaño .card-body {
+  justify-content: start; /* Alinear elementos al principio */
+}
+
+  

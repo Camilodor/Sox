@@ -7,6 +7,11 @@ import { PruebaComponent } from './prueba/prueba.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { SubcategoriasComponent } from './subcategorias/subcategorias.component';
 import { MercanciaComponent } from './mercancia/mercancia.component';
+import { DespachoComponent } from './despacho/despacho.component';
+import { EntregasComponent } from './entregas/entregas.component';
+import { DevolucionesComponent } from './devoluciones/devoluciones.component';
+import { VehiculosComponent } from './vehiculos/vehiculos.component';
+
 
 
 
@@ -17,6 +22,12 @@ export const routes: Routes = [
     { path: 'categorias', component: CategoriasComponent },
     { path: 'subcategorias', component: SubcategoriasComponent },
     { path: 'mercancia', component: MercanciaComponent },
+    { path: 'despacho', component: DespachoComponent},
+    { path: 'entrega', component: EntregasComponent },
+    { path: 'devoluciones', component: DevolucionesComponent },
+    { path: 'vehiculos', component: VehiculosComponent },
+
+
   {path: 'adso', component: CuerpoComponent,
     children:[
       {path: '', component: PaginaComponent },

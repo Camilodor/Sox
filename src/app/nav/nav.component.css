@@ -11,16 +11,29 @@
   /* Asegura que el color del texto de los enlaces sea blanco */
   .nav-link {
     color: white !important; /* Color de texto blanco */
+    padding: 0.1rem 1rem; /* Ajusta el padding de los enlaces */
+    font-size: 0.875rem; /* Cambia el tamaño de la fuente */
   }
   
   /* Estilo para el logo */
   .navbar-brand img {
-    margin-right: 0.5rem; /* Espacio a la derecha de la imagen */
+    margin-right: 0.1rem; /* Espacio a la derecha de la imagen */
   }
   
   /* Para el estado hover de los enlaces */
   .nav-link:hover {
     color: #cccccc !important; /* Cambia el color al pasar el mouse */
   }
+  .navbar {
+    padding-top: 0.1rem; /* Ajusta el padding superior */
+    padding-bottom: 0.1rem; /* Ajusta el padding inferior */
+}
+.dropdown-menu {
+  padding: 0.1rem; /* Ajusta el padding del menú desplegable */
+}
+
+.navbar-nav {
+  margin-bottom: 0; /* Elimina el margen inferior de la lista de navegación */
+}
 
   
