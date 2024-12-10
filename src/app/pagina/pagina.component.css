@@ -1,6 +1,6 @@
 h2{
     font-style: italic;
-    color: #0a0a0a;
+    color: #ffffff;
 }
 
 /* Fondo principal dividido en dos colores verticalmente */
@@ -12,12 +12,12 @@ h2{
   
   .background .left-section {
     flex: 1; /* Mitad izquierda */
-    background-color: #135169; /* Azul claro */
+    background-color: #000000; /* Azul claro */
   }
   
   .background .right-section {
     flex: 1; /* Mitad derecha */
-    background-color: #1d1f1f; /* Gris oscuro */
+    background-color: #3a7cbb; /* Gris oscuro */
     display: flex;
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
@@ -25,7 +25,7 @@ h2{
   
   /* Estilo del cuadro */
   .login-box {
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: #0a0a0a; /* Fondo blanco */
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
@@ -34,5 +34,10 @@ h2{
     max-width: 400px; /* Ancho máximo del cuadro */
     text-align: center;
   }
- 
+  .right-section {
+    background-image: url('/imagenes/Camion.avif'); /* Nota: No necesitas '/public' en la ruta */
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el área */
+    background-position: center; /* Centra la imagen en el área */
+    height: 100vh; /* Asegúrate de que ocupe toda la altura de la sección */
+  }
   

@@ -1,19 +1,22 @@
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-custom">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="">Sox</a>
+    <a class="navbar-brand" routerLink="">
+      
+      <img src="/imagenes/soxlogo.png" alt="Logo" width="100px" height="80px" class="me-2"> <!-- Reemplaza "tu-imagen.jpg" con el nombre de tu imagen -->
+     
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" >Login</a>
+          <a class="nav-link active" aria-current="page">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" >Inicio</a>
+          <a class="nav-link">Inicio</a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/usuarios']" routerLinkActive="router-link-active">Usuarios</a>
         </li>
@@ -46,7 +49,7 @@
             <li><a class="dropdown-item" href="#">Categorias</a></li>
             <li><a class="dropdown-item" href="#">Subcategorias</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">mercancia</a></li>
+            <li><a class="dropdown-item" href="#">Mercancia</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -57,7 +60,6 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-   
     </div>
   </div>
 </nav>

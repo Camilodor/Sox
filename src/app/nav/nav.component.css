@@ -3,3 +3,24 @@
    
     
 }
+.bg-custom {
+    background-color: black; /* Fondo negro */
+    color: white; /* Texto blanco */
+  }
+  
+  /* Asegura que el color del texto de los enlaces sea blanco */
+  .nav-link {
+    color: white !important; /* Color de texto blanco */
+  }
+  
+  /* Estilo para el logo */
+  .navbar-brand img {
+    margin-right: 0.5rem; /* Espacio a la derecha de la imagen */
+  }
+  
+  /* Para el estado hover de los enlaces */
+  .nav-link:hover {
+    color: #cccccc !important; /* Cambia el color al pasar el mouse */
+  }
+
+  
