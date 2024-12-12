@@ -17,7 +17,6 @@ h2{
   
   .background .right-section {
     flex: 1; /* Mitad derecha */
-    background-color: #3a7cbb; /* Gris oscuro */
     display: flex;
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */

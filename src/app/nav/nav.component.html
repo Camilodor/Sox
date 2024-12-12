@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg bg-custom">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="">
+    <a class="navbar-brand" >
       <img src="/imagenes/soxlogo.png" alt="Logo" width="100px" height="80px" class="me-2">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,10 +10,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page">Login</a>
+          <a class="nav-link active" aria-current="page" routerLink="">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Inicio</a>
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active">Inicio</a>
         </li>
       </ul>
       <form class="d-flex me-3" role="search">
@@ -25,7 +25,7 @@
           <img src="/imagenes/Usuario.png" alt="Usuario" width="30" height="30" class="me-1"> Usuario
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Gestionar</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/gestionar']" routerLinkActive="router-link-active">Gestionar</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item">Administrador</a></li>
         </ul>

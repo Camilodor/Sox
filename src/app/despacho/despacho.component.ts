@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
 import { VerticalNavComponent } from '../vertical-nav/vertical-nav.component';
 
@@ -14,12 +14,12 @@ export class DespachoComponent {
   despachos = [
     { id: 1, fecha: '2024-12-10', mercancia: 'Mercancía A', vehiculo: 'Vehículo X' },
     { id: 2, fecha: '2024-12-11', mercancia: 'Mercancía B', vehiculo: 'Vehículo Y' },
-    // Más datos
+   
   ];
   despachoSeleccionado: any = {};
 
   abrirFormularioEditar(despacho: any) {
-    this.despachoSeleccionado = { ...despacho }; // Copiar el despacho seleccionado
+    this.despachoSeleccionado = { ...despacho }; 
   }
 
   crearDespacho() {

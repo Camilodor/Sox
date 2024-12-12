@@ -1,72 +1,96 @@
-
-.card {
-    min-height: 100px; /* Ajusta este valor según sea necesario */
-    background-color: #000000;
-  }
-
-  .usuario-card {
-    min-height: 300px; /* Ajusta la altura mínima según lo necesites */
-    
-  }
+.container-fluid{
+  background-color: #222b24;
+  padding: 10px;
   
-  .alertas-card {
-    min-height: 300px; /* Ajusta la altura mínima según lo necesites */
-  }
-  .mercancia-card{
-    min-height: 10px; /* Ajusta la altura mínima según lo necesites */
-  }
-  .despacho-card{
-    min-height: 10px; /* Ajusta la altura mínima según lo necesites */
-  }
-  .devoluciones-card{
-    min-height: 10px; /* Ajusta la altura mínima según lo necesites */
-  }
-  .quienessomos-card{
-    min-height: 10px; /* Ajusta la altura mínima según lo necesites */
-  }
-  .btn-light-blue {
-    background-color: #add8e6; /* Color azul claro */
-    color: #ffffff; /* Color del texto */
-    border: 2px solid #000000; /* Borde negro */
-  }
-  
-  .btn-light-blue:hover {
-    background-color: #87ceeb; /* Color azul más oscuro al pasar el mouse */
-  }
-  
-  .btn-dark-gray {
-    background-color: #343a40; /* Color gris oscuro */
-    color: #ffffff; /* Color del texto */
-    border: 2px solid #000000; /* Borde negro */
-  }
-  
-  .btn-dark-gray:hover {
-    background-color: #495057; /* Color gris más claro al pasar el mouse */
-  }
-  .custom-icon {
-    font-size: 150px; /* Ajusta este valor al tamaño que desees */
-  }
-  .alertas-card {
-    background-color: #343a40; /* Color gris oscuro */
-    color: white; /* Texto blanco */
-    border: none; /* Sin borde para parecer un botón */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: background-color 0.3s; /* Suaviza la transición del color de fondo */
+}
+.col-md-9{
+  padding-left: 10px;
 }
 
-.alertas-card:hover {
-    background-color: #495057; /* Color más claro al pasar el mouse */
+.card {
+  min-height: 150px; /* Ajustar altura mínima general */
+  background-color: #000000; /* Fondo negro */
+  color: white; /* Texto blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ligera */
 }
 
 .card-tamaño {
-  height: 80px; /* Altura personalizada */
-  width: 200px; /* Ancho personalizado */
+  height: 140px; /* Altura personalizada */
+  width: 220px; /* Ancho personalizado */
   margin: 0 auto; /* Centrado en su contenedor */
-  font-size: 0.9rem; /* Ajustar el texto */
+  display: flex; /* Asegura el uso de flexbox */
+  flex-direction: column; /* Elementos en columna */
+  justify-content: center; /* Alineación vertical centrada */
+  align-items: center; /* Alineación horizontal centrada */
+  font-size: 1rem; /* Ajustar el texto */
 }
 
 .card-tamaño .card-body {
-  justify-content: start; /* Alinear elementos al principio */
+  padding: 0; /* Remueve relleno adicional */
+  display: flex; /* Asegura flexbox en el contenido */
+  flex-direction: column; /* Orden en columna */
+  align-items: center; /* Centrado horizontal */
+  justify-content: center; /* Centrado vertical */
 }
 
-  
+.card-tamaño h5 {
+  margin-bottom: 0.5rem; /* Espaciado inferior del título */
+}
+
+.card-tamaño .fa-circle {
+  font-size: 2.5rem; /* Ajustar tamaño del icono */
+  color: #28a745; /* Verde (Bootstrap success) */
+}
+
+.card-tamaño span {
+  font-size: 1rem; /* Tamaño de fuente para registros */
+  font-weight: bold; /* Negrita */
+}
+
+.alertas-card, .usuario-card {
+  min-height: 300px;
+  background-color: #343a40; /* Gris oscuro */
+  color: white;
+  border-radius: 8px;
+}
+
+.alertas-card:hover {
+  background-color: #495057; /* Gris más claro al pasar el mouse */
+}
+
+.custom-icon {
+  font-size: 5rem; /* Tamaño grande para íconos */
+  margin-bottom: 1rem; /* Espaciado inferior */
+}
+
+.btn-light-blue {
+  background-color: #add8e6; /* Color azul claro */
+  color: #ffffff; /* Texto blanco */
+  border: 2px solid #000000;
+}
+
+.btn-light-blue:hover {
+  background-color: #87ceeb; /* Azul más oscuro */
+}
+
+.btn-dark-gray {
+  background-color: #343a40; /* Gris oscuro */
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+.btn-dark-gray:hover {
+  background-color: #495057; /* Gris más claro */
+}
+.custom-icon {
+
+  font-size: 1rem; /* Tamaño del ícono */
+  color: green; /* Color verde */
+}
+
+.record-number {
+  font-size: 1.5rem; /* Tamaño del número */
+  font-weight: bold; /* Número destacado */
+  color: rgb(255, 255, 255); /* Color del número */
+}

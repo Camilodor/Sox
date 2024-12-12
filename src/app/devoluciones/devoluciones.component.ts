@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule } from '@angular/common'; 
 import { NavComponent } from '../nav/nav.component';
 import { VerticalNavComponent } from '../vertical-nav/vertical-nav.component';
 @Component({
@@ -13,12 +13,12 @@ export class DevolucionesComponent {
   devoluciones = [
     { id: 1, nombre: 'Carlos Ruiz', mercancia: 'Mercancía C', razon: 'Producto defectuoso' },
     { id: 2, nombre: 'Marta Díaz', mercancia: 'Mercancía D', razon: 'Error en el pedido' },
-    // Más datos
+  
   ];
   devolucionSeleccionada: any = {};
 
   abrirFormularioEditar(devolucion: any) {
-    this.devolucionSeleccionada = { ...devolucion }; // Copiar la devolución seleccionada
+    this.devolucionSeleccionada = { ...devolucion }; 
   }
 
   crearDevolucion() {

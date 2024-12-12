@@ -45,15 +45,15 @@
 }
 
 .container {
-  margin-left: 20px; /* Ajusta el margen para que no se solape con el navbar */
-  flex-grow: 1; /* Permite que el contenedor de la tabla crezca */
+  margin-left: 20px;
+  flex-grow: 1; 
   margin-top: 20px;
 }
 
 .table {
-  margin-top: 20px; /* Espacio entre el navbar y la tabla */
+  margin-top: 20px; 
 }
 
 .navbar {
-  width: 200px; /* Ajusta el ancho según sea necesario */
+  width: 200px; 
 }
