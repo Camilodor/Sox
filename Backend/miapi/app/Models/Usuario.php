@@ -1,38 +1,27 @@
 <?php
 
-
-
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
 
-class Usuario extends Authenticatable
+class Usuario extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    protected $table = 'usuarios'; // Nombre de la tabla en la base de datos
+    protected $table = 'usuarios';
 
-    protected $fillable = [ // Campos que se pueden insertar de forma masiva
+    protected $fillable = [
         'nombre_usuario',
         'nombres',
         'apellidos',
-        'tipo_documento',
+        'tipodocumento_id', // Relación
         'numero_documento',
         'telefono',
         'direccion',
         'ciudad',
         'email',
         'contraseña',
+        'tiporol_id' // Relación
     ];
-
-    // Mutador para encriptar la contraseña automáticamente
-    public function setContraseñaAttribute($value)
-    {
-        $this->attributes['contraseña'] = Hash::make($value);
-    }
 }
