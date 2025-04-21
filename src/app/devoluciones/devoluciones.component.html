@@ -1,0 +1,122 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Mercancía</th>
+          <th>Razón de Devolución</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let devolucion of devoluciones">
+          <td>
+            <img src="imagenes/icono-devolucion.avif" alt="Devolución" width="30" height="30" />
+          </td>
+          <td>{{ devolucion.id }}</td>
+          <td>{{ devolucion.nombre }}</td>
+          <td>{{ devolucion.mercancia }}</td>
+          <td>{{ devolucion.razon }}</td>
+          <td>
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(devolucion)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2" (click)="eliminarDevolucion(devolucion.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info" (click)="consultarDevolucion(devolucion.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Devolución</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+
+<div
+  class="modal fade"
+  id="createModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Crear Devolución</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" />
+          </div>
+          <div class="mb-3">
+            <label for="mercancia" class="form-label">Mercancía</label>
+            <input type="text" class="form-control" id="mercancia" placeholder="Ingrese la mercancía" />
+          </div>
+          <div class="mb-3">
+            <label for="razon" class="form-label">Razón de Devolución</label>
+            <textarea class="form-control" id="razon" rows="3" placeholder="Ingrese la razón de la devolución"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Devolución</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Devolución</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Editar Nombre</label>
+            <input type="text" class="form-control" id="editNombre" [value]="devolucionSeleccionada.nombre" readonly />
+          </div>
+          <div class="mb-3">
+            <label for="editMercancia" class="form-label">Editar Mercancía</label>
+            <input type="text" class="form-control" id="editMercancia" [value]="devolucionSeleccionada.mercancia" readonly />
+          </div>
+          <div class="mb-3">
+            <label for="editRazon" class="form-label">Editar Razón de Devolución</label>
+            <textarea class="form-control" id="editRazon" rows="3" [value]="devolucionSeleccionada.razon" readonly></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+

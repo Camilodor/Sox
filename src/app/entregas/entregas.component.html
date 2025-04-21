@@ -1,0 +1,127 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Mercancía</th>
+          <th>Destino</th>
+          <th>Observaciones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entrega of entregas">
+          <td>{{ entrega.id }}</td>
+          <td>{{ entrega.nombre }}</td>
+          <td>{{ entrega.mercancia }}</td>
+          <td>{{ entrega.destino }}</td>
+          <td>{{ entrega.observaciones }}</td>
+          <td>
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(entrega)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2" (click)="eliminarEntrega(entrega.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info" (click)="consultarEntrega(entrega.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Entrega</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para crear una entrega -->
+<div
+  class="modal fade"
+  id="createModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Crear Entrega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" />
+          </div>
+          <div class="mb-3">
+            <label for="mercancia" class="form-label">Mercancía</label>
+            <input type="text" class="form-control" id="mercancia" placeholder="Ingrese la mercancía" />
+          </div>
+          <div class="mb-3">
+            <label for="destino" class="form-label">Destino</label>
+            <input type="text" class="form-control" id="destino" placeholder="Ingrese el destino" />
+          </div>
+          <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea class="form-control" id="observaciones" placeholder="Ingrese las observaciones"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Entrega</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para editar una entrega -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Entrega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Editar Nombre</label>
+            <input type="text" class="form-control" id="editNombre" [value]="entregaSeleccionada.nombre" readonly />
+          </div>
+          <div class="mb-3">
+            <label for="editMercancia" class="form-label">Editar Mercancía</label>
+            <input type="text" class="form-control" id="editMercancia" [value]="entregaSeleccionada.mercancia" readonly />
+          </div>
+          <div class="mb-3">
+            <label for="editDestino" class="form-label">Editar Destino</label>
+            <input type="text" class="form-control" id="editDestino" [value]="entregaSeleccionada.destino" readonly />
+          </div>
+          <div class="mb-3">
+            <label for="editObservaciones" class="form-label">Editar Observaciones</label>
+            <textarea class="form-control" id="editObservaciones" [value]="entregaSeleccionada.observaciones" readonly></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
