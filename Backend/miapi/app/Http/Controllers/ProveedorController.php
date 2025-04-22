@@ -20,35 +20,35 @@ class ProveedorController extends Controller
             'descripcion' => 'nullable|string',
         ]);
 
-        $proveedor = Proveedor::create($request->all());
+        $proveedores = Proveedor::create($request->all());
 
         return response()->json([
             'message' => 'Proveedor creado exitosamente.',
-            'proveedor' => $proveedor
+            'proveedor' => $proveedores
         ], 201);
     }
 
     public function show($id)
     {
         $proveedor = Proveedor::findOrFail($id);
-        return response()->json($proveedor, 200);
+        return response()->json($proveedores, 200);
     }
 
     public function update(Request $request, $id)
     {
-        $proveedor = Proveedor::findOrFail($id);
-        $proveedor->update($request->all());
+        $proveedores = Proveedor::findOrFail($id);
+        $proveedores->update($request->all());
 
         return response()->json([
             'message' => 'Proveedor actualizado exitosamente.',
-            'proveedor' => $proveedor
+            'proveedor' => $proveedores
         ], 200);
     }
 
     public function destroy($id)
     {
-        $proveedor = Proveedor::findOrFail($id);
-        $proveedor->delete();
+        $proveedores = Proveedor::findOrFail($id);
+        $proveedores->delete();
 
         return response()->json([
             'message' => 'Proveedor eliminado exitosamente.'

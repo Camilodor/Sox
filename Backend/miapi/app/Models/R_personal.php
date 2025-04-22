@@ -17,20 +17,20 @@ class R_personal extends Model
         'apellido',
         'parentezco',
         'num_documento',
-        'tipo_documento',
+        'tipo_documento_id',
         'num_celular',
         'num_direccion',
     ];
 
     // Relación con usuario
-    public function usuario()
+    public function usuarios()
     {
         return $this->belongsTo(Usuario::class, 'usuarios_id');
     }
 
     // Relación con tipo_documento
-    public function tipoDocumento()
+    public function tipos_documento()
     {
-        return $this->belongsTo(TipoDocumento::class, 'tipo_documento');
+        return $this->belongsTo(Tipodocumento::class, 'tipo_documento_id');
     }
 }

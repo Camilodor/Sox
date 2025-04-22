@@ -5,15 +5,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDevolucionesTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
         Schema::create('devoluciones', function (Blueprint $table) {
             $table->id();
             // Relación con entregas y productos
-            $table->foreignId('entregas_id')->constrained('entregas')->onDelete('cascade');
-            $table->foreignId('productos_id')->constrained('productos')->onDelete('cascade');
+            $table->foreignId('mercancias_id')->constrained('mercancias')->onDelete('cascade');
+            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('proveedores_id')->constrained('proveedores')->onDelete('cascade');
             
             // Otros datos
             $table->date('fecha_devolucion'); // Fecha de la devolución
@@ -29,4 +30,4 @@ class CreateDevolucionesTable extends Migration
     {
         Schema::dropIfExists('devoluciones');
     }
-}
+};

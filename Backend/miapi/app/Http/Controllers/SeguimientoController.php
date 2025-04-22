@@ -22,13 +22,13 @@ class SeguimientoController extends Controller
     // Obtener un seguimiento específico por ID
     public function show($id)
     {
-        $seguimiento = Seguimiento::with(['mercancia', 'despacho', 'entrega', 'devolucion'])->find($id);
+        $seguimientos = Seguimiento::with(['mercancia', 'despacho', 'entrega', 'devolucion'])->find($id);
 
-        if (!$seguimiento) {
+        if (!$seguimientos) {
             return response()->json(['message' => 'Seguimiento no encontrado'], 404);
         }
 
-        return response()->json($seguimiento, 200);
+        return response()->json($seguimientos, 200);
     }
 
     // Crear un seguimiento (Esto lo podrías llamar en el controlador correspondiente cuando se realice un cambio)
@@ -44,11 +44,11 @@ class SeguimientoController extends Controller
             'devolucion_id' => 'nullable|exists:devoluciones,id',
         ]);
 
-        $seguimiento = Seguimiento::create($request->all());
+        $seguimientos = Seguimiento::create($request->all());
 
         return response()->json([
             'message' => 'Seguimiento creado exitosamente',
-            'seguimiento' => $seguimiento
+            'seguimiento' => $seguimientos
         ], 201);
     }
 
@@ -65,30 +65,30 @@ class SeguimientoController extends Controller
             'devolucion_id' => 'nullable|exists:devoluciones,id',
         ]);
 
-        $seguimiento = Seguimiento::find($id);
+        $seguimientos = Seguimiento::find($id);
 
-        if (!$seguimiento) {
+        if (!$seguimientos) {
             return response()->json(['message' => 'Seguimiento no encontrado'], 404);
         }
 
-        $seguimiento->update($request->all());
+        $seguimientos->update($request->all());
 
         return response()->json([
             'message' => 'Seguimiento actualizado exitosamente',
-            'seguimiento' => $seguimiento
+            'seguimiento' => $seguimientos
         ], 200);
     }
 
     // Eliminar un seguimiento
     public function destroy($id)
     {
-        $seguimiento = Seguimiento::find($id);
+        $seguimientos = Seguimiento::find($id);
 
-        if (!$seguimiento) {
+        if (!$seguimientos) {
             return response()->json(['message' => 'Seguimiento no encontrado'], 404);
         }
 
-        $seguimiento->delete();
+        $seguimientos->delete();
 
         return response()->json(['message' => 'Seguimiento eliminado exitosamente'], 200);
     }

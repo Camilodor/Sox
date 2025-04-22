@@ -14,7 +14,7 @@ class DevolucionController extends Controller
     // Obtener todas las devoluciones
     public function index()
     {
-        $devoluciones = Devolucion::with(['mercancia', 'usuario', 'motivoDevolucion'])->get();
+        $devoluciones = Devolucion::with(['mercancia', 'usuario', 'proveedor'])->get();
         return response()->json($devoluciones, 200);
     }
 
@@ -23,7 +23,8 @@ class DevolucionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mercancias_id' => 'required|exists:mercancias,id',
-            'motivo_devolucion' => 'required|string',
+            'usuarios_id' => 'required|exists:usuarios,id',
+            'proveedores_id' => 'required|exists:proveedores,id',
             'fecha_devolucion' => 'required|date',
             'estado_devolucion' => 'required|string',
             'observaciones' => 'nullable|string',
@@ -33,33 +34,33 @@ class DevolucionController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $devolucion = Devolucion::create($request->all());
+        $devoluciones = Devolucion::create($request->all());
 
         // Crear seguimiento
         Seguimiento::create([
-            'mercancias_id' => $devolucion->mercancias_id,
+            'mercancias_id' => $devoluciones->mercancias_id,
             'evento' => 'Devolución realizada',
             'estado' => 'Devolución procesada',
-            'usuario_id' => $devolucion->usuario_id,
-            'devolucion_id' => $devolucion->id
+            'usuario_id' => $devoluciones->usuarios_id,
+            'devolucion_id' => $devoluciones->id
         ]);
 
         return response()->json([
             'message' => 'Devolución registrada exitosamente',
-            'devolucion' => $devolucion
+            'devolucion' => $devoluciones
         ], 201);
     }
 
     // Obtener una devolución específica por ID
     public function show($id)
     {
-        $devolucion = Devolucion::with(['mercancia', 'usuario', 'motivoDevolucion'])->find($id);
+        $devoluciones = Devolucion::with(['mercancia', 'usuario','proveedor'])->find($id);
 
-        if (!$devolucion) {
+        if (!$devoluciones) {
             return response()->json(['message' => 'Devolución no encontrada'], 404);
         }
 
-        return response()->json($devolucion, 200);
+        return response()->json($devoluciones, 200);
     }
 
     // Actualizar una devolución
@@ -67,7 +68,8 @@ class DevolucionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mercancias_id' => 'required|exists:mercancias,id',
-            'motivo_devolucion' => 'required|string',
+            'usuarios_id' => 'required|exists:usuarios,id',
+            'proveedores_id' => 'required|exists:proveedores,id',
             'fecha_devolucion' => 'required|date',
             'estado_devolucion' => 'required|string',
             'observaciones' => 'nullable|string',
@@ -77,48 +79,48 @@ class DevolucionController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $devolucion = Devolucion::find($id);
+        $devoluciones = Devolucion::find($id);
 
-        if (!$devolucion) {
+        if (!$devoluciones) {
             return response()->json(['message' => 'Devolución no encontrada'], 404);
         }
 
-        $devolucion->update($request->all());
+        $devoluciones->update($request->all());
 
         // Crear seguimiento para la actualización
         Seguimiento::create([
-            'mercancias_id' => $devolucion->mercancias_id,
+            'mercancias_id' => $devoluciones->mercancias_id,
             'evento' => 'Devolución actualizada',
             'estado' => 'Devolución procesada',
-            'usuario_id' => $devolucion->usuario_id,
-            'devolucion_id' => $devolucion->id
+            'usuario_id' => $devoluciones->usuarios_id,
+            'devolucion_id' => $devoluciones->id
         ]);
 
         return response()->json([
             'message' => 'Devolución actualizada exitosamente',
-            'devolucion' => $devolucion
+            'devolucion' => $devoluciones
         ], 200);
     }
 
     // Eliminar una devolución
     public function destroy($id)
     {
-        $devolucion = Devolucion::find($id);
+        $devoluciones= Devolucion::find($id);
 
-        if (!$devolucion) {
+        if (!$devoluciones) {
             return response()->json(['message' => 'Devolución no encontrada'], 404);
         }
 
         // Crear seguimiento para la eliminación
         Seguimiento::create([
-            'mercancias_id' => $devolucion->mercancias_id,
+            'mercancias_id' => $devoluciones->mercancias_id,
             'evento' => 'Devolución eliminada',
             'estado' => 'Eliminada',
-            'usuario_id' => $devolucion->usuario_id,
-            'devolucion_id' => $devolucion->id
+            'usuario_id' => $devoluciones->usuarios_id,
+            'devolucion_id' => $devoluciones->id
         ]);
 
-        $devolucion->delete();
+        $devoluciones->delete();
 
         return response()->json(['message' => 'Devolución eliminada exitosamente'], 200);
     }

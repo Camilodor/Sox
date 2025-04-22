@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Devolucion extends Model
 {
     use HasFactory;
-
+    protected $table = 'devoluciones';
     protected $fillable = [
-        'entregas_id',
-        'productos_id',
+        'mercancias_id',
+        'usuarios_id',
+        'proveedores_id',
         'fecha_devolucion',
         'motivo_devolucion',
         'estado_devolucion',
@@ -19,13 +20,17 @@ class Devolucion extends Model
     ];
 
     // Relaciones
-    public function entrega()
+    public function merancias()
     {
-        return $this->belongsTo(Entrega::class, 'entregas_id');
+        return $this->belongsTo(Mercancia::class, 'mercancias_id');
+    }
+    public function usuarios()
+    {
+        return $this->belongsTo(Usuario::class, 'usuarios_id');
     }
 
-    public function producto()
+    public function proveedores()
     {
-        return $this->belongsTo(Mercancia::class, 'productos_id');
+        return $this->belongsTo(Proveedor::class, 'proveedores_id');
     }
 }

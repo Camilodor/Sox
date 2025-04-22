@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -19,40 +20,40 @@ class UsuarioController extends Controller
             'nombre_usuario' => 'required|unique:usuarios',
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'tipodocumento_id' => 'required|integer|exists:tiposdocumento,id',
+            'tipo_documento_id' => 'required|integer|exists:tipos_documento,id',
             'numero_documento' => 'required|integer|unique:usuarios',
             'telefono' => 'required|string|max:20',
             'direccion' => 'required|string|max:255',
             'ciudad' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios',
             'contraseña' => 'required|min:6',
-            'tiporol_id' => 'required|integer|exists:tiposrol,id'
+            'tiposrol_id' => 'required|integer|exists:tiposrol,id'
         ]);
 
-        $usuario = Usuario::create($request->all());
+        $usuarios = Usuario::create($request->all());
 
         return response()->json([
             'message' => 'Usuario creado exitosamente',
-            'usuario' => $usuario
+            'usuario' => $usuarios
         ], 201);
     }
 
     public function show($id)
     {
-        $usuario = Usuario::find($id);
+        $usuarios = Usuario::find($id);
 
-        if (!$usuario) {
+        if (!$usuarios) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        return response()->json($usuario, 200);
+        return response()->json($usuarios, 200);
     }
 
     public function update(Request $request, $id)
     {
-        $usuario = Usuario::find($id);
+        $usuarios = Usuario::find($id);
 
-        if (!$usuario) {
+        if (!$usuarios) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
@@ -60,36 +61,81 @@ class UsuarioController extends Controller
             'nombre_usuario' => 'required|string|max:255|unique:usuarios,nombre_usuario,' . $id,
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'tipodocumento_id' => 'required|integer|exists:tiposdocumento,id',
+            'tipo_documento_id' => 'required|integer|exists:tipos_documento,id',
             'numero_documento' => 'required|integer|unique:usuarios,numero_documento,' . $id,
             'telefono' => 'required|string|max:20',
             'direccion' => 'required|string|max:255',
             'ciudad' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios,email,' . $id,
             'contraseña' => 'required|min:6',
-            'tiporol_id' => 'required|integer|exists:tiposrol,id'
+            'tiposrol_id' => 'required|integer|exists:tiposrol,id'
         ]);
 
-        $usuario->update($request->all());
+        $usuarios->update($request->all());
 
         return response()->json([
             'message' => 'Usuario actualizado exitosamente',
-            'usuario' => $usuario
+            'usuario' => $usuarios
         ], 200);
     }
 
     public function destroy($id)
     {
-        $usuario = Usuario::find($id);
+        $usuarios = Usuario::find($id);
 
-        if (!$usuario) {
+        if (!$usuarios) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario->delete();
+        $usuarios->delete();
 
         return response()->json([
             'message' => 'Usuario eliminado exitosamente'
         ], 200);
     }
+
+
+
+    public function patch(Request $request, $id)
+    {
+        // 1) Buscar el usuario
+        $usuarios = Usuario::find($id);
+        if (!$usuarios) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // 2) Definir reglas "sometimes" para los campos que puedan venir
+        $rules = [
+            'nombre_usuario'     => 'sometimes|unique:usuarios,nombre_usuario,' . $id,
+            'nombres'            => 'sometimes|string|max:255',
+            'apellidos'          => 'sometimes|string|max:255',
+            'tipo_documento_id'  => 'sometimes|integer|exists:tipos_documento,id',
+            'numero_documento'   => 'sometimes|string|unique:usuarios,numero_documento,' . $id,
+            'telefono'           => 'sometimes|string|max:20',
+            'direccion'          => 'sometimes|string|max:255',
+            'ciudad'             => 'sometimes|string|max:100',
+            'email'              => 'sometimes|email|unique:usuarios,email,' . $id,
+            'contraseña'         => 'sometimes|min:6',
+            'tiposrol_id'         => 'sometimes|integer|exists:tiposrol,id',
+        ];
+
+        // 3) Validar solo los campos presentes
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Errores de validación',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // 4) Actualizar solo los campos enviados
+        $usuarios->update($request->only(array_keys($rules)));
+
+        // 5) Responder con el usuario actualizado
+        return response()->json([
+            'message' => 'Usuario actualizado parcialmente',
+            'usuario' => $usuarios->fresh()
+        ], 200);
+    }
+
 }

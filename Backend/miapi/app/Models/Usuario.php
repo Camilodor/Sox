@@ -15,13 +15,13 @@ class Usuario extends Model
         'nombre_usuario',
         'nombres',
         'apellidos',
-        'tipodocumento_id', // Relación
+        'tipo_documento_id', // Relación
         'numero_documento',
         'telefono',
         'direccion',
         'ciudad',
         'email',
         'contraseña',
-        'tiporol_id' // Relación
+        'tiposrol_id' // Relación
     ];
 }

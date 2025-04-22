@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TipopagoController;
 use App\Http\Controllers\MercanciaController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\DespachoController;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\SeguimientoController;
@@ -50,6 +51,12 @@ Route::prefix('devoluciones')->group(function () {
     Route::delete('/{id}', [DevolucionController::class, 'destroy']); // Eliminar una devolución
 });
 
+Route::post('/despachos', [DespachoController::class, 'store']);
+Route::get('/despachos', [DespachoController::class, 'index']);
+Route::get('/despachos/{id}', [DespachoController::class, 'show']);
+Route::put('/despachos/{id}', [DespachoController::class, 'update']);
+Route::delete('/despachos/{id}', [DespachoController::class, 'destroy']);
+
 Route::post('/vehiculos', [VehiculoController::class, 'store']);
 Route::get('/vehiculos', [VehiculoController::class, 'index']);
 Route::get('/vehiculos/{id}', [VehiculoController::class, 'show']);
@@ -84,24 +91,25 @@ Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::put('/productos/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
 // Rutas para R_personal
-Route::post('/r-personales', [R_personalController::class, 'store']); // Crear referencia personal
-Route::get('/r-personales', [R_personalController::class, 'index']); // Obtener todas las referencias personales
-Route::get('/r-personales/{id}', [R_personalController::class, 'show']); // Obtener referencia personal por ID
-Route::put('/r-personales/{id}', [R_personalController::class, 'update']); // Actualizar referencia personal
-Route::delete('/r-personales/{id}', [R_personalController::class, 'destroy']); // Eliminar referencia personal
+Route::post('/r_personales', [R_personalController::class, 'store']); // Crear referencia personal
+Route::get('/r_personales', [R_personalController::class, 'index']); // Obtener todas las referencias personales
+Route::get('/r_personales/{id}', [R_personalController::class, 'show']); // Obtener referencia personal por ID
+Route::put('/r_personales/{id}', [R_personalController::class, 'update']); // Actualizar referencia personal
+Route::delete('/r_personales/{id}', [R_personalController::class, 'destroy']); // Eliminar referencia personal
 
 // Rutas para R_laboral
-Route::post('/r-laborales', [R_laboralController::class, 'store']); // Crear referencia laboral
-Route::get('/r-laborales', [R_laboralController::class, 'index']); // Obtener todas las referencias laborales
-Route::get('/r-laborales/{id}', [R_laboralController::class, 'show']); // Obtener referencia laboral por ID
-Route::put('/r-laborales/{id}', [R_laboralController::class, 'update']); // Actualizar referencia laboral
-Route::delete('/r-laborales/{id}', [R_laboralController::class, 'destroy']); // Eliminar referencia laboral
+Route::post('/r_laborales', [R_laboralController::class, 'store']); // Crear referencia laboral
+Route::get('/r_laborales', [R_laboralController::class, 'index']); // Obtener todas las referencias laborales
+Route::get('/r_laborales/{id}', [R_laboralController::class, 'show']); // Obtener referencia laboral por ID
+Route::put('/r_laborales/{id}', [R_laboralController::class, 'update']); // Actualizar referencia laboral
+Route::delete('/r_laborales/{id}', [R_laboralController::class, 'destroy']); // Eliminar referencia laboral
 // Rutas para Usuario
 Route::post('/usuarios', [UsuarioController::class, 'store']); // Crear usuario
 Route::get('/usuarios', [UsuarioController::class, 'index']); // Obtener todos los usuarios
 Route::get('/usuarios/{id}', [UsuarioController::class, 'show']); // Obtener usuario por ID
 Route::put('/usuarios/{id}', [UsuarioController::class, 'update']); // Actualizar usuario
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']); // Eliminar usuario
+Route::patch('/usuarios/{id}', [UsuarioController::class, 'patch']);  
 
 // Rutas para Tipodocumento
 Route::post('/tiposdocumento', [TipodocumentoController::class, 'store']); // Crear tipo de documento

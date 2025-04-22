@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDespachosTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -14,7 +14,8 @@ class CreateDespachosTable extends Migration
             // Relación con mercancia, vehiculo y usuario
             $table->foreignId('mercancias_id')->constrained('mercancias')->onDelete('cascade');
             $table->foreignId('vehiculos_id')->constrained('vehiculos')->onDelete('cascade');
-            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('usuarios_id')->constrained('usuarios');
+
             // Relación con tipo de pago
             $table->foreignId('tipo_pago_id')->constrained('tipospago')->onDelete('cascade');
             
@@ -33,4 +34,4 @@ class CreateDespachosTable extends Migration
     {
         Schema::dropIfExists('despachos');
     }
-}
+};

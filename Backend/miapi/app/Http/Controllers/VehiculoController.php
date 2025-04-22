@@ -41,38 +41,41 @@ class VehiculoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $vehiculo = Vehiculo::create($request->all());
+        $vehiculos = Vehiculo::create($request->all());
 
         return response()->json([
             'message' => 'Vehículo creado exitosamente',
-            'vehiculo' => $vehiculo
+            'vehiculo' => $vehiculos
         ], 201);
     }
 
     // Mostrar un vehículo por ID
     public function show($id)
     {
-        $vehiculo = Vehiculo::find($id);
-        if (!$vehiculo) {
+        $vehiculos = Vehiculo::find($id);
+        if (!$vehiculos) {
             return response()->json(['message' => 'Vehículo no encontrado'], 404);
         }
-        return response()->json($vehiculo, 200);
+        return response()->json($vehiculos, 200);
     }
 
     // Actualizar un vehículo
     public function update(Request $request, $id)
     {
-        $vehiculo = Vehiculo::find($id);
-        if (!$vehiculo) {
+        $vehiculos = Vehiculo::find($id);
+        if (!$vehiculos) {
             return response()->json(['message' => 'Vehículo no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'num_placas' => 'sometimes|required|string|max:20',
-            'nom_marca_vehiculo' => 'sometimes|required|string|max:50',
-            'num_propietario_veh' => 'sometimes|required|string|max:50',
-            'num_modelo_año' => 'sometimes|required|string|max:10',
-            'color_vehiculo' => 'sometimes|required|string|max:30',
+            'num_placas' => 'required|string|max:20',
+            'nom_marca_vehiculo' => 'required|string|max:50',
+            'num_propietario_veh' => 'required|string|max:50',
+            'num_propietario_cel' => 'required|string|max:50',
+            'direc_propietario' => 'required|string|max:50',
+            'ciudad_propietario' => 'required|string|max:50',
+            'num_modelo_año' => 'required|string|max:10',
+            'color_vehiculo' => 'required|string|max:30',
             'fecha_vencimiento_soat' => 'nullable|date',
             'fecha_vencimiento_tecno' => 'nullable|date',
             'nom_satelital' => 'nullable|string|max:50',
@@ -85,23 +88,23 @@ class VehiculoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $vehiculo->update($request->all());
+        $vehiculos->update($request->all());
 
         return response()->json([
             'message' => 'Vehículo actualizado exitosamente',
-            'vehiculo' => $vehiculo
+            'vehiculo' => $vehiculos
         ], 200);
     }
 
     // Eliminar un vehículo
     public function destroy($id)
     {
-        $vehiculo = Vehiculo::find($id);
-        if (!$vehiculo) {
+        $vehiculos = Vehiculo::find($id);
+        if (!$vehiculos) {
             return response()->json(['message' => 'Vehículo no encontrado'], 404);
         }
 
-        $vehiculo->delete();
+        $vehiculos->delete();
         return response()->json(['message' => 'Vehículo eliminado correctamente'], 200);
     }
 }

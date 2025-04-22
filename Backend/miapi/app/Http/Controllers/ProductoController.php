@@ -16,39 +16,40 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'proveedores_id' => 'required|exists:proveedores,id',
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
         ]);
 
-        $producto = Producto::create($request->all());
+        $productos = Producto::create($request->all());
 
         return response()->json([
             'message' => 'Producto creado exitosamente.',
-            'producto' => $producto
+            'producto' => $productos
         ], 201);
     }
 
     public function show($id)
     {
-        $producto = Producto::findOrFail($id);
-        return response()->json($producto, 200);
+        $productos = Producto::findOrFail($id);
+        return response()->json($productos, 200);
     }
 
     public function update(Request $request, $id)
     {
-        $producto = Producto::findOrFail($id);
-        $producto->update($request->all());
+        $productos = Producto::findOrFail($id);
+        $productos->update($request->all());
 
         return response()->json([
             'message' => 'Producto actualizado exitosamente.',
-            'producto' => $producto
+            'producto' => $productos
         ], 200);
     }
 
     public function destroy($id)
     {
-        $producto = Producto::findOrFail($id);
-        $producto->delete();
+        $productos = Producto::findOrFail($id);
+        $productos->delete();
 
         return response()->json([
             'message' => 'Producto eliminado exitosamente.'

@@ -9,7 +9,7 @@ class TipodocumentoSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('tiposdocumento')->insert([
+        DB::table('tipos_documento')->insert([
             ['nombre' => 'Cédula de Ciudadanía'],
             ['nombre' => 'Tarjeta de Identidad'],
             ['nombre' => 'Pasaporte'],

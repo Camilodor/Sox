@@ -13,7 +13,7 @@ class DespachoController extends Controller
     // Obtener todos los despachos
     public function index()
     {
-        $despachos = Despacho::with(['mercancia', 'vehiculo', 'usuario', 'tipoPago'])->get();
+        $despachos = Despacho::with(['mercancia', 'vehiculo', 'usuario', 'tipopago'])->get();
         return response()->json($despachos, 200);
     }
 
@@ -36,33 +36,33 @@ class DespachoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $despacho = Despacho::create($request->all());
+        $despachos = Despacho::create($request->all());
 
         // Crear seguimiento
         Seguimiento::create([
-            'mercancias_id' => $despacho->mercancias_id,
+            'mercancias_id' => $despachos->mercancias_id,
             'evento' => 'Despacho creado',
             'estado' => 'Despachado',
-            'usuario_id' => $despacho->usuarios_id,
-            'despacho_id' => $despacho->id
+            'usuario_id' => $despachos->usuarios_id,
+            'despacho_id' => $despachos->id
         ]);
 
         return response()->json([
             'message' => 'Despacho creado exitosamente',
-            'despacho' => $despacho
+            'despacho' => $despachos
         ], 201);
     }
 
     // Obtener un despacho por ID
     public function show($id)
     {
-        $despacho = Despacho::with(['mercancia', 'vehiculo', 'usuario', 'tipoPago'])->find($id);
+        $despachos = Despacho::with(['mercancia', 'vehiculo', 'usuario', 'tipopago'])->find($id);
 
-        if (!$despacho) {
+        if (!$despachos) {
             return response()->json(['message' => 'Despacho no encontrado'], 404);
         }
 
-        return response()->json($despacho, 200);
+        return response()->json($despachos, 200);
     }
 
     // Actualizar un despacho
@@ -84,48 +84,48 @@ class DespachoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $despacho = Despacho::find($id);
+        $despachos = Despacho::find($id);
 
-        if (!$despacho) {
+        if (!$despachos) {
             return response()->json(['message' => 'Despacho no encontrado'], 404);
         }
 
-        $despacho->update($request->all());
+        $despachos->update($request->all());
 
         // Crear seguimiento para actualización
         Seguimiento::create([
-            'mercancias_id' => $despacho->mercancias_id,
+            'mercancias_id' => $despachos->mercancias_id,
             'evento' => 'Despacho actualizado',
             'estado' => 'En tránsito',
-            'usuario_id' => $despacho->usuarios_id,
-            'despacho_id' => $despacho->id
+            'usuario_id' => $despachos->usuarios_id,
+            'despacho_id' => $despachos->id
         ]);
 
         return response()->json([
             'message' => 'Despacho actualizado exitosamente',
-            'despacho' => $despacho
+            'despacho' => $despachos
         ], 200);
     }
 
     // Eliminar un despacho
     public function destroy($id)
     {
-        $despacho = Despacho::find($id);
+        $despachos = Despacho::find($id);
 
-        if (!$despacho) {
+        if (!$despachos) {
             return response()->json(['message' => 'Despacho no encontrado'], 404);
         }
 
         // Crear seguimiento para eliminación
         Seguimiento::create([
-            'mercancias_id' => $despacho->mercancias_id,
+            'mercancias_id' => $despachos->mercancias_id,
             'evento' => 'Despacho eliminado',
             'estado' => 'Eliminado',
-            'usuario_id' => $despacho->usuarios_id,
-            'despacho_id' => $despacho->id
+            'usuario_id' => $despachos->usuarios_id,
+            'despacho_id' => $despachos->id
         ]);
 
-        $despacho->delete();
+        $despachos->delete();
 
         return response()->json(['message' => 'Despacho eliminado exitosamente'], 200);
     }

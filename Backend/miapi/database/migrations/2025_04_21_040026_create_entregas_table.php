@@ -4,16 +4,16 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-class CreateEntregasTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
             // Relación con despacho y usuario
+            $table->foreignId('mercancias_id')->constrained('mercancias')->onDelete('cascade');
             $table->foreignId('despacho_id')->constrained('despachos')->onDelete('cascade');
-            $table->foreignId('usuarios_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             
             // Otros datos
             $table->string('nombre_recibe'); // Nombre de quien recibe
@@ -30,5 +30,4 @@ class CreateEntregasTable extends Migration
     {
         Schema::dropIfExists('entregas');
     }
-}
-
+};

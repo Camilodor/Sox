@@ -5,15 +5,14 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-class CreateMercanciasTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
         Schema::create('mercancias', function (Blueprint $table) {
-            $table->id('id_mercancia');
-            $table->unsignedBigInteger('proveedor_id')->nullable(); // NUEVO
-            $table->unsignedBigInteger('producto_id')->nullable();  // NUEVO
+            $table->id();
+            $table->unsignedBigInteger('proveedor_id')->nullable(); // NUEVo
+            $table->unsignedBigInteger('usuario_id')->nullable(); // NUEVo
             $table->date('fecha_ingreso');
             $table->string('num_remesa', 50)->nullable();
             $table->string('origen_mer', 100);
@@ -42,7 +41,7 @@ class CreateMercanciasTable extends Migration
             // Relaciones
             $table->foreign('tipopago_id')->references('id')->on('tipospago')->onDelete('set null');
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('set null'); // NUEVA
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('set null');   // NUEVA
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('set null'); // NUEVA
         });
     }
 
@@ -50,4 +49,4 @@ class CreateMercanciasTable extends Migration
     {
         Schema::dropIfExists('mercancias');
     }
-}
+};

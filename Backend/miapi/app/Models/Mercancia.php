@@ -13,11 +13,11 @@ class Mercancia extends Model
 
     protected $table = 'mercancias';
 
-    protected $primaryKey = 'id_mercancia';
+   
 
     protected $fillable = [
         'proveedor_id',
-        'producto_id',
+        'usuario_id',
         'fecha_ingreso',
         'num_remesa',
         'origen_mer',
@@ -40,18 +40,15 @@ class Mercancia extends Model
     ];
 
     // Relaciones
-    public function tipopago()
+    public function tipospago()
     {
         return $this->belongsTo(Tipopago::class, 'tipopago_id');
     }
 
-    public function proveedor()
+    public function proveedores()
     {
         return $this->belongsTo(Proveedor::class, 'proveedor_id');
     }
 
-    public function producto()
-    {
-        return $this->belongsTo(Producto::class, 'producto_id');
-    }
+    
 }
