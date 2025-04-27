@@ -21,7 +21,7 @@ class Usuario extends Model
         'direccion',
         'ciudad',
         'email',
-        'contraseña',
+        'contrasena',
         'tiposrol_id' // Relación
     ];
 }

@@ -26,7 +26,7 @@ class UsuarioController extends Controller
             'direccion' => 'required|string|max:255',
             'ciudad' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios',
-            'contraseña' => 'required|min:6',
+            'contrasena' => 'required|min:6',
             'tiposrol_id' => 'required|integer|exists:tiposrol,id'
         ]);
 
@@ -67,7 +67,7 @@ class UsuarioController extends Controller
             'direccion' => 'required|string|max:255',
             'ciudad' => 'required|string|max:100',
             'email' => 'required|email|unique:usuarios,email,' . $id,
-            'contraseña' => 'required|min:6',
+            'contrasena' => 'required|min:6',
             'tiposrol_id' => 'required|integer|exists:tiposrol,id'
         ]);
 
@@ -115,7 +115,7 @@ class UsuarioController extends Controller
             'direccion'          => 'sometimes|string|max:255',
             'ciudad'             => 'sometimes|string|max:100',
             'email'              => 'sometimes|email|unique:usuarios,email,' . $id,
-            'contraseña'         => 'sometimes|min:6',
+            'contrasena'         => 'sometimes|min:6',
             'tiposrol_id'         => 'sometimes|integer|exists:tiposrol,id',
         ];
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('ciudad');
             $table->string('email');
-            $table->string('contraseña');
+            $table->string('contrasena');
             $table->unsignedBigInteger('tiposrol_id');       // FK a tiposrol
             $table->timestamps();
 
