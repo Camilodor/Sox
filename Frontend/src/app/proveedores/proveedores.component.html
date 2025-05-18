@@ -1,0 +1,201 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+  <div class="container mt-5">
+
+    <!-- Tabla de Proveedores -->
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of proveedores">
+          <td>{{ proveedor.id }}</td>
+          <td>{{ proveedor.nombre }}</td>
+          <td>{{ proveedor.descripcion }}</td>
+          <td>
+            <button class="btn btn-warning me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                    (click)="abrirFormularioEditar(proveedor)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2"
+                    (click)="eliminarProveedor(proveedor.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info"
+                    (click)="consultarProveedor(proveedor.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Botones Crear / Guardar -->
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom"
+              data-bs-toggle="modal"
+              data-bs-target="#createModal">
+        Crear Proveedor
+      </button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear -->
+<div class="modal fade" id="createModal" tabindex="-1"
+     aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Crear Proveedor</h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="nuevoProveedor.nombre"
+                   name="nombre" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="nuevoProveedor.descripcion"
+                   name="descripcion" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary"
+                data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary"
+                (click)="crearProveedor()"
+                data-bs-dismiss="modal">
+          Crear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editModal" tabindex="-1"
+     aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Proveedor</h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="proveedorSeleccionado.nombre"
+                   name="edit_nombre" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="proveedorSeleccionado.descripcion"
+                   name="edit_descripcion" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary"
+                data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary"
+                (click)="actualizarProveedor()"
+                data-bs-dismiss="modal">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ver Detalle -->
+<div class="modal fade" id="viewModal" tabindex="-1"
+     aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Detalle Proveedor</h5>
+        <button type="button" class="btn-close"
+                data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-12">
+            <label class="form-label">ID</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="proveedorSeleccionado.id"
+                   name="view_id" readonly />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="proveedorSeleccionado.nombre"
+                   name="view_nombre" readonly />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="3"
+                      [(ngModel)]="proveedorSeleccionado.descripcion"
+                      name="view_descripcion" readonly>
+            </textarea>
+          </div>
+        </form>
+      </div>
+      
+<!-- Modal Consultar Proveedor -->
+<div class="modal fade" id="consultModal" tabindex="-1" aria-labelledby="consultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="consultModalLabel">Detalles del Proveedor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">ID</label>
+              <input type="text" class="form-control" [value]="proveedorSeleccionado.id" readonly />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" [value]="proveedorSeleccionado.nombre" readonly />
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" rows="3" [value]="proveedorSeleccionado.descripcion" readonly></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary"
+                data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

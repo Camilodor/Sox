@@ -1,0 +1,165 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Proveedor ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.proveedores_id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>
+            <button class="btn btn-warning me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                    (click)="abrirFormularioEditar(producto)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2"
+                    (click)="eliminarProducto(producto.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info"
+                    data-bs-toggle="modal"
+                    data-bs-target="#consultModal"
+                    (click)="consultarProducto(producto.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">
+        Crear Producto
+      </button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear Producto -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Proveedor ID</label>
+            <input type="number" class="form-control"
+                   [(ngModel)]="nuevoProducto.proveedores_id"
+                   name="proveedores_id" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="nuevoProducto.nombre"
+                   name="nombre" />
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="3"
+                      [(ngModel)]="nuevoProducto.descripcion"
+                      name="descripcion"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" (click)="crearProducto()" data-bs-dismiss="modal">
+          Crear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Producto -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Proveedor ID</label>
+            <input type="number" class="form-control"
+                   [(ngModel)]="productoSeleccionado.proveedores_id"
+                   name="edit_proveedores_id" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="productoSeleccionado.nombre"
+                   name="edit_nombre" />
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="3"
+                      [(ngModel)]="productoSeleccionado.descripcion"
+                      name="edit_descripcion"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" (click)="actualizarProducto()" data-bs-dismiss="modal">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Consultar Producto -->
+<div class="modal fade" id="consultModal" tabindex="-1" aria-labelledby="consultModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="consultModalLabel">Detalles del Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">ID</label>
+            <input type="text" class="form-control" [value]="productoSeleccionado.id" readonly />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Proveedor ID</label>
+            <input type="text" class="form-control" [value]="productoSeleccionado.proveedores_id" readonly />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [value]="productoSeleccionado.nombre" readonly />
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="3" [value]="productoSeleccionado.descripcion" readonly></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

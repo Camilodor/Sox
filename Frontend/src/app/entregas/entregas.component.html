@@ -1,0 +1,77 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+  <div class="container mt-5">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped tabla-estilizada">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ID Mercancía</th>
+            <th>ID Despacho</th>
+            <th>ID Usuario</th>
+            <th>Nombre Recibe</th>
+            <th>Celular Recibe</th>
+            <th>Observaciones</th>
+            <th>Fecha Entrega</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entrega of entregas">
+            <td>{{ entrega.id }}</td>
+            <td>{{ entrega.mercancias_id }}</td>
+            <td>{{ entrega.despacho_id }}</td>
+            <td>{{ entrega.usuario_id }}</td>
+            <td>{{ entrega.nombre_recibe }}</td>
+            <td>{{ entrega.num_celular_recibe }}</td>
+            <td>{{ entrega.observaciones }}</td>
+            <td>{{ entrega.fecha_entrega }}</td>
+            <td>{{ entrega.estado_entrega }}</td>
+            <td>
+              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(entrega)">
+                <i class="fa fa-pencil-alt"></i>
+              </button>
+              <button class="btn btn-danger me-2" (click)="eliminarEntrega(entrega.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+              <button class="btn btn-info" (click)="consultarEntrega(entrega.id)">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Entrega</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Entrega -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Entrega</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6" *ngFor="let campo of camposEntrega">
+            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
+            <input type="text" class="form-control" [value]="entregaSeleccionada[campo]" readonly>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

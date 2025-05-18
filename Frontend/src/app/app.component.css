@@ -1,0 +1,24 @@
+.container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 400px 800px 200px;
+    grid-template-areas:" nav"
+                        "cuerpo cuerpo"
+                        "footer footer";
+}
+
+header{
+    border: solid 1px red;
+    grid-area: header;
+}
+nav{
+    border: solid 1px blue;
+    grid-area: nav;
+}
+.cuerpo{
+    grid-area: cuerpo;
+}
+footer{
+    border: solid 1px green;
+    grid-area: footer;
+}

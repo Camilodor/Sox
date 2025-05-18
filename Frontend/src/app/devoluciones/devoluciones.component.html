@@ -1,0 +1,75 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+  <div class="container mt-5">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped tabla-estilizada">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ID Mercancía</th>
+            <th>ID Usuario</th>
+            <th>ID Proveedor</th>
+            <th>Fecha Devolución</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let devolucion of devoluciones">
+            <td>{{ devolucion.id }}</td>
+            <td>{{ devolucion.mercancias_id }}</td>
+            <td>{{ devolucion.usuarios_id }}</td>
+            <td>{{ devolucion.proveedores_id }}</td>
+            <td>{{ devolucion.fecha_devolucion }}</td>
+            <td>{{ devolucion.motivo_devolucion }}</td>
+            <td>{{ devolucion.estado_devolucion }}</td>
+            <td>{{ devolucion.observaciones }}</td>
+            <td>
+              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(devolucion)">
+                <i class="fa fa-pencil-alt"></i>
+              </button>
+              <button class="btn btn-danger me-2" (click)="eliminarDevolucion(devolucion.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+              <button class="btn btn-info" (click)="consultarDevolucion(devolucion.id)">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Devolución</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Devolución -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Devolución</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6" *ngFor="let campo of camposDevolucion">
+            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
+            <input type="text" class="form-control" [value]="devolucionSeleccionada[campo]" readonly>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

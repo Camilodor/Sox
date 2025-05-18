@@ -1,0 +1,88 @@
+<app-nav></app-nav>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Menú Vertical -->
+    <div class="col-md-3">
+      <app-navgestionar></app-navgestionar>
+    </div>
+
+    <!-- Información del Usuario -->
+    <div class="col-md-9">
+      <div class="card shadow-lg">
+        <!-- Título -->
+        <div class="card-header text-center bg-primary text-white">
+          <h3>Tu Información</h3>
+        </div>
+        <!-- Cuerpo del formulario -->
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">Usuario</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre" value="Juan Pérez" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label fw-bold">Teléfono</label>
+              <input type="tel" class="form-control" id="telefono" placeholder="Ingrese su teléfono" value="123-456-7890" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="correo" class="form-label fw-bold">Correo</label>
+              <input type="email" class="form-control" id="correo" placeholder="Ingrese su correo" value="juan.perez@example.com" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label fw-bold">Dirección</label>
+              <input type="text" class="form-control" id="direccion" placeholder="Ingrese su dirección" value="Calle Falsa 123" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="eps" class="form-label fw-bold">EPS</label>
+              <input type="text" class="form-control" id="eps" placeholder="Ingrese su EPS" value="SaludTotal" disabled>
+            </div>
+          </form>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Usuario</button>
+            <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+          </div>
+          <div
+  class="modal fade"
+  id="createModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Crear Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" />
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" placeholder="Ingrese el teléfono" />
+          </div>
+          <div class="mb-3">
+            <label for="rol" class="form-label">Rol</label>
+            <select class="form-select" id="rol">
+              <option value="Administrador">Administrador</option>
+              <option value="Bodeguero">Bodeguero</option>
+              <option value="Conductor">Conductor</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Crear Usuario</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

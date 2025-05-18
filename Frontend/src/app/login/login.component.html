@@ -1,0 +1,62 @@
+<app-nav></app-nav>
+
+<div class="container-fluid px-4 py-4 main-background">
+  <div class="row">
+    <!-- Menú lateral -->
+    <div class="col-md-3">
+      <app-vertical-nav></app-vertical-nav>
+    </div>
+
+    <!-- Cuerpo principal -->
+    <div class="col-md-9">
+      
+      <!-- Resumen (2x2, más pequeño y centrado) -->
+      <section class="row g-3 justify-content-center mb-4">
+        <div class="col-6 col-md-3" *ngFor="let card of resumen">
+          <div class="summary-card glassmorphism text-center p-3" [ngClass]="card.fondo">
+            <div class="icon-box mb-2">
+              <i class="{{ card.icono }}"></i>
+            </div>
+            <h6 class="mb-1">{{ card.titulo }}</h6>
+            <p class="total mb-0">{{ card.total }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gráfico y Últimas actividades -->
+      <section class="row g-4 mb-4">
+        <div class="col-md-6">
+          <div class="panel panel-light text-center p-4">
+            <img src="imagenes/grafico.png" class="img-fluid mb-3" style="max-width: 120px;" alt="Gráfico" />
+            <h6 class="mb-0">Visualización de movimientos</h6>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel glassmorphism text-start p-4">
+            <h5 class="mb-3">Últimas actividades</h5>
+            <ul class="activity-list">
+              <li><i class="fa fa-check text-success"></i> 5 entregas completadas hoy</li>
+              <li><i class="fa fa-truck text-warning"></i> 3 despachos pendientes</li>
+              <li><i class="fa fa-undo text-danger"></i> 2 devoluciones registradas</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiénes somos -->
+      <section class="row">
+        <div class="col-12">
+          <div class="panel panel-primary text-center p-4">
+            <h4 class="mb-2">¿Quiénes somos?</h4>
+            <p class="mb-0">Somos una empresa comprometida con la logística eficiente y el control de mercancías, entregas y devoluciones en todo el país.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer text-center py-3">
+  <p>¿Quiénes somos? | &copy; 2024 SoxLogistics. Todos los derechos reservados.</p>
+</footer>

@@ -1,0 +1,202 @@
+<app-nav></app-nav>
+<div class="d-flex">
+  <app-vertical-nav></app-vertical-nav>
+
+  <div class="container mt-5">
+    <table class="table table-bordered table-striped tabla-estilizada">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Tipo Documento</th>
+          <th>Documento</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Ciudad</th>
+          <th>Email</th>
+          <th>Contraseña</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td><img src="assets/icono-usuario.avif" alt="Usuario" width="30" height="30" /></td>
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nombre_usuario }}</td>
+          <td>{{ usuario.nombres }}</td>
+          <td>{{ usuario.apellidos }}</td>
+          <td>{{ usuario.tipo_documento_id }}</td>
+          <td>{{ usuario.numero_documento }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>{{ usuario.direccion }}</td>
+          <td>{{ usuario.ciudad }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.contrasena }}</td>
+          <td>{{ usuario.tiposrol_id }}</td>
+          <td>
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(usuario)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger me-2" (click)="eliminarUsuario(usuario.id)">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-info" (click)="consultarUsuario(usuario.id)">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Usuario</button>
+      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal CREAR USUARIO -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label>Nombre de Usuario</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.nombre_usuario" name="nombre_usuario" />
+            </div>
+            <div class="col-md-6">
+              <label>Nombres</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.nombres" name="nombres" />
+            </div>
+            <div class="col-md-6">
+              <label>Apellidos</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.apellidos" name="apellidos" />
+            </div>
+            <div class="col-md-6">
+              <label>Tipo Documento</label>
+              <select class="form-select" [(ngModel)]="nuevoUsuario.tipo_documento_id" name="tipo_documento_id">
+                <option [value]="1">CC</option>
+                <option [value]="2">TI</option>
+                <option [value]="3">CE</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label>Número Documento</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.numero_documento" name="numero_documento" />
+            </div>
+            <div class="col-md-6">
+              <label>Teléfono</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.telefono" name="telefono" />
+            </div>
+            <div class="col-md-6">
+              <label>Dirección</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.direccion" name="direccion" />
+            </div>
+            <div class="col-md-6">
+              <label>Ciudad</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.ciudad" name="ciudad" />
+            </div>
+            <div class="col-md-6">
+              <label>Email</label>
+              <input type="email" class="form-control" [(ngModel)]="nuevoUsuario.email" name="email" />
+            </div>
+            <div class="col-md-6">
+              <label>Contrasena</label>
+              <input type="password" class="form-control" [(ngModel)]="nuevoUsuario.contrasena" name="contrasena" />
+            </div>
+            <div class="col-md-6">
+              <label>Rol</label>
+              <select class="form-select" [(ngModel)]="nuevoUsuario.tiposrol_id" name="tiposrol_id">
+                <option [value]="1">Administrador</option>
+                <option [value]="2">Bodeguero</option>
+                <option [value]="3">Conductor</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" (click)="crearUsuario()" data-bs-dismiss="modal">Crear Usuario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDITAR USUARIO -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.nombre_usuario" name="edit_nombre_usuario" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nombres</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.nombres" name="edit_nombres" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Apellidos</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.apellidos" name="edit_apellidos" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Tipo Documento</label>
+            <select class="form-select" [(ngModel)]="usuarioSeleccionado.tipo_documento_id" name="edit_tipo_documento_id">
+              <option [value]="1">CC</option>
+              <option [value]="2">TI</option>
+              <option [value]="3">CE</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Número Documento</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.numero_documento" name="edit_numero_documento" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Teléfono</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.telefono" name="edit_telefono" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.direccion" name="edit_direccion" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Ciudad</label>
+            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.ciudad" name="edit_ciudad" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="usuarioSeleccionado.email" name="edit_email" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Rol</label>
+            <select class="form-select" [(ngModel)]="usuarioSeleccionado.tiposrol_id" name="edit_tiposrol_id">
+              <option [value]="1">Administrador</option>
+              <option [value]="2">Bodeguero</option>
+              <option [value]="3">Conductor</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarCambios()" data-bs-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
