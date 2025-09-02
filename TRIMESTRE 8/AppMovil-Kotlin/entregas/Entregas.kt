@@ -1,4 +1,4 @@
-package com.example.demo.entregas
+package com.example.Sox.entregas
 
 import java.time.LocalDateTime
 

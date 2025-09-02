@@ -1,4 +1,5 @@
-package com.example.demo.seguimientos
+package com.example.Sox.seguimientos
+
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate

@@ -1,7 +1,5 @@
-package com.example.demo.seguimientos
+package com.example.Sox.seguimientos
 
-import com.example.demo.seguimientos.Seguimientos
-import com.example.demo.seguimientos.ServiceSeguimientos
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

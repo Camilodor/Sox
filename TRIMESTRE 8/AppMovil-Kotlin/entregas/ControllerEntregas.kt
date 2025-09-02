@@ -1,7 +1,5 @@
-package com.example.demo.entregas
+package com.example.Sox.entregas
 
-import com.example.demo.entregas.Entregas
-import com.example.demo.entregas.ServiceEntregas
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import kotlin.compareTo
 
 @RestController
 class ControllerEntregas {
@@ -28,8 +27,8 @@ class ControllerEntregas {
 
     @PostMapping("/entregas")
     fun crearEntregas(@RequestBody entrega: Entregas): String{
-            val filas = Serviceentregas.Crearentregas(entrega)
-            return if (filas > 0) "Entrega realizada con éxito" else "No se pudo realizar la entrega"
+        val filas = Serviceentregas.Crearentregas(entrega)
+        return if (filas > 0) "Entrega realizada con éxito" else "No se pudo realizar la entrega"
 
     }
     @PutMapping("/entregas/{id}")

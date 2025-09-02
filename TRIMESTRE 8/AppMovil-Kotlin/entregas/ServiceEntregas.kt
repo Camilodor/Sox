@@ -1,6 +1,6 @@
-package com.example.demo.entregas
+package com.example.Sox.entregas
 
-import com.example.demo.entregas.Entregas
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

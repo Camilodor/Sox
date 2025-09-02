@@ -1,4 +1,5 @@
-package com.example.demo.tipopago
+package com.example.Sox.tipopago
+
 
 import java.time.LocalDateTime
 

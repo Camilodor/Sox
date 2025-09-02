@@ -1,4 +1,5 @@
-package com.example.demo.seguimientos
+package com.example.Sox.seguimientos
+
 
 import java.time.LocalDateTime
 

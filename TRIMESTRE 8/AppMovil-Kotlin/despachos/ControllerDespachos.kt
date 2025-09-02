@@ -1,7 +1,7 @@
-package com.example.demo.despachos
+package com.example.Sox.despachos
 
-import com.example.demo.despachos.Despachos
-import com.example.demo.despachos.ServiceDespachos
+
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

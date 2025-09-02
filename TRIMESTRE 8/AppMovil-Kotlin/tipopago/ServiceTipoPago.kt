@@ -1,6 +1,5 @@
-package com.example.demo.tipopago
+package com.example.Sox.tipopago
 
-import com.example.demo.tipopago.TipoPago
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
