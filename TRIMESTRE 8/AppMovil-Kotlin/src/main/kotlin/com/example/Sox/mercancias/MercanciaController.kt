@@ -1,7 +1,5 @@
 package com.example.Sox.mercancias
 
-import com.example.Sox.Modelos.Mercancia
-import com.example.Sox.Service.MercanciaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 

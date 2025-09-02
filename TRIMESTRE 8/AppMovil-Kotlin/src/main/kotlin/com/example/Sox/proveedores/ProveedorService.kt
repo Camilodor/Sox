@@ -1,6 +1,6 @@
 package com.example.Sox.proveedores
 
-import com.example.Sox.Modelos.Proveedor
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

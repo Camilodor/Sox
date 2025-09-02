@@ -1,7 +1,7 @@
 package com.example.Sox.usuarios.UsuarioService
 
 
-import com.example.Sox.Modelos.Usuarios
+import com.example.Sox.usuarios.Usuarios
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

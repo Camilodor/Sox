@@ -1,6 +1,6 @@
 package com.example.Sox.mercancias
 
-import com.example.Sox.Modelos.Mercancia
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

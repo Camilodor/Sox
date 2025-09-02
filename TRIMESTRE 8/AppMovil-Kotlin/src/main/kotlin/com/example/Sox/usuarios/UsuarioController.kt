@@ -1,8 +1,8 @@
 package com.example.Sox.usuarios.UsuarioController
 
 
-import com.example.Sox.Modelos.Usuarios
-import com.example.Sox.Service.UsuarioService.UsuarioService
+import com.example.Sox.usuarios.UsuarioService.UsuarioService
+import com.example.Sox.usuarios.Usuarios
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
