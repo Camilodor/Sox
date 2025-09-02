@@ -1,4 +1,4 @@
-package com.example.Sox.Modelos
+package com.example.Sox.proveedores
 
 data class Proveedor(
     val id: Int? = null,        // nullable porque al crear aún no existe

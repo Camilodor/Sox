@@ -1,4 +1,4 @@
-package com.example.Sox.Controllers
+package com.example.Sox.proveedores
 
 import com.example.Sox.Modelos.Proveedor
 import com.example.Sox.Service.ProveedorService

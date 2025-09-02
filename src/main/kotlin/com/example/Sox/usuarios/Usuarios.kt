@@ -1,4 +1,4 @@
-package com.example.Sox.Modelos
+package com.example.Sox.usuarios
 
 
 import java.time.LocalDateTime

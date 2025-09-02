@@ -1,4 +1,4 @@
-package com.example.Sox.Service
+package com.example.Sox.proveedores
 
 import com.example.Sox.Modelos.Proveedor
 import org.springframework.beans.factory.annotation.Autowired

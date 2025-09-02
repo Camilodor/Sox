@@ -1,4 +1,4 @@
-package com.example.Sox.Modelos
+package com.example.Sox.mercancias
 
 import java.time.LocalDate
 

@@ -1,4 +1,4 @@
-package com.example.Sox.Service
+package com.example.Sox.mercancias
 
 import com.example.Sox.Modelos.Mercancia
 import org.springframework.beans.factory.annotation.Autowired

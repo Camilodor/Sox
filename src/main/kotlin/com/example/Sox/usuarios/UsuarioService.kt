@@ -1,4 +1,4 @@
-package com.example.Sox.Service.UsuarioService
+package com.example.Sox.usuarios.UsuarioService
 
 
 import com.example.Sox.Modelos.Usuarios

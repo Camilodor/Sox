@@ -1,4 +1,4 @@
-package com.example.Sox.Controllers.UsuarioController
+package com.example.Sox.usuarios.UsuarioController
 
 
 import com.example.Sox.Modelos.Usuarios
