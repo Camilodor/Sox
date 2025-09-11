@@ -1,71 +1,109 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>ID Mercancía</th>
-            <th>Ubicación</th>
-            <th>Estado</th>
-            <th>Fecha y Hora</th>
-            <th>Observaciones</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let seguimiento of seguimientos">
-            <td>{{ seguimiento.id }}</td>
-            <td>{{ seguimiento.mercancias_id }}</td>
-            <td>{{ seguimiento.ubicacion }}</td>
-            <td>{{ seguimiento.estado }}</td>
-            <td>{{ seguimiento.fecha_hora }}</td>
-            <td>{{ seguimiento.observaciones }}</td>
-            <td>
-              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(seguimiento)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-2" (click)="eliminarSeguimiento(seguimiento.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info" (click)="consultarSeguimiento(seguimiento.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="seguimientos-container" *ngIf="data$ | async as data; else cargando">
+  <h2>📡 Gestión de Seguimientos</h2>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Seguimiento</button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+  <!-- 🔔 Alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- Botones de descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" (click)="toggleDropdown($event)">⬇️ Descargas</button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item"(click)="exportarExcel(data.seguimientos)">📊 Excel</a></li>
+        <li><a class="dropdown-item"(click)="exportarCSV(data.seguimientos)">📄 CSV</a></li>
+        <li><a class="dropdown-item"(click)="exportarWord(data.seguimientos)">📝 Word</a></li>
+        <li><a class="dropdown-item"(click)="exportarPDF(data.seguimientos)">📕 PDF</a></li>
+      </ul>
     </div>
   </div>
-</div>
 
-<!-- Modal Editar Seguimiento -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Seguimiento</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6" *ngFor="let campo of camposSeguimiento">
-            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
-            <input type="text" class="form-control" [value]="seguimientoSeleccionado[campo]" readonly>
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">➕ Nuevo Seguimiento</button>
+    <div class="buscadores">
+         <div class="buscador">
+        <i class="fas fa-box"></i>
+      <input type="text" placeholder="Buscar por remesa..." [(ngModel)]="filtroRemesa"/>
+         </div>
+          <div class="buscador">
+        <i class="fas fa-box"></i>
+      <input type="text" placeholder="Buscar por estado..." [(ngModel)]="filtroEstado"/>
           </div>
-        </form>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla-wrapper">
+    <table class="tabla-seguimientos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Remesa</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of seguimientosFiltrados(data.seguimientos) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ s.id }}</td>
+          <td>{{ s.mercancia?.numero_remesa }}</td>
+          <td>{{ s.estado }}</td>
+          <td>
+            <button class="btn-accion consultar" (click)="consultarSeguimiento(s.id)"></button>
+            <button class="btn-accion editar" (click)="abrirModal(s)"></button>
+            <button class="btn-accion eliminar" (click)="eliminarSeguimiento(s.id)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="seguimientoConsultado">
+    <div class="modal-content">
+      <h3>📡 Detalles del Seguimiento</h3>
+      <ul class="detalles-seguimiento">
+      <ul>
+        <li><strong>ID:</strong> {{ seguimientoConsultado.id }}</li>
+        <li><strong>Remesa:</strong> {{ seguimientoConsultado.mercancia?.numero_remesa }}</li>
+        <li><strong>Estado:</strong> {{ seguimientoConsultado.estado }}</li>
+      </ul>
+      </ul>
+       <div class="modal-buttons">
+      <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+    </div>
+  </div>
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Seguimiento' : '➕ Nuevo Seguimiento' }}</h3>
+      <div class="form-grid">
+        <select [(ngModel)]="seguimientoForm.mercancias_id" required>
+          <option value="">Seleccione Mercancía</option>
+          <option *ngFor="let m of data.mercancias" [value]="m.id">
+            {{ m.numero_remesa }}
+          </option>
+        </select>
+        <input placeholder="Estado" [(ngModel)]="seguimientoForm.estado" required />
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarSeguimiento()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando seguimientos...</p>
+  </div>
+</ng-template>

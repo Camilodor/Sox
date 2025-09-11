@@ -1,202 +1,142 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
+<div class="usuarios-container" *ngIf="data$ | async as data; else cargando">
+  <h2>👥 Gestión de Usuarios</h2>
 
-  <div class="container mt-5">
-    <table class="table table-bordered table-striped tabla-estilizada">
+  <!-- 🔔 Caja de alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+ <div class="descargas-container">
+  <div class="dropdown" (click)="$event.stopPropagation()">
+    <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">
+      ⬇️ Descargas
+    </button>
+
+    <ul class="dropdown-menu" *ngIf="dropdownOpen">
+      <li><a class="dropdown-item" (click)="exportarExcel(data.usuarios)">📊 Excel</a></li>
+      <li><a class="dropdown-item" (click)="exportarCSV(data.usuarios)">📄 CSV</a></li>
+      <li><a class="dropdown-item" (click)="exportarWord(data.usuarios)">📝 Word</a></li>
+      <li><a class="dropdown-item" (click)="exportarPDF(data.usuarios)">📕 PDF</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+  <button class="btn-nuevo" (click)="abrirModal()">
+    <i class="bi bi-person-plus"></i> Nuevo
+  </button>
+
+ 
+  <!-- Botón de Descargas con menú -->
+
+
+
+  <!-- buscadores -->
+  <div class="buscadores">
+    <div class="buscador">
+      <i class="fas fa-user"></i>
+      <input type="text" placeholder="Buscar por nombre..." [(ngModel)]="filtroNombre"/>
+    </div>
+    <div class="buscador">
+      <i class="fas fa-id-card"></i>
+      <input type="text" placeholder="Buscar por cédula..." [(ngModel)]="filtroCedula"/>
+    </div>
+  </div>
+</div>
+
+  <!-- Tabla de usuarios -->
+  <div class="tabla-wrapper">
+    <table class="tabla-usuarios">
       <thead>
         <tr>
-          <th>Imagen</th>
-          <th>ID</th>
-          <th>Usuario</th>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>Tipo Documento</th>
-          <th>Documento</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
-          <th>Ciudad</th>
-          <th>Email</th>
-          <th>Contraseña</th>
-          <th>Rol</th>
-          <th>Acciones</th>
+          <th (click)="ordenar('id')">ID</th>
+          <th (click)="ordenar('nombre_usuario')">Usuario</th>
+          <th (click)="ordenar('nombres')">Nombres</th>
+          <th (click)="ordenar('numero_documento')">Cédula</th>
+          <th (click)="ordenar('tipo_rol_id')">Rol</th>
+          <th class="acciones-col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios">
-          <td><img src="assets/icono-usuario.avif" alt="Usuario" width="30" height="30" /></td>
-          <td>{{ usuario.id }}</td>
-          <td>{{ usuario.nombre_usuario }}</td>
-          <td>{{ usuario.nombres }}</td>
-          <td>{{ usuario.apellidos }}</td>
-          <td>{{ usuario.tipo_documento_id }}</td>
-          <td>{{ usuario.numero_documento }}</td>
-          <td>{{ usuario.telefono }}</td>
-          <td>{{ usuario.direccion }}</td>
-          <td>{{ usuario.ciudad }}</td>
-          <td>{{ usuario.email }}</td>
-          <td>{{ usuario.contrasena }}</td>
-          <td>{{ usuario.tiposrol_id }}</td>
-          <td>
-            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(usuario)">
-              <i class="fa fa-pencil-alt"></i>
-            </button>
-            <button class="btn btn-danger me-2" (click)="eliminarUsuario(usuario.id)">
-              <i class="fa fa-trash"></i>
-            </button>
-            <button class="btn btn-info" (click)="consultarUsuario(usuario.id)">
-              <i class="fa fa-eye"></i>
-            </button>
+        <tr *ngFor="let u of usuariosFiltrados(data.usuarios) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ u.id }}</td>
+          <td>{{ u.nombre_usuario }}</td>
+          <td>{{ u.nombres }}</td>
+          <td>{{ u.numero_documento }}</td>
+          <td>{{ getNombreRol(u.tipo_rol_id, data.roles) }}</td>
+          <td class="acciones">
+            <button class="btn-accion consultar" (click)="consultarUsuario(u.id)" title="Consultar"></button>
+            <button class="btn-accion editar" (click)="abrirModal(u)" title="Editar"></button>
+            <button class="btn-accion eliminar" (click)="eliminarUsuario(u.id)" title="Eliminar"></button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <div class="d-flex justify-content-center gap-3 mt-4">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Usuario</button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
-    </div>
   </div>
-</div>
 
-<!-- Modal CREAR USUARIO -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- 📌 Paginación -->
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="usuarioConsultado">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Crear Usuario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <h3>👤 Detalles del Usuario</h3>
+      <ul class="detalles-usuario">
+        <li><strong>ID:</strong> {{ usuarioConsultado.id }}</li>
+        <li><strong>Usuario:</strong> {{ usuarioConsultado.nombre_usuario }}</li>
+        <li><strong>Nombres:</strong> {{ usuarioConsultado.nombres }}</li>
+        <li><strong>Apellidos:</strong> {{ usuarioConsultado.apellidos }}</li>
+        <li><strong>Documento:</strong> {{ usuarioConsultado.tipo_documento?.nombre }} - {{ usuarioConsultado.numero_documento }}</li>
+        <li><strong>Celular:</strong> {{ usuarioConsultado.celular }}</li>
+        <li><strong>Dirección:</strong> {{ usuarioConsultado.direccion }}</li>
+        <li><strong>Ciudad:</strong> {{ usuarioConsultado.ciudad }}</li>
+        <li><strong>Email:</strong> {{ usuarioConsultado.email }}</li>
+        <li><strong>Rol:</strong> {{ usuarioConsultado.tipo_rol?.nombre }}</li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label>Nombre de Usuario</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.nombre_usuario" name="nombre_usuario" />
-            </div>
-            <div class="col-md-6">
-              <label>Nombres</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.nombres" name="nombres" />
-            </div>
-            <div class="col-md-6">
-              <label>Apellidos</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.apellidos" name="apellidos" />
-            </div>
-            <div class="col-md-6">
-              <label>Tipo Documento</label>
-              <select class="form-select" [(ngModel)]="nuevoUsuario.tipo_documento_id" name="tipo_documento_id">
-                <option [value]="1">CC</option>
-                <option [value]="2">TI</option>
-                <option [value]="3">CE</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label>Número Documento</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.numero_documento" name="numero_documento" />
-            </div>
-            <div class="col-md-6">
-              <label>Teléfono</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.telefono" name="telefono" />
-            </div>
-            <div class="col-md-6">
-              <label>Dirección</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.direccion" name="direccion" />
-            </div>
-            <div class="col-md-6">
-              <label>Ciudad</label>
-              <input type="text" class="form-control" [(ngModel)]="nuevoUsuario.ciudad" name="ciudad" />
-            </div>
-            <div class="col-md-6">
-              <label>Email</label>
-              <input type="email" class="form-control" [(ngModel)]="nuevoUsuario.email" name="email" />
-            </div>
-            <div class="col-md-6">
-              <label>Contrasena</label>
-              <input type="password" class="form-control" [(ngModel)]="nuevoUsuario.contrasena" name="contrasena" />
-            </div>
-            <div class="col-md-6">
-              <label>Rol</label>
-              <select class="form-select" [(ngModel)]="nuevoUsuario.tiposrol_id" name="tiposrol_id">
-                <option [value]="1">Administrador</option>
-                <option [value]="2">Bodeguero</option>
-                <option [value]="3">Conductor</option>
-              </select>
-            </div>
-          </div>
-        </form>
+    </div>
+  </div>
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Usuario' : '➕ Nuevo Usuario' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Nombre de usuario" [(ngModel)]="usuarioForm.nombre_usuario" required />
+        <input placeholder="Nombres" [(ngModel)]="usuarioForm.nombres" required />
+        <input placeholder="Apellidos" [(ngModel)]="usuarioForm.apellidos" required />
+        <select [(ngModel)]="usuarioForm.tipo_documento_id" required>
+          <option value="">Seleccione Tipo Documento</option>
+          <option *ngFor="let doc of data.documentos" [value]="doc.id">{{ doc.nombre }}</option>
+        </select>
+        <input placeholder="Número Documento" [(ngModel)]="usuarioForm.numero_documento" required />
+        <input placeholder="Celular" [(ngModel)]="usuarioForm.celular" />
+        <input placeholder="Dirección" [(ngModel)]="usuarioForm.direccion" />
+        <input placeholder="Ciudad" [(ngModel)]="usuarioForm.ciudad" />
+        <input type="email" placeholder="Email" [(ngModel)]="usuarioForm.email" required />
+        <input type="password" placeholder="Contraseña" [(ngModel)]="usuarioForm.contrasena" [required]="!editando" />
+        <select [(ngModel)]="usuarioForm.tipo_rol_id" required>
+          <option value="">Seleccione Rol</option>
+          <option *ngFor="let rol of data.roles" [value]="rol.id">{{ rol.nombre }}</option>
+        </select>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" (click)="crearUsuario()" data-bs-dismiss="modal">Crear Usuario</button>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarUsuario()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal EDITAR USUARIO -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Nombre de Usuario</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.nombre_usuario" name="edit_nombre_usuario" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Nombres</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.nombres" name="edit_nombres" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Apellidos</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.apellidos" name="edit_apellidos" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Tipo Documento</label>
-            <select class="form-select" [(ngModel)]="usuarioSeleccionado.tipo_documento_id" name="edit_tipo_documento_id">
-              <option [value]="1">CC</option>
-              <option [value]="2">TI</option>
-              <option [value]="3">CE</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Número Documento</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.numero_documento" name="edit_numero_documento" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Teléfono</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.telefono" name="edit_telefono" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Dirección</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.direccion" name="edit_direccion" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Ciudad</label>
-            <input type="text" class="form-control" [(ngModel)]="usuarioSeleccionado.ciudad" name="edit_ciudad" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" [(ngModel)]="usuarioSeleccionado.email" name="edit_email" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Rol</label>
-            <select class="form-select" [(ngModel)]="usuarioSeleccionado.tiposrol_id" name="edit_tiposrol_id">
-              <option [value]="1">Administrador</option>
-              <option [value]="2">Bodeguero</option>
-              <option [value]="3">Conductor</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarCambios()" data-bs-dismiss="modal">Guardar Cambios</button>
-      </div>
-    </div>
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando usuarios...</p>
   </div>
-</div>
+</ng-template>

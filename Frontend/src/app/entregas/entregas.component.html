@@ -1,77 +1,125 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>ID Mercancía</th>
-            <th>ID Despacho</th>
-            <th>ID Usuario</th>
-            <th>Nombre Recibe</th>
-            <th>Celular Recibe</th>
-            <th>Observaciones</th>
-            <th>Fecha Entrega</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entrega of entregas">
-            <td>{{ entrega.id }}</td>
-            <td>{{ entrega.mercancias_id }}</td>
-            <td>{{ entrega.despacho_id }}</td>
-            <td>{{ entrega.usuario_id }}</td>
-            <td>{{ entrega.nombre_recibe }}</td>
-            <td>{{ entrega.num_celular_recibe }}</td>
-            <td>{{ entrega.observaciones }}</td>
-            <td>{{ entrega.fecha_entrega }}</td>
-            <td>{{ entrega.estado_entrega }}</td>
-            <td>
-              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(entrega)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-2" (click)="eliminarEntrega(entrega.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info" (click)="consultarEntrega(entrega.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="entregas-container" *ngIf="data$ | async as data; else cargando">
+  <h2>📦 Gestión de Entregas</h2>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Entrega</button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+  <!-- 🔔 Alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- Botones de descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+    <button class="btn-nuevo1" (click)="toggleDropdown($event)">⬇️ Descargas</button>
+     <ul class="dropdown-menu" *ngIf="dropdownOpen">
+      <li><a class="dropdown-item"(click)="exportarExcel(data.entregas)">📊 Excel</a></li>
+      <li><a class="dropdown-item"(click)="exportarCSV(data.entregas)">📄 CSV</a></li>
+      <li><a class="dropdown-item"(click)="exportarWord(data.entregas)">📝 Word</a></li>
+      <li><a class="dropdown-item"(click)="exportarPDF(data.entregas)">📕 PDF</a></li>
+    </ul>
     </div>
   </div>
-</div>
 
-<!-- Modal Editar Entrega -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">➕ Nueva Entrega</button>
+    <div class="buscadores">
+        <div class="buscador">
+             <i class="fas fa-user"></i>
+      <input type="text" placeholder="Buscar por remesa..." [(ngModel)]="filtroRemesa"/>
+      </div>
+       <div class="buscador">
+             <i class="fas fa-user"></i>
+      <input type="text" placeholder="Buscar por estado..." [(ngModel)]="filtroEstado"/>
+       </div>
+    </div>
+  </div>
+   
+
+  <!-- Tabla -->
+  <div class="tabla-wrapper">
+    <table class="tabla-entregas">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Remesa</th>
+          <th>Recibe</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of entregasFiltradas(data.entregas) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ e.id }}</td>
+          <td>{{ e.mercancias?.numero_remesa }}</td>
+          <td>{{ e.nombre_recibe }}</td>
+          <td>{{ e.estado_entrega }}</td>
+          <td>{{ e.fecha_entrega | date }}</td>
+          <td>
+            <button class="btn-accion consultar" (click)="consultarEntrega(e.id)"></button>
+            <button class="btn-accion editar" (click)="abrirModal(e)"></button>
+            <button class="btn-accion eliminar" (click)="eliminarEntrega(e.id)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="entregaConsultada">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Entrega</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      <h3>📦 Detalles de la Entrega</h3>
+      <ul class="detalles-entrega">
+        <li><strong>ID:</strong> {{ entregaConsultada.id }}</li>
+        <li><strong>Número Remesa:</strong> {{ entregaConsultada.mercancias?.numero_remesa }}</li>
+        <li><strong>Nombre Recibe:</strong> {{ entregaConsultada.nombre_recibe }}</li>
+        <li><strong>Teléfono Recibe:</strong> {{ entregaConsultada.numero_celular_recibe }}</li>
+        <li><strong>Estado:</strong> {{ entregaConsultada.estado_entrega }}</li>
+        <li><strong>Fecha:</strong> {{ entregaConsultada.fecha_entrega | date }}</li>
+        <li><strong>Observaciones:</strong> {{ entregaConsultada.observaciones }}</li>
+        <li><strong>Despacho:</strong> #{{ entregaConsultada.despachos_id }}</li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6" *ngFor="let campo of camposEntrega">
-            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
-            <input type="text" class="form-control" [value]="entregaSeleccionada[campo]" readonly>
-          </div>
-        </form>
+    </div>
+  </div>
+
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Entrega' : '➕ Nueva Entrega' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Número Remesa" [(ngModel)]="entregaForm.numero_remesa" required />
+        <select [(ngModel)]="entregaForm.despachos_id" required>
+          <option value="">Seleccione Despacho</option>
+          <option *ngFor="let d of data.despachos" [value]="d.id">Despacho #{{ d.id }}</option>
+        </select>
+        <input placeholder="Nombre Recibe" [(ngModel)]="entregaForm.nombre_recibe" required />
+        <input placeholder="Teléfono Recibe" [(ngModel)]="entregaForm.numero_celular_recibe" required />
+        <input type="date" [(ngModel)]="entregaForm.fecha_entrega" required />
+        <select [(ngModel)]="entregaForm.estado_entrega">
+          <option>Pendiente</option>
+          <option>Entregado</option>
+          <option>Devuelto</option>
+        </select>
+        <textarea placeholder="Observaciones" [(ngModel)]="entregaForm.observaciones"></textarea>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarEntrega()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando entregas...</p>
+  </div>
+</ng-template>

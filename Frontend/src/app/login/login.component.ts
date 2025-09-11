@@ -1,22 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from '../nav/nav.component';
-import { VerticalNavComponent } from '../vertical-nav/vertical-nav.component';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, NavComponent, VerticalNavComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  resumen = [
-    { titulo: 'Mercancía', icono: 'fa fa-archive', total: 25, fondo: 'bg-verde' },
-    { titulo: 'Despacho', icono: 'fa fa-truck', total: 12, fondo: 'bg-naranja' },
-    { titulo: 'Entregas', icono: 'fa fa-check-circle', total: 8, fondo: 'bg-azul' },
-    { titulo: 'Devoluciones', icono: 'fa fa-undo', total: 4, fondo: 'bg-rojo' }
-  ];
+export class LoginComponent {
+  loginData = {
+    login: '',
+    contrasena: ''
+  };
+  errorMessage = '';
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private router: Router) {}
+onSubmit() {
+  this.authService.login(this.loginData).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.token ?? res.access_token);
+      localStorage.setItem('user', JSON.stringify(res.user));
+
+      // Manejo de rol (soporta string o {id, nombre})
+      let rolNombre: string;
+      let rolId: number | null = null;
+
+      if (typeof res.user.rol === 'string') {
+        rolNombre = res.user.rol;
+      } else {
+        rolNombre = res.user.rol.nombre;
+        rolId = res.user.rol.id;
+      }
+
+      localStorage.setItem('rol_nombre', rolNombre);
+      if (rolId !== null) {
+        localStorage.setItem('rol_id', rolId.toString());
+      }
+
+      // 🔹 Redirección según rol
+      if (rolNombre === 'Administrador') {
+        this.router.navigate(['/admin']);
+      } else if (rolNombre === 'Bodeguero') {
+        this.router.navigate(['/bodeguero']);
+      } else if (rolNombre === 'Conductor') {
+        this.router.navigate(['/conductor']);
+        } else if (rolNombre === 'Cliente') {
+        this.router.navigate(['/cliente']);
+      } else {
+        this.router.navigate(['/']);
+      }
+    },
+    error: () => {
+      this.errorMessage = 'Credenciales incorrectas';
+    }
+  });
 }
+}
+

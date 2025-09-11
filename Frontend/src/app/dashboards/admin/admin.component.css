@@ -1,0 +1,183 @@
+/* Contenedor principal */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #043d3d;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+
+.user-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.user-info .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 3px solid #fff;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.user-info .rol {
+  font-size: 14px;
+  color: #b8d8d8;
+}
+
+.logout {
+  background: #ff4d4f;
+  border: none;
+  color: #fff;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: auto;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.logout:hover {
+  background: #ff1f1f;
+  transform: scale(1.05);
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafa;
+}
+
+/* Header */
+.header {
+  background: #e6f0f0;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header .logo-header {
+  width: 55px;
+  height: 55px;
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #043d3d;
+}
+
+/* Body */
+.content {
+  padding: 30px;
+}
+
+.content h2 {
+  margin-bottom: 15px;
+  color: #043d3d;
+}
+
+/* Fondo para accesos rápidos */
+.cards-background {
+  background: url('/assets/fondoadmin.jpg') no-repeat center center/cover;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Tarjetas de accesos rápidos */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: linear-gradient(135deg, #00bfa6, #043d3d);
+  color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.card span {
+  font-size: 15px;
+  color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Bloques adicionales */
+.extras {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.extra-card {
+  flex: 1;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.extra-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 15px 20px;
+  background: #e6f0f0;
+  margin-top: auto;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 1200px) { .card { flex: 1 1 calc(33.33% - 15px); } } 
+@media (max-width: 768px) { .card { flex: 1 1 calc(50% - 15px); } } 
+@media (max-width: 480px) { .card { flex: 1 1 100%; } }

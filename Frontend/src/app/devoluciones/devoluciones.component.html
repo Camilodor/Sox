@@ -1,75 +1,121 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>ID Mercancía</th>
-            <th>ID Usuario</th>
-            <th>ID Proveedor</th>
-            <th>Fecha Devolución</th>
-            <th>Motivo</th>
-            <th>Estado</th>
-            <th>Observaciones</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let devolucion of devoluciones">
-            <td>{{ devolucion.id }}</td>
-            <td>{{ devolucion.mercancias_id }}</td>
-            <td>{{ devolucion.usuarios_id }}</td>
-            <td>{{ devolucion.proveedores_id }}</td>
-            <td>{{ devolucion.fecha_devolucion }}</td>
-            <td>{{ devolucion.motivo_devolucion }}</td>
-            <td>{{ devolucion.estado_devolucion }}</td>
-            <td>{{ devolucion.observaciones }}</td>
-            <td>
-              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(devolucion)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-2" (click)="eliminarDevolucion(devolucion.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info" (click)="consultarDevolucion(devolucion.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="devoluciones-container" *ngIf="data$ | async as data; else cargando">
+  <h2>↩️ Gestión de Devoluciones</h2>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Devolución</button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+  <!-- 🔔 Alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- Botones de descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" (click)="toggleDropdown($event)">⬇️ Descargas</button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item"(click)="exportarExcel(data.devoluciones)">📊 Excel</a></li>
+        <li><a class="dropdown-item"(click)="exportarCSV(data.devoluciones)">📄 CSV</a></li>
+        <li><a class="dropdown-item"(click)="exportarWord(data.devoluciones)">📝 Word</a></li>
+        <li><a class="dropdown-item"(click)="exportarPDF(data.devoluciones)">📕 PDF</a></li>
+      </ul>
     </div>
   </div>
-</div>
 
-<!-- Modal Editar Devolución -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">➕ Nueva Devolución</button>
+    <div class="buscadores">
+      <div class="buscador">
+        <i class="fas fa-box"></i>
+        <input type="text" placeholder="Buscar por remesa..." [(ngModel)]="filtroRemesa"/>
+      </div>
+      <div class="buscador">
+        <i class="fas fa-info-circle"></i>
+        <input type="text" placeholder="Buscar por estado..." [(ngModel)]="filtroEstado"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla-wrapper">
+    <table class="tabla-devoluciones">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Remesa</th>
+          <th>Motivo</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of devolucionesFiltradas(data.devoluciones) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ d.id }}</td>
+          <td>{{ d.mercancias?.numero_remesa }}</td>
+          <td>{{ d.motivo_devolucion }}</td>
+          <td>{{ d.estado_devolucion }}</td>
+          <td>{{ d.fecha_devolucion | date }}</td>
+          <td>
+            <button class="btn-accion consultar" (click)="consultarDevolucion(d.id)"></button>
+            <button class="btn-accion editar" (click)="abrirModal(d)"></button>
+            <button class="btn-accion eliminar" (click)="eliminarDevolucion(d.id)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="devolucionConsultada">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Devolución</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      <h3>↩️ Detalles de la Devolución</h3>
+      <ul class="detalles-devolucion">
+        <li><strong>ID:</strong> {{ devolucionConsultada.id }}</li>
+        <li><strong>Número Remesa:</strong> {{ devolucionConsultada.mercancias?.numero_remesa }}</li>
+        <li><strong>Motivo:</strong> {{ devolucionConsultada.motivo_devolucion }}</li>
+        <li><strong>Estado:</strong> {{ devolucionConsultada.estado_devolucion }}</li>
+        <li><strong>Fecha:</strong> {{ devolucionConsultada.fecha_devolucion | date }}</li>
+        <li><strong>Observaciones:</strong> {{ devolucionConsultada.observaciones }}</li>
+        <li><strong>Despacho:</strong> #{{ devolucionConsultada.despachos_id }}</li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6" *ngFor="let campo of camposDevolucion">
-            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
-            <input type="text" class="form-control" [value]="devolucionSeleccionada[campo]" readonly>
-          </div>
-        </form>
+    </div>
+  </div>
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Devolución' : '➕ Nueva Devolución' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Número Remesa" [(ngModel)]="devolucionForm.numero_remesa" required />
+        <select [(ngModel)]="devolucionForm.despachos_id" required>
+          <option value="">Seleccione Despacho</option>
+          <option *ngFor="let d of data.despachos" [value]="d.id">Despacho #{{ d.id }}</option>
+        </select>
+        <input type="date" [(ngModel)]="devolucionForm.fecha_devolucion" required />
+        <input placeholder="Motivo de devolución" [(ngModel)]="devolucionForm.motivo_devolucion" required />
+        <select [(ngModel)]="devolucionForm.estado_devolucion">
+          <option>Pendiente</option>
+          <option>Aprobada</option>
+          <option>Rechazada</option>
+        </select>
+        <textarea placeholder="Observaciones" [(ngModel)]="devolucionForm.observaciones"></textarea>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarDevolucion()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando devoluciones...</p>
+  </div>
+</ng-template>
