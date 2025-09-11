@@ -1,236 +1,118 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
+<div class="despachos-container" *ngIf="data$ | async as data; else cargando">
+  <h2>🚚 Gestión de Despachos</h2>
 
-    <!-- Tabla de despachos -->
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Mercancía ID</th>
-            <th>Vehículo ID</th>
-            <th>Usuario ID</th>
-            <th>Tipo Pago ID</th>
-            <th>Fecha Despacho</th>
-            <th>Negociación</th>
-            <th>Anticipo</th>
-            <th>Saldo</th>
-            <th>Observaciones</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of despachos">
-            <td>{{ d.id }}</td>
-            <td>{{ d.mercancias_id }}</td>
-            <td>{{ d.vehiculos_id }}</td>
-            <td>{{ d.usuarios_id }}</td>
-            <td>{{ d.tipo_pago_id }}</td>
-            <td>{{ d.fecha_despacho }}</td>
-            <td>{{ d.negociacion }}</td>
-            <td>{{ d.anticipo }}</td>
-            <td>{{ d.saldo }}</td>
-            <td>{{ d.observaciones_mer }}</td>
-            <td>
-              <button class="btn btn-warning me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                      (click)="abrirFormularioEditar(d)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-2"
-                      (click)="eliminarDespacho(d.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info"
-                      (click)="consultarDespacho(d.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Botones Crear / Guardar -->
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">
-        Crear Despacho
-      </button>
-      <button class="btn btn-custom" (click)="guardarCambios()">
-        Guardar Cambios
-      </button>
-    </div>
-
+  <!-- 🔔 Alerta -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
   </div>
-</div>
 
-<!-- Modal CREAR -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- 📥 Descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">⬇️ Descargas</button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item" (click)="exportarExcel(data.despachos)">📊 Excel</a></li>
+        <li><a class="dropdown-item" (click)="exportarCSV(data.despachos)">📄 CSV</a></li>
+        <li><a class="dropdown-item" (click)="exportarWord(data.despachos)">📝 Word</a></li>
+        <li><a class="dropdown-item" (click)="exportarPDF(data.despachos)">📕 PDF</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">➕ Nuevo</button>
+    <div class="buscadores">
+      <div class="buscador">
+        <input type="text" placeholder="Buscar por Remesa..." [(ngModel)]="filtroRemesa"/>
+      </div>
+      <div class="buscador">
+        <input type="text" placeholder="Buscar por Placa..." [(ngModel)]="filtroPlaca"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla-wrapper">
+    <table class="tabla-despachos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Remesa</th>
+          <th>Placa</th>
+          <th>Tipo Pago</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of despachosFiltrados(data.despachos) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ d.id }}</td>
+          <td>{{ d.mercancias?.numero_remesa }}</td>
+          <td>{{ d.vehiculos?.numero_placas }}</td>
+          <td>{{ d.tipopago?.nombre }}</td>
+          <td>{{ d.fecha_despacho }}</td>
+          <td>
+            <button class="btn-accion consultar" (click)="consultarDespacho(d.id)" title="Consultar"></button>
+            <button class="btn-accion editar" (click)="abrirModal(d)" title="Editar"></button>
+            <button class="btn-accion eliminar" (click)="eliminarDespacho(d.id)" title="Eliminar"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📌 Paginación -->
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="despachoConsultado">
     <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">Crear Despacho</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label>Mercancía ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.mercancias_id"
-                   name="mercancias_id">
-          </div>
-          <div class="col-md-6">
-            <label>Vehículo ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.vehiculos_id"
-                   name="vehiculos_id">
-          </div>
-          <div class="col-md-6">
-            <label>Usuario ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.usuarios_id"
-                   name="usuarios_id">
-          </div>
-          <div class="col-md-6">
-            <label>Tipo Pago ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.tipo_pago_id"
-                   name="tipo_pago_id">
-          </div>
-          <div class="col-md-6">
-            <label>Fecha Despacho</label>
-            <input type="date" class="form-control"
-                   [(ngModel)]="nuevaDespacho.fecha_despacho"
-                   name="fecha_despacho">
-          </div>
-          <div class="col-md-6">
-            <label>Negociación</label>
-            <input type="text" class="form-control"
-                   [(ngModel)]="nuevaDespacho.negociacion"
-                   name="negociacion">
-          </div>
-          <div class="col-md-6">
-            <label>Anticipo</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.anticipo"
-                   name="anticipo">
-          </div>
-          <div class="col-md-6">
-            <label>Saldo</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevaDespacho.saldo"
-                   name="saldo">
-          </div>
-          <div class="col-md-12">
-            <label>Observaciones</label>
-            <textarea class="form-control"
-                      rows="3"
-                      [(ngModel)]="nuevaDespacho.observaciones_mer"
-                      name="observaciones_mer">
-            </textarea>
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary"
-                (click)="crearDespacho()"
-                data-bs-dismiss="modal">
-          Crear Despacho
-        </button>
-      </div>
-
+      <h3>👁 Detalles del Despacho</h3>
+      <ul>
+        <li><strong>ID:</strong> {{ despachoConsultado.id }}</li>
+        <li><strong>Remesa:</strong> {{ despachoConsultado.mercancias?.numero_remesa }}</li>
+        <li><strong>Placa:</strong> {{ despachoConsultado.vehiculos?.numero_placas }}</li>
+        <li><strong>Tipo Pago:</strong> {{ despachoConsultado.tipopago?.nombre }}</li>
+        <li><strong>Fecha:</strong> {{ despachoConsultado.fecha_despacho }}</li>
+        <li><strong>Negociación:</strong> {{ despachoConsultado.negociacion }}</li>
+        <li><strong>Anticipo:</strong> {{ despachoConsultado.anticipo }}</li>
+        <li><strong>Saldo:</strong> {{ despachoConsultado.saldo }}</li>
+        <li><strong>Observaciones:</strong> {{ despachoConsultado.observaciones_mer }}</li>
+      </ul>
+      <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
     </div>
   </div>
-</div>
 
-<!-- Modal EDITAR -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- Modal crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
     <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Editar Despacho</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <h3>{{ editando ? '✏️ Editar Despacho' : '➕ Nuevo Despacho' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Número Remesa" [(ngModel)]="despachoForm.numero_remesa" required />
+        <input placeholder="Número Placas" [(ngModel)]="despachoForm.numero_placas" required />
+        <select [(ngModel)]="despachoForm.tipo_pago_id" required>
+          <option value="">Seleccione Tipo Pago</option>
+          <option *ngFor="let p of data.pagos" [value]="p.id">{{ p.nombre }}</option>
+        </select>
+        <input type="date" [(ngModel)]="despachoForm.fecha_despacho" required />
+        <input type="number" placeholder="Negociación" [(ngModel)]="despachoForm.negociacion" />
+        <input type="number" placeholder="Anticipo" [(ngModel)]="despachoForm.anticipo" />
+        <input type="number" placeholder="Saldo" [(ngModel)]="despachoForm.saldo" />
+        <textarea placeholder="Observaciones" [(ngModel)]="despachoForm.observaciones_mer"></textarea>
       </div>
-
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label>Mercancía ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.mercancias_id"
-                   name="edit_mercancias_id">
-          </div>
-          <div class="col-md-6">
-            <label>Vehículo ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.vehiculos_id"
-                   name="edit_vehiculos_id">
-          </div>
-          <div class="col-md-6">
-            <label>Usuario ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.usuarios_id"
-                   name="edit_usuarios_id">
-          </div>
-          <div class="col-md-6">
-            <label>Tipo Pago ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.tipo_pago_id"
-                   name="edit_tipo_pago_id">
-          </div>
-          <div class="col-md-6">
-            <label>Fecha Despacho</label>
-            <input type="date" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.fecha_despacho"
-                   name="edit_fecha_despacho">
-          </div>
-          <div class="col-md-6">
-            <label>Negociación</label>
-            <input type="text" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.negociacion"
-                   name="edit_negociacion">
-          </div>
-          <div class="col-md-6">
-            <label>Anticipo</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.anticipo"
-                   name="edit_anticipo">
-          </div>
-          <div class="col-md-6">
-            <label>Saldo</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="despachoSeleccionado.saldo"
-                   name="edit_saldo">
-          </div>
-          <div class="col-md-12">
-            <label>Observaciones</label>
-            <textarea class="form-control"
-                      rows="3"
-                      [(ngModel)]="despachoSeleccionado.observaciones_mer"
-                      name="edit_observaciones_mer">
-            </textarea>
-          </div>
-        </form>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarDespacho()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
-
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary"
-                (click)="actualizarDespacho()"
-                data-bs-dismiss="modal">
-          Guardar Cambios
-        </button>
-      </div>
-
     </div>
   </div>
 </div>
+
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando despachos...</p>
+  </div>
+</ng-template>

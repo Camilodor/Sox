@@ -1,89 +1,121 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Placas</th>
-            <th>Marca</th>
-            <th>Propietario</th>
-            <th>Cel. Propietario</th>
-            <th>Dirección</th>
-            <th>Ciudad</th>
-            <th>Modelo/Anio</th>
-            <th>Color</th>
-            <th>SOAT</th>
-            <th>Tecnomecánica</th>
-            <th>GPS</th>
-            <th>Usuario GPS</th>
-            <th>Contraseña GPS</th>
-            <th>Capacidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let vehiculo of vehiculos">
-            <td>{{ vehiculo.id }}</td>
-            <td>{{ vehiculo.num_placas }}</td>
-            <td>{{ vehiculo.nom_marca_vehiculo }}</td>
-            <td>{{ vehiculo.num_propietario_veh }}</td>
-            <td>{{ vehiculo.num_propietario_cel }}</td>
-            <td>{{ vehiculo.direc_propietario }}</td>
-            <td>{{ vehiculo.ciudad_propietario }}</td>
-            <td>{{ vehiculo.num_modelo_anio }}</td>
-            <td>{{ vehiculo.color_vehiculo }}</td>
-            <td>{{ vehiculo.fecha_vencimiento_soat }}</td>
-            <td>{{ vehiculo.fecha_vencimiento_tecno }}</td>
-            <td>{{ vehiculo.nom_satelital }}</td>
-            <td>{{ vehiculo.usuario_satelital }}</td>
-            <td>{{ vehiculo.contra_satelital }}</td>
-            <td>{{ vehiculo.capacidad_carga }}</td>
-            <td>
-              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal" (click)="abrirFormularioEditar(vehiculo)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-2" (click)="eliminarVehiculo(vehiculo.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info" (click)="consultarVehiculo(vehiculo.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="vehiculos-container" *ngIf="data$ | async as data; else cargando">
+  <h2>🚚 Gestión de Vehículos</h2>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">Crear Vehículo</button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
+  <!-- 🔔 Alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- Botón Nuevo + Exportaciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">
+      <i class="bi bi-truck"></i> Nuevo Vehículo
+    </button>
+     <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">
+        ⬇️ Descargas
+      </button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item" (click)="exportarExcel(data.vehiculos)">📊 Excel</a></li>
+        <li><a class="dropdown-item" (click)="exportarCSV(data.vehiculos)">📄 CSV</a></li>
+        <li><a class="dropdown-item" (click)="exportarWord(data.vehiculos)">📝 Word</a></li>
+        <li><a class="dropdown-item" (click)="exportarPDF(data.vehiculos)">📕 PDF</a></li>
+      </ul>
     </div>
   </div>
-</div>
+  </div>
 
-<!-- Modal Editar Vehículo -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- Tabla de vehículos -->
+  <div class="tabla-wrapper">
+    <table class="tabla-vehiculos">
+      <thead>
+        <tr>
+          <th (click)="ordenar('id')">ID</th>
+          <th (click)="ordenar('numero_placas')">Placa</th>
+          <th (click)="ordenar('nombre_marca_vehiculo')">Marca</th>
+          <th (click)="ordenar('nombre_propietario_vehiculo')">Propietario</th>
+          <th (click)="ordenar('usuario.numero_documento')">Conductor</th>
+          <th class="acciones-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let v of vehiculosFiltrados(data.vehiculos) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ v.id }}</td>
+          <td>{{ v.numero_placas }}</td>
+          <td>{{ v.nombre_marca_vehiculo }}</td>
+          <td>{{ v.nombre_propietario_vehiculo }}</td>
+          <td>{{ v.usuario?.numero_documento }} - {{ v.usuario?.nombre_completo }}</td>
+          <td class="acciones">
+            <button class="btn-accion consultar" (click)="consultarVehiculo(v.id)" title="Consultar"></button>
+            <button class="btn-accion editar" (click)="abrirModal(v)" title="Editar"></button>
+            <button class="btn-accion eliminar" (click)="eliminarVehiculo(v.id)" title="Eliminar"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📌 Paginación -->
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="vehiculoConsultado">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Vehículo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      <h3>🚛 Detalles del Vehículo</h3>
+      <ul>
+        <li><strong>ID:</strong> {{ vehiculoConsultado.id }}</li>
+        <li><strong>Placas:</strong> {{ vehiculoConsultado.numero_placas }}</li>
+        <li><strong>Marca:</strong> {{ vehiculoConsultado.nombre_marca_vehiculo }}</li>
+        <li><strong>Propietario:</strong> {{ vehiculoConsultado.nombre_propietario_vehiculo }}</li>
+        <li><strong>Documento Propietario:</strong> {{ vehiculoConsultado.documento_propietario_vehiculo }}</li>
+        <li><strong>Teléfono:</strong> {{ vehiculoConsultado.numero_celular_propietario }}</li>
+        <li><strong>Dirección:</strong> {{ vehiculoConsultado.direccion_propietario }}</li>
+        <li><strong>Ciudad:</strong> {{ vehiculoConsultado.ciudad_propietario }}</li>
+        <li><strong>Modelo:</strong> {{ vehiculoConsultado.numero_modelo_anio }}</li>
+        <li><strong>Color:</strong> {{ vehiculoConsultado.color_vehiculo }}</li>
+        <li><strong>Conductor:</strong> {{ vehiculoConsultado.usuario?.nombre_completo }} ({{ vehiculoConsultado.usuario?.numero_documento }})</li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6" *ngFor="let campo of camposVehiculo">
-            <label class="form-label text-capitalize">{{ campo.replace('_', ' ') }}</label>
-            <input type="text" class="form-control" [value]="vehiculoSeleccionado[campo]" readonly>
-          </div>
-        </form>
+    </div>
+  </div>
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Vehículo' : '➕ Nuevo Vehículo' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Número Placas" [(ngModel)]="vehiculoForm.numero_placas" required />
+        <input placeholder="Marca" [(ngModel)]="vehiculoForm.nombre_marca_vehiculo" required />
+        <input placeholder="Nombre Propietario" [(ngModel)]="vehiculoForm.nombre_propietario_vehiculo" required />
+        <input placeholder="Documento Propietario" [(ngModel)]="vehiculoForm.documento_propietario_vehiculo" required />
+        <input placeholder="Celular Propietario" [(ngModel)]="vehiculoForm.numero_celular_propietario" required />
+        <input placeholder="Dirección Propietario" [(ngModel)]="vehiculoForm.direccion_propietario" required />
+        <input placeholder="Ciudad Propietario" [(ngModel)]="vehiculoForm.ciudad_propietario" required />
+        <input placeholder="Modelo (Año)" [(ngModel)]="vehiculoForm.numero_modelo_anio" required />
+        <input placeholder="Color" [(ngModel)]="vehiculoForm.color_vehiculo" required />
+        <input type="date" placeholder="Vencimiento SOAT" [(ngModel)]="vehiculoForm.fecha_vencimiento_soat" />
+        <input type="date" placeholder="Vencimiento Tecno" [(ngModel)]="vehiculoForm.fecha_vencimiento_tecno" />
+        <input placeholder="Nombre Satelital" [(ngModel)]="vehiculoForm.nombre_satelital" />
+        <input placeholder="Usuario Satelital" [(ngModel)]="vehiculoForm.usuario_satelital" />
+        <input placeholder="Contraseña Satelital" [(ngModel)]="vehiculoForm.contrasena_satelital" />
+        <input type="number" placeholder="Capacidad Carga (Kg)" [(ngModel)]="vehiculoForm.capacidad_carga" />
+        <input placeholder="Número Documento Conductor" [(ngModel)]="vehiculoForm.numero_documento" required />
       </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar Cambios</button>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarVehiculo()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando vehículos...</p>
+  </div>
+</ng-template>
