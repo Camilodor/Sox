@@ -1,165 +1,121 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <table class="table table-bordered table-striped tabla-estilizada">
+<div class="productos-container" *ngIf="data$ | async as data; else cargando">
+  <h2>📦 Gestión de Productos</h2>
+
+  <!-- 🔔 Caja de alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- Descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">
+        ⬇️ Descargas
+      </button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item" (click)="exportarExcel(data.productos)">📊 Excel</a></li>
+        <li><a class="dropdown-item" (click)="exportarCSV(data.productos)">📄 CSV</a></li>
+        <li><a class="dropdown-item" (click)="exportarWord(data.productos)">📝 Word</a></li>
+        <li><a class="dropdown-item" (click)="exportarPDF(data.productos)">📕 PDF</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">
+      <i class="bi bi-box-seam"></i> Nuevo
+    </button>
+
+    <!-- Buscadores -->
+    <div class="buscadores">
+      <div class="buscador">
+        <i class="fas fa-tag"></i>
+        <input type="text" placeholder="Buscar por nombre..." [(ngModel)]="filtroNombre"/>
+      </div>
+      <div class="buscador">
+        <i class="fas fa-industry"></i>
+        <input type="text" placeholder="Buscar por proveedor..." [(ngModel)]="filtroProveedor"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de productos -->
+  <div class="tabla-wrapper">
+    <table class="tabla-usuarios">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Proveedor ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Acciones</th>
+          <th (click)="ordenar('id')">ID</th>
+          <th (click)="ordenar('nombre')">Nombre</th>
+          <th (click)="ordenar('proveedores')">Proveedor</th>
+          <th class="acciones-col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let producto of productos">
-          <td>{{ producto.id }}</td>
-          <td>{{ producto.proveedores_id }}</td>
-          <td>{{ producto.nombre }}</td>
-          <td>{{ producto.descripcion }}</td>
-          <td>
-            <button class="btn btn-warning me-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editModal"
-                    (click)="abrirFormularioEditar(producto)">
-              <i class="fa fa-pencil-alt"></i>
-            </button>
-            <button class="btn btn-danger me-2"
-                    (click)="eliminarProducto(producto.id)">
-              <i class="fa fa-trash"></i>
-            </button>
-            <button class="btn btn-info"
-                    data-bs-toggle="modal"
-                    data-bs-target="#consultModal"
-                    (click)="consultarProducto(producto.id)">
-              <i class="fa fa-eye"></i>
-            </button>
+        <tr *ngFor="let p of productosFiltrados(data.productos, data.proveedores) 
+                    | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ p.id }}</td>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.proveedores?.nombre }}</td>
+          <td class="acciones">
+            <button class="btn-accion consultar" (click)="consultarProducto(p.id)" title="Consultar"></button>
+            <button class="btn-accion editar" (click)="abrirModal(p)" title="Editar"></button>
+            <button class="btn-accion eliminar" (click)="eliminarProducto(p.id)" title="Eliminar"></button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#createModal">
-        Crear Producto
-      </button>
-      <button class="btn btn-custom" (click)="guardarCambios()">Guardar</button>
-    </div>
   </div>
-</div>
 
-<!-- Modal Crear Producto -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <!-- 📌 Paginación -->
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- Modal de consulta -->
+  <div class="modal" *ngIf="productoConsultado">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Crear Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <h3>📦 Detalles del Producto</h3>
+      <ul class="detalles-usuario">
+        <li><strong>ID:</strong> {{ productoConsultado.id }}</li>
+        <li><strong>Nombre:</strong> {{ productoConsultado.nombre }}</li>
+        <li><strong>Proveedor:</strong> {{ productoConsultado.proveedores?.nombre }}</li>
+        <li><strong>Usuario asignado:</strong> 
+          {{ productoConsultado.proveedores?.usuario?.nombre_completo }}
+          ({{ productoConsultado.proveedores?.usuario?.numero_documento }})
+        </li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Proveedor ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="nuevoProducto.proveedores_id"
-                   name="proveedores_id" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control"
-                   [(ngModel)]="nuevoProducto.nombre"
-                   name="nombre" />
-          </div>
-          <div class="col-md-12">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" rows="3"
-                      [(ngModel)]="nuevoProducto.descripcion"
-                      name="descripcion"></textarea>
-          </div>
-        </form>
+    </div>
+  </div>
+
+  <!-- Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Producto' : '➕ Nuevo Producto' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Nombre" [(ngModel)]="productoForm.nombre" required />
+
+        <!-- Select de proveedor -->
+        <select [(ngModel)]="productoForm.proveedores_id" required>
+          <option value="" disabled selected>Seleccione un proveedor</option>
+          <option *ngFor="let prov of data.proveedores" [value]="prov.id">
+            {{ prov.nombre }} — {{ prov.usuario?.nombre_completo }}
+          </option>
+        </select>
       </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" (click)="crearProducto()" data-bs-dismiss="modal">
-          Crear
-        </button>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarProducto()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal Editar Producto -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Proveedor ID</label>
-            <input type="number" class="form-control"
-                   [(ngModel)]="productoSeleccionado.proveedores_id"
-                   name="edit_proveedores_id" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control"
-                   [(ngModel)]="productoSeleccionado.nombre"
-                   name="edit_nombre" />
-          </div>
-          <div class="col-md-12">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" rows="3"
-                      [(ngModel)]="productoSeleccionado.descripcion"
-                      name="edit_descripcion"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" (click)="actualizarProducto()" data-bs-dismiss="modal">
-          Guardar Cambios
-        </button>
-      </div>
-    </div>
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando productos...</p>
   </div>
-</div>
-
-<!-- Modal Consultar Producto -->
-<div class="modal fade" id="consultModal" tabindex="-1" aria-labelledby="consultModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="consultModalLabel">Detalles del Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-4">
-            <label class="form-label">ID</label>
-            <input type="text" class="form-control" [value]="productoSeleccionado.id" readonly />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Proveedor ID</label>
-            <input type="text" class="form-control" [value]="productoSeleccionado.proveedores_id" readonly />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" [value]="productoSeleccionado.nombre" readonly />
-          </div>
-          <div class="col-md-12">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" rows="3" [value]="productoSeleccionado.descripcion" readonly></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+</ng-template>

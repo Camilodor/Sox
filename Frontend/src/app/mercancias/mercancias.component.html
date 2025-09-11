@@ -1,469 +1,162 @@
-<app-nav></app-nav>
-<div class="d-flex">
-  <app-vertical-nav></app-vertical-nav>
-  <div class="container mt-5">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped tabla-estilizada">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Proveedor ID</th>
-            <th>Usuario ID</th>
-            <th>Fecha Ingreso</th>
-            <th>Remesa</th>
-            <th>Origen</th>
-            <th>Destino</th>
-            <th>Remitente</th>
-            <th>Doc. Remitente</th>
-            <th>Dir. Remitente</th>
-            <th>Cel. Remitente</th>
-            <th>Destinatario</th>
-            <th>Doc. Destinatario</th>
-            <th>Dir. Destinatario</th>
-            <th>Cel. Destinatario</th>
-            <th>Val. Declarado</th>
-            <th>Val. Flete</th>
-            <th>Val. Total</th>
-            <th>Peso</th>
-            <th>Unidades</th>
-            <th>Observaciones</th>
-            <th>Tipo Pago ID</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let merc of mercancias">
-            <td>{{ merc.id }}</td>
-            <td>{{ merc.proveedor_id }}</td>
-            <td>{{ merc.usuario_id }}</td>
-            <td>{{ merc.fecha_ingreso }}</td>
-            <td>{{ merc.num_remesa }}</td>
-            <td>{{ merc.origen_mer }}</td>
-            <td>{{ merc.destino_mer }}</td>
-            <td>{{ merc.nom_remitente }}</td>
-            <td>{{ merc.doc_remitente }}</td>
-            <td>{{ merc.direccion_remitente }}</td>
-            <td>{{ merc.cel_remitente }}</td>
-            <td>{{ merc.destin_nom }}</td>
-            <td>{{ merc.destin_doc }}</td>
-            <td>{{ merc.destin_direccion }}</td>
-            <td>{{ merc.destin_celular }}</td>
-            <td>{{ merc.val_declarado }}</td>
-            <td>{{ merc.val_flete }}</td>
-            <td>{{ merc.val_total }}</td>
-            <td>{{ merc.peso }}</td>
-            <td>{{ merc.unidades }}</td>
-            <td>{{ merc.observaciones }}</td>
-            <td>{{ merc.tipopago_id }}</td>
-            <td>
-              <button class="btn btn-warning me-1"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                      (click)="abrirFormularioEditar(merc)">
-                <i class="fa fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger me-1"
-                      (click)="eliminarMercancia(merc.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-              <button class="btn btn-info"
-                      (click)="consultarMercancia(merc.id)">
-                <i class="fa fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="mercancias-container" *ngIf="data$ | async as data; else cargando">
+  <h2>📦 Gestión de Mercancías</h2>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <button class="btn btn-custom"
-              data-bs-toggle="modal"
-              data-bs-target="#createModal">
-        Crear Mercancía
+  <!-- 🔔 Caja de alertas -->
+  <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
+    {{ alertaMensaje }}
+    <button class="cerrar" (click)="cerrarAlerta()">×</button>
+  </div>
+
+  <!-- 📥 Descargas -->
+  <div class="descargas-container">
+    <div class="dropdown" (click)="$event.stopPropagation()">
+      <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">
+        ⬇️ Descargas
       </button>
-      <button class="btn btn-custom"
-              (click)="guardarCambios()">
-        Guardar
-      </button>
+      <ul class="dropdown-menu" *ngIf="dropdownOpen">
+        <li><a class="dropdown-item" (click)="exportarExcel(data.mercancias)">📊 Excel</a></li>
+        <li><a class="dropdown-item" (click)="exportarCSV(data.mercancias)">📄 CSV</a></li>
+        <li><a class="dropdown-item" (click)="exportarWord(data.mercancias)">📝 Word</a></li>
+        <li><a class="dropdown-item" (click)="exportarPDF(data.mercancias)">📕 PDF</a></li>
+      </ul>
     </div>
   </div>
-</div>
 
-<!-- Modal Crear -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+  <!-- Barra de acciones -->
+  <div class="acciones-bar">
+    <button class="btn-nuevo" (click)="abrirModal()">
+      <i class="bi bi-box-seam"></i> Nuevo
+    </button>
+
+    <!-- buscadores -->
+    <div class="buscadores">
+      <div class="buscador">
+        <input type="text" placeholder="Buscar por remesa..." [(ngModel)]="filtroRemesa"/>
+      </div>
+      <div class="buscador">
+        <input type="text" placeholder="Buscar por origen..." [(ngModel)]="filtroOrigen"/>
+      </div>
+      <div class="buscador">
+        <input type="text" placeholder="Buscar por destino..." [(ngModel)]="filtroDestino"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Tabla -->
+  <div class="tabla-wrapper">
+    <table class="tabla-mercancias">
+      <thead>
+        <tr>
+          <th (click)="ordenar('id')">ID</th>
+          <th (click)="ordenar('numero_remesa')">Remesa</th>
+          <th (click)="ordenar('origen_mercancia')">Origen</th>
+          <th (click)="ordenar('destino_mercancia')">Destino</th>
+          <th (click)="ordenar('unidades')">Unidades</th>
+          <th class="acciones-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of mercanciasFiltradas(data.mercancias) | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td>{{ m.id }}</td>
+          <td>{{ m.numero_remesa }}</td>
+          <td>{{ m.origen_mercancia }}</td>
+          <td>{{ m.destino_mercancia }}</td>
+          <td>{{ m.unidades }}</td>
+          <td class="acciones">
+            <button class="btn-accion consultar" (click)="consultarMercancia(m.id)" title="Consultar"></button>
+            <button class="btn-accion editar" (click)="abrirModal(m)" title="Editar"></button>
+            <button class="btn-accion eliminar" (click)="eliminarMercancia(m.id)" title="Eliminar"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📌 Paginación -->
+  <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
+
+  <!-- 📖 Modal de consulta -->
+  <div class="modal" *ngIf="mercanciaConsultada">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Crear Mercancía</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-4">
-            <label>Proveedor ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.proveedor_id"
-                   name="proveedor_id">
-          </div>
-          <div class="col-md-4">
-            <label>Usuario ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.usuario_id"
-                   name="usuario_id">
-          </div>
-          <div class="col-md-4">
-            <label>Fecha Ingreso</label>
-            <input type="date"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.fecha_ingreso"
-                   name="fecha_ingreso">
-          </div>
-          <div class="col-md-4">
-            <label>Num Remesa</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.num_remesa"
-                   name="num_remesa">
-          </div>
-          <div class="col-md-4">
-            <label>Origen</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.origen_mer"
-                   name="origen_mer">
-          </div>
-          <div class="col-md-4">
-            <label>Destino</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.destino_mer"
-                   name="destino_mer">
-          </div>
-          <div class="col-md-4">
-            <label>Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.nom_remitente"
-                   name="nom_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Doc. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.doc_remitente"
-                   name="doc_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Dir. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.direccion_remitente"
-                   name="direccion_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Cel. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.cel_remitente"
-                   name="cel_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.destin_nom"
-                   name="destin_nom">
-          </div>
-          <div class="col-md-4">
-            <label>Doc. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.destin_doc"
-                   name="destin_doc">
-          </div>
-          <div class="col-md-4">
-            <label>Dir. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.destin_direccion"
-                   name="destin_direccion">
-          </div>
-          <div class="col-md-4">
-            <label>Cel. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.destin_celular"
-                   name="destin_celular">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Declarado</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.val_declarado"
-                   name="val_declarado">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Flete</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.val_flete"
-                   name="val_flete">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Total</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.val_total"
-                   name="val_total">
-          </div>
-          <div class="col-md-4">
-            <label>Peso</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.peso"
-                   name="peso">
-          </div>
-          <div class="col-md-4">
-            <label>Unidades</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.unidades"
-                   name="unidades">
-          </div>
-          <div class="col-md-4">
-            <label>Observaciones</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.observaciones"
-                   name="observaciones">
-          </div>
-          <div class="col-md-4">
-            <label>Tipo Pago ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="nuevaMercancia.tipopago_id"
-                   name="tipopago_id">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary"
-                data-bs-dismiss="modal">
-          Cancelar
-        </button>
-        <button class="btn btn-primary"
-                (click)="crearMercancia()"
-                data-bs-dismiss="modal">
-          Crear
-        </button>
+      <h3>📦 Detalles de la Mercancía</h3>
+      <ul class="detalles-mercancia">
+        <li><strong>ID:</strong> {{ mercanciaConsultada.id }}</li>
+        <li><strong>Remesa:</strong> {{ mercanciaConsultada.numero_remesa }}</li>
+        <li><strong>Fecha ingreso:</strong> {{ mercanciaConsultada.fecha_ingreso }}</li>
+        <li><strong>Origen:</strong> {{ mercanciaConsultada.origen_mercancia }}</li>
+        <li><strong>Destino:</strong> {{ mercanciaConsultada.destino_mercancia }}</li>
+        <li><strong>Remitente:</strong> {{ mercanciaConsultada.nombre_remitente }} ({{ mercanciaConsultada.documento_remitente }})</li>
+        <li><strong>Celular remitente:</strong> {{ mercanciaConsultada.celular_remitente }}</li>
+        <li><strong>Destinatario:</strong> {{ mercanciaConsultada.nombre_destinatario }} ({{ mercanciaConsultada.documento_destinatario }})</li>
+        <li><strong>Celular destinatario:</strong> {{ mercanciaConsultada.celular_destinatario }}</li>
+        <li><strong>Peso:</strong> {{ mercanciaConsultada.peso }}</li>
+        <li><strong>Unidades:</strong> {{ mercanciaConsultada.unidades }}</li>
+        <li><strong>Valor declarado:</strong> {{ mercanciaConsultada.valor_declarado }}</li>
+        <li><strong>Valor flete:</strong> {{ mercanciaConsultada.valor_flete }}</li>
+        <li><strong>Valor total:</strong> {{ mercanciaConsultada.valor_total }}</li>
+        <li><strong>Proveedor:</strong> {{ getNombreProveedor(mercanciaConsultada.proveedores_id, data.proveedores) }}</li>
+        <li><strong>Tipo pago:</strong> {{ getNombreTipoPago(mercanciaConsultada.tipo_pago_id, data.tiposPago) }}</li>
+        <li><strong>Observaciones:</strong> {{ mercanciaConsultada.observaciones }}</li>
+      </ul>
+      <div class="modal-buttons">
+        <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal Editar -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+  <!-- ✏️ Modal de crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Mercancía</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <h3>{{ editando ? '✏️ Editar Mercancía' : '➕ Nueva Mercancía' }}</h3>
+      <div class="form-grid">
+        <input type="date" placeholder="Fecha ingreso" [(ngModel)]="mercanciaForm.fecha_ingreso" />
+        <input placeholder="Número de remesa" [(ngModel)]="mercanciaForm.numero_remesa" required />
+        <input placeholder="Origen" [(ngModel)]="mercanciaForm.origen_mercancia" required />
+        <input placeholder="Destino" [(ngModel)]="mercanciaForm.destino_mercancia" required />
+
+        <input placeholder="Nombre remitente" [(ngModel)]="mercanciaForm.nombre_remitente" />
+        <input placeholder="Documento remitente" [(ngModel)]="mercanciaForm.documento_remitente" />
+        <input placeholder="Dirección remitente" [(ngModel)]="mercanciaForm.direccion_remitente" />
+        <input placeholder="Celular remitente" [(ngModel)]="mercanciaForm.celular_remitente" />
+
+        <input placeholder="Nombre destinatario" [(ngModel)]="mercanciaForm.nombre_destinatario" />
+        <input placeholder="Documento destinatario" [(ngModel)]="mercanciaForm.documento_destinatario" />
+        <input placeholder="Dirección destinatario" [(ngModel)]="mercanciaForm.direccion_destinatario" />
+        <input placeholder="Celular destinatario" [(ngModel)]="mercanciaForm.celular_destinatario" />
+
+        <input type="number" placeholder="Peso" [(ngModel)]="mercanciaForm.peso" />
+        <input type="number" placeholder="Unidades" [(ngModel)]="mercanciaForm.unidades" />
+        <input type="number" placeholder="Valor declarado" [(ngModel)]="mercanciaForm.valor_declarado" />
+        <input type="number" placeholder="Valor flete" [(ngModel)]="mercanciaForm.valor_flete" />
+        <input type="number" placeholder="Valor total" [(ngModel)]="mercanciaForm.valor_total" />
+
+        <!-- Select de Proveedor -->
+        <select [(ngModel)]="mercanciaForm.proveedores_id">
+          <option value="">Seleccione Proveedor</option>
+          <option *ngFor="let p of data.proveedores" [value]="p.id">{{ p.nombre }}</option>
+        </select>
+
+        <!-- Select de Tipo Pago -->
+        <select [(ngModel)]="mercanciaForm.tipo_pago_id">
+          <option value="">Seleccione Tipo Pago</option>
+          <option *ngFor="let t of data.tiposPago" [value]="t.id">{{ t.nombre }}</option>
+        </select>
+
+        <textarea placeholder="Observaciones" [(ngModel)]="mercanciaForm.observaciones"></textarea>
       </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-4">
-            <label>Proveedor ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.proveedor_id"
-                   name="edit_proveedor_id">
-          </div>
-          <div class="col-md-4">
-            <label>Usuario ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.usuario_id"
-                   name="edit_usuario_id">
-          </div>
-          <div class="col-md-4">
-            <label>Fecha Ingreso</label>
-            <input type="date"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.fecha_ingreso"
-                   name="edit_fecha_ingreso">
-          </div>
-          <div class="col-md-4">
-            <label>Num Remesa</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.num_remesa"
-                   name="edit_num_remesa">
-          </div>
-          <div class="col-md-4">
-            <label>Origen</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.origen_mer"
-                   name="edit_origen_mer">
-          </div>
-          <div class="col-md-4">
-            <label>Destino</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.destino_mer"
-                   name="edit_destino_mer">
-          </div>
-          <div class="col-md-4">
-            <label>Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.nom_remitente"
-                   name="edit_nom_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Doc. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.doc_remitente"
-                   name="edit_doc_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Dir. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.direccion_remitente"
-                   name="edit_direccion_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Cel. Remitente</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.cel_remitente"
-                   name="edit_cel_remitente">
-          </div>
-          <div class="col-md-4">
-            <label>Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.destin_nom"
-                   name="edit_destin_nom">
-          </div>
-          <div class="col-md-4">
-            <label>Doc. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.destin_doc"
-                   name="edit_destin_doc">
-          </div>
-          <div class="col-md-4">
-            <label>Dir. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.destin_direccion"
-                   name="edit_destin_direccion">
-          </div>
-          <div class="col-md-4">
-            <label>Cel. Destinatario</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.destin_celular"
-                   name="edit_destin_celular">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Declarado</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.val_declarado"
-                   name="edit_val_declarado">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Flete</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.val_flete"
-                   name="edit_val_flete">
-          </div>
-          <div class="col-md-4">
-            <label>Val. Total</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.val_total"
-                   name="edit_val_total">
-          </div>
-          <div class="col-md-4">
-            <label>Peso</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.peso"
-                   name="edit_peso">
-          </div>
-          <div class="col-md-4">
-            <label>Unidades</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.unidades"
-                   name="edit_unidades">
-          </div>
-          <div class="col-md-4">
-            <label>Observaciones</label>
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.observaciones"
-                   name="edit_observaciones">
-          </div>
-          <div class="col-md-4">
-            <label>Tipo Pago ID</label>
-            <input type="number"
-                   class="form-control"
-                   [(ngModel)]="mercanciaSeleccionada.tipopago_id"
-                   name="edit_tipopago_id">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary"
-                data-bs-dismiss="modal">
-          Cancelar
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarMercancia()">
+          {{ editando ? 'Actualizar' : 'Crear' }}
         </button>
-        <button class="btn btn-primary"
-                (click)="actualizarMercancia()"
-                data-bs-dismiss="modal">
-          Guardar Cambios
-        </button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
 
-  
-
-<!-- Consultar -->
-<div class="modal fade" id="consultModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Detalle de Mercancía</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-md-2">
-            <label class="form-label">ID</label>
-            <input type="text" class="form-control" [value]="mercanciaSeleccionada.id" readonly />
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Proveedor</label>
-            <input type="text" class="form-control" [value]="mercanciaSeleccionada.proveedor_id" readonly />
-          </div>
-          <!-- ... igual para los campos restantes ... -->
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
+<ng-template #cargando>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Cargando mercancías...</p>
   </div>
-</div>
+</ng-template>
