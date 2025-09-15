@@ -1,7 +1,7 @@
 <div class="proveedores-container" *ngIf="data$ | async as data; else cargando">
-  <h2>📦 Gestión de Proveedores</h2>
+  <h2>🏢 Gestión de Proveedores</h2>
 
-  <!-- 🔔 Alertas -->
+  <!-- 🔔 Caja de alertas -->
   <div *ngIf="alertaVisible" class="alerta" [ngClass]="alertaTipo">
     {{ alertaMensaje }}
     <button class="cerrar" (click)="cerrarAlerta()">×</button>
@@ -13,6 +13,7 @@
       <button class="btn-nuevo1" type="button" (click)="toggleDropdown($event)">
         ⬇️ Descargas
       </button>
+
       <ul class="dropdown-menu" *ngIf="dropdownOpen">
         <li><a class="dropdown-item" (click)="exportarExcel(data.proveedores)">📊 Excel</a></li>
         <li><a class="dropdown-item" (click)="exportarCSV(data.proveedores)">📄 CSV</a></li>
@@ -24,22 +25,23 @@
 
   <!-- Barra de acciones -->
   <div class="acciones-bar">
-    <button class="btn-nuevo" (click)="abrirModal()">➕ Nuevo Proveedor</button>
+    <button class="btn-nuevo" (click)="abrirModal()">
+      <i class="bi bi-person-plus"></i> Nuevo
+    </button>
 
-    <!-- Buscadores -->
     <div class="buscadores">
       <div class="buscador">
-        <i class="fas fa-box"></i>
-        <input type="text" placeholder="Filtrar por nombre..." [(ngModel)]="filtroNombre"/>
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Buscar por nombre..." [(ngModel)]="filtroNombre"/>
       </div>
       <div class="buscador">
         <i class="fas fa-id-card"></i>
-        <input type="text" placeholder="Filtrar por cédula..." [(ngModel)]="filtroDocumento"/>
+        <input type="text" placeholder="Buscar por documento de usuario..." [(ngModel)]="filtroDocumento"/>
       </div>
     </div>
   </div>
 
-  <!-- Tabla de proveedores -->
+  <!-- Tabla -->
   <div class="tabla-wrapper">
     <table class="tabla-proveedores">
       <thead>
@@ -47,7 +49,7 @@
           <th (click)="ordenar('id')">ID</th>
           <th (click)="ordenar('nombre')">Nombre</th>
           <th (click)="ordenar('descripcion')">Descripción</th>
-          <th (click)="ordenar('numero_documento')">Cédula Usuario</th>
+          <th (click)="ordenar('numero_documento')">Documento Usuario</th>
           <th class="acciones-col">Acciones</th>
         </tr>
       </thead>
@@ -56,7 +58,7 @@
           <td>{{ p.id }}</td>
           <td>{{ p.nombre }}</td>
           <td>{{ p.descripcion }}</td>
-          <td>{{ p.numero_documento }}</td>
+          <td>{{ p.usuario?.numero_documento }}</td>
           <td class="acciones">
             <button class="btn-accion consultar" (click)="consultarProveedor(p.id)" title="Consultar"></button>
             <button class="btn-accion editar" (click)="abrirModal(p)" title="Editar"></button>
@@ -67,34 +69,18 @@
     </table>
   </div>
 
-  <!-- Paginación -->
+  <!-- 📌 Paginación -->
   <pagination-controls (pageChange)="page = $event" class="paginacion"></pagination-controls>
 
-  <!-- Modal Crear/Editar -->
-  <div class="modal" *ngIf="modalVisible">
-    <div class="modal-content">
-      <h3>{{ editando ? '✏️ Editar Proveedor' : '➕ Nuevo Proveedor' }}</h3>
-      <div class="form-grid">
-        <input placeholder="Nombre *" [(ngModel)]="proveedorForm.nombre" required />
-        <input placeholder="Descripción" [(ngModel)]="proveedorForm.descripcion" />
-        <input placeholder="Cédula Usuario *" [(ngModel)]="proveedorForm.numero_documento" required />
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-guardar" (click)="guardarProveedor()">{{ editando ? 'Actualizar' : 'Guardar' }}</button>
-        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Consulta -->
+  <!-- Modal consulta -->
   <div class="modal" *ngIf="proveedorConsultado">
     <div class="modal-content">
-      <h3>🔍 Consulta Proveedor</h3>
-      <ul class="detalles-usuario">
+      <h3>🏢 Detalles del Proveedor</h3>
+      <ul class="detalles-proveedor">
         <li><strong>ID:</strong> {{ proveedorConsultado.id }}</li>
         <li><strong>Nombre:</strong> {{ proveedorConsultado.nombre }}</li>
         <li><strong>Descripción:</strong> {{ proveedorConsultado.descripcion }}</li>
-        <li><strong>Cédula Usuario:</strong> {{ proveedorConsultado.numero_documento }}</li>
+        <li><strong>Usuario:</strong> {{ proveedorConsultado.usuario?.nombre_completo }} ({{ proveedorConsultado.usuario?.numero_documento }})</li>
       </ul>
       <div class="modal-buttons">
         <button class="btn-cancelar" (click)="cerrarConsulta()">Cerrar</button>
@@ -102,6 +88,21 @@
     </div>
   </div>
 
+  <!-- Modal crear/editar -->
+  <div class="modal" *ngIf="modalVisible">
+    <div class="modal-content">
+      <h3>{{ editando ? '✏️ Editar Proveedor' : '➕ Nuevo Proveedor' }}</h3>
+      <div class="form-grid">
+        <input placeholder="Nombre" [(ngModel)]="proveedorForm.nombre" required />
+        <input placeholder="Descripción" [(ngModel)]="proveedorForm.descripcion" />
+        <input placeholder="Número de documento del usuario" [(ngModel)]="proveedorForm.numero_documento" required />
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-guardar" (click)="guardarProveedor()">{{ editando ? 'Actualizar' : 'Crear' }}</button>
+        <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #cargando>

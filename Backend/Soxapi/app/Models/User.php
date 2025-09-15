@@ -14,7 +14,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $table = 'users';
 
-    // 🔑 Todos los campos que quieres poder crear/actualizar masivamente
+    // 🔑 Todos los campos que quieres poder crear/actualizar masivamente inn
     protected $fillable = [
         'nombre_usuario',
         'nombres',

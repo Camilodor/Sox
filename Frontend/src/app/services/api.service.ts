@@ -40,26 +40,25 @@ export class ApiService {
   getTiposDocumento(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/tipodocumentos`);
   }
-   // ✅ Proveedores
-  getProveedores(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/proveedores`);
-  }
+  getProveedores() {
+  return this.http.get<any[]>(`${this.apiUrl}/proveedores`);
+}
 
-  getProveedor(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/proveedores/${id}`);
-  }
+getProveedor(id: number) {
+  return this.http.get<any>(`${this.apiUrl}/proveedores/${id}`);
+}
 
-  crearProveedor(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/proveedores`, data);
-  }
+crearProveedor(data: any) {
+  return this.http.post(`${this.apiUrl}/proveedores`, data);
+}
 
-  actualizarProveedor(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/proveedores/${id}`, data);
-  }
+actualizarProveedor(id: number, data: any) {
+  return this.http.put(`${this.apiUrl}/proveedores/${id}`, data);
+}
 
-  eliminarProveedor(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/proveedores/${id}`);
-  }
+eliminarProveedor(id: number) {
+  return this.http.delete(`${this.apiUrl}/proveedores/${id}`);
+}
     getProductos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/productos`);
   }

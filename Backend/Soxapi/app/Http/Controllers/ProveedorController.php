@@ -69,10 +69,10 @@ class ProveedorController extends Controller
             'descripcion' => $request->descripcion,
         ])->load('usuario:id,numero_documento,nombres,apellidos');
 
-        return response()->json([
-            'message' => 'Proveedor creado exitosamente.',
-            'proveedor' => $this->formatProveedor($proveedor)
-        ], 201);
+      return response()->json([
+    'message' => 'Proveedor creado exitosamente.',
+    'proveedor' => $proveedor
+], 201);
     }
 
     // 📌 Actualizar proveedor
@@ -97,7 +97,7 @@ class ProveedorController extends Controller
 
         return response()->json([
             'message' => 'Proveedor actualizado exitosamente.',
-            'proveedor' => $this->formatProveedor($proveedor)
+            'proveedor' => $proveedor
         ], 200);
     }
 
