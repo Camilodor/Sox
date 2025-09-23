@@ -24,7 +24,7 @@ class ServiceTipoPago {
 
 
     fun Detalletipospago(id: Int): TipoPago? {
-        val sql = "SELECT * FROM proveedores WHERE id = ?"
+        val sql = "SELECT * FROM tipospago WHERE id = ?"
         return jdbcTemplate.query(sql, arrayOf(id)) { rs, _ ->
             TipoPago(
                 id = rs.getInt("id"),

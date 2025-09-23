@@ -16,8 +16,9 @@ class ServiceDevoluciones {
             Devoluciones(
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
+                despachos_id = rs.getInt("despachos_id"),
                 usuarios_id = rs.getInt("usuarios_id"),
-                proveedores_id = rs.getInt("proveedores_id"),
+
                 fecha_devolucion = rs.getTimestamp("fecha_devolucion").toLocalDateTime(),
                 motivo_devolucion = rs.getString("motivo_devolucion"),
                 estado_devolucion = rs.getString("estado_devolucion"),
@@ -32,14 +33,14 @@ class ServiceDevoluciones {
     fun Creardevoluciones(devolucion: Devoluciones): Int {
         val sql = """
             INSERT INTO devoluciones
-            (mercancias_id, usuarios_id , proveedores_id, fecha_devolucion,motivo_devolucion,estado_devolucion, observaciones)
+            (mercancias_id, despachos_id, usuarios_id , fecha_devolucion,motivo_devolucion,estado_devolucion, observaciones)
             VALUES (?, ?, ?, ?, ?, ?, ? )
         """.trimIndent()
 
         return jdbcTemplate.update(
             sql, devolucion.mercancias_id,
+            devolucion.despachos_id,
             devolucion.usuarios_id,
-            devolucion.proveedores_id,
             devolucion.fecha_devolucion,
             devolucion.motivo_devolucion,
             devolucion.estado_devolucion,
@@ -54,8 +55,9 @@ class ServiceDevoluciones {
             Devoluciones(
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
+                despachos_id = rs.getInt("despachos_id"),
                 usuarios_id = rs.getInt("usuarios_id"),
-                proveedores_id = rs.getInt("proveedores_id"),
+
                 fecha_devolucion = rs.getTimestamp("fecha_devolucion").toLocalDateTime(),
                 motivo_devolucion = rs.getString("motivo_devolucion"),
                 estado_devolucion = rs.getString("estado_devolucion"),
@@ -71,7 +73,7 @@ class ServiceDevoluciones {
     fun actualizarDevolucion(id: Int, devolucion: Devoluciones): Int{
         val sql= """
             UPDATE devoluciones SET 
-                mercancias_id = ?, usuarios_id = ?, proveedores_id = ?, 
+                mercancias_id = ?, despachos_id = ?,  usuarios_id = ?,
                   fecha_devolucion= ?, motivo_devolucion = ?, estado_devolucion = ?, observaciones = ?
             WHERE id = ?
         """.trimIndent()
@@ -79,8 +81,8 @@ class ServiceDevoluciones {
 
         return jdbcTemplate.update (
             sql, devolucion.mercancias_id,
+            devolucion.despachos_id,
             devolucion.usuarios_id,
-            devolucion.proveedores_id,
             devolucion.fecha_devolucion,
             devolucion.motivo_devolucion,
             devolucion.estado_devolucion,

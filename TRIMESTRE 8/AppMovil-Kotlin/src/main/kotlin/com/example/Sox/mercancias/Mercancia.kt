@@ -4,29 +4,29 @@ import java.time.LocalDate
 
 data class Mercancia(
     val id: Int? = null,
-    val proveedor_id: Int? = null,   // FK a proveedores
-    val usuario_id: Int? = null,     // FK a usuarios
+    val proveedores_id: Int,
+    val usuarios_id: Int,
     val fecha_ingreso: LocalDate,
-    val num_remesa: String? = null,
-    val origen_mer: String,
-    val destino_mer: String,
+    val numero_remesa: String,
+    val origen_mercancia: String,
+    val destino_mercancia: String,
 
-    val nom_remitente: String,
-    val doc_remitente: String,
+    val nombre_remitente: String,
+    val documento_remitente: String,
     val direccion_remitente: String,
-    val cel_remitente: String,
+    val celular_remitente: String,
 
-    val destin_nom: String,
-    val destin_doc: String,
-    val destin_direccion: String,
-    val destin_celular: String,
+    val nombre_destinatario: String,
+    val documento_destinatario: String,
+    val direccion_destinatario: String,
+    val celular_destinatario: String,
 
-    val val_declarado: Double,
-    val val_flete: Double,
-    val val_total: Double,
+    val valor_declarado: Double,
+    val valor_flete: Double,
+    val valor_total: Double,
     val peso: Double,
     val unidades: Int,
     val observaciones: String? = null,
 
-    val tipopago_id: Int? = null
+    val tipo_pago_id: Int
 )
