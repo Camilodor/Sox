@@ -10,10 +10,10 @@ data class Usuarios (
     val apellidos: String,
     val tipo_documento_id: Int,
     val numero_documento: Long,
-    val telefono: String,
+    val celular: String,
     val direccion: String,
     val ciudad: String,
     val email: String,
     val contrasena: String,
-    val tiposrol_id: Int
+    val tipo_rol_id: Int
 )

@@ -7,8 +7,8 @@ data class Devoluciones (
 
     val id: Int? = null,
     val mercancias_id: Int,
+    val despachos_id: Int,
     val usuarios_id: Int,
-    val proveedores_id: Int,
     val fecha_devolucion: LocalDateTime,
     val motivo_devolucion: String,
     val estado_devolucion: String,

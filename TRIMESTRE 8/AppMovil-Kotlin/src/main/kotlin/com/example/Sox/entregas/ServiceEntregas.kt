@@ -17,10 +17,10 @@ class ServiceEntregas {
             Entregas(
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
-                despacho_id = rs.getInt("despacho_id"),
-                usuario_id = rs.getInt("usuario_id"),
+                despachos_id = rs.getInt("despachos_id"),
+                usuarios_id = rs.getInt("usuarios_id"),
                 nombre_recibe = rs.getString("nombre_recibe"),
-                num_celular_recibe = rs.getString("num_celular_recibe"),
+                numero_celular_recibe = rs.getString("numero_celular_recibe"),
                 observaciones = rs.getString("observaciones"),
                 fecha_entrega = rs.getTimestamp("fecha_entrega").toLocalDateTime(),
                 estado_entrega = rs.getString("estado_entrega") ?: "Pendiente",
@@ -34,16 +34,16 @@ class ServiceEntregas {
     fun Crearentregas(entregas: Entregas): Int {
         val sql = """
             INSERT INTO entregas 
-            (mercancias_id,despacho_id , usuario_id, nombre_recibe,num_celular_recibe, observaciones, fecha_entrega, estado_entrega)
+            (mercancias_id, despachos_id, usuarios_id, nombre_recibe, numero_celular_recibe, observaciones, fecha_entrega, estado_entrega)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """.trimIndent()
         return jdbcTemplate.update (
             sql,
             entregas.mercancias_id,
-            entregas.despacho_id,
-            entregas.usuario_id,
+            entregas.despachos_id,
+            entregas.usuarios_id,
             entregas.nombre_recibe,
-            entregas.num_celular_recibe,
+            entregas.numero_celular_recibe,
             entregas.observaciones,
             entregas.fecha_entrega,
             entregas.estado_entrega
@@ -58,10 +58,10 @@ class ServiceEntregas {
             Entregas(
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
-                despacho_id = rs.getInt("despacho_id"),
-                usuario_id = rs.getInt("usuario_id"),
+                despachos_id = rs.getInt("despachos_id"),
+                usuarios_id = rs.getInt("usuarios_id"),
                 nombre_recibe = rs.getString("nombre_recibe"),
-                num_celular_recibe = rs.getString("num_celular_recibe"),
+                numero_celular_recibe = rs.getString("numero_celular_recibe"),
                 observaciones = rs.getString("observaciones"),
                 fecha_entrega = rs.getTimestamp("fecha_entrega").toLocalDateTime(),
                 estado_entrega = rs.getString("estado_entrega") ?: "Pendiente",
@@ -75,8 +75,8 @@ class ServiceEntregas {
     fun Actualizarentrega(id: Int, entregas: Entregas): Int{
         val sql = """
             UPDATE entregas SET 
-                mercancias_id = ?, despacho_id = ?, usuario_id = ?, 
-                  nombre_recibe = ?, num_celular_recibe = ?, observaciones = ?, 
+                mercancias_id = ?, despachos_id = ?, usuarios_id = ?, 
+                  nombre_recibe = ?, numero_celular_recibe = ?, observaciones = ?, 
                  fecha_entrega = ?, estado_entrega = ?
             WHERE id = ?
         """.trimIndent()
@@ -84,10 +84,10 @@ class ServiceEntregas {
         return jdbcTemplate.update (
             sql,
             entregas.mercancias_id,
-            entregas.despacho_id,
-            entregas.usuario_id,
+            entregas.despachos_id,
+            entregas.usuarios_id,
             entregas.nombre_recibe,
-            entregas.num_celular_recibe,
+            entregas.numero_celular_recibe,
             entregas.observaciones,
             entregas.fecha_entrega,
             entregas.estado_entrega,

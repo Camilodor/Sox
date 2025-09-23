@@ -18,12 +18,8 @@ class ServiceSeguimientos {
 
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
-                despacho_id = rs.getInt("despacho_id"),
-                entrega_id = rs.getInt("entrega_id"),
-                devolucion_id = rs.getInt("devolucion_id"),
-                usuario_id = rs.getInt("usuario_id"),
-                evento = rs.getString("evento"),
                 estado = rs.getString("estado"),
+                observaciones = rs.getString("observaciones"),
                 createdAt = rs.getTimestamp("created_at")?.toLocalDateTime(),
                 updatedAt = rs.getTimestamp("updated_at")?.toLocalDateTime()
             )
@@ -37,12 +33,8 @@ class ServiceSeguimientos {
             Seguimientos(
                 id = rs.getInt("id"),
                 mercancias_id = rs.getInt("mercancias_id"),
-                despacho_id = rs.getInt("despacho_id"),
-                entrega_id = rs.getInt("entrega_id"),
-                devolucion_id = rs.getInt("devolucion_id"),
-                usuario_id = rs.getInt("usuario_id"),
-                evento = rs.getString("evento"),
                 estado = rs.getString("estado"),
+                observaciones = rs.getString("observaciones"),
                 createdAt = rs.getTimestamp("created_at")?.toLocalDateTime(),
                 updatedAt = rs.getTimestamp("updated_at")?.toLocalDateTime()
             )

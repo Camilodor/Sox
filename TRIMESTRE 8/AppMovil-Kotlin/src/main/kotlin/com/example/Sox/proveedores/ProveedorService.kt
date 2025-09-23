@@ -17,6 +17,7 @@ class ProveedorService {
         return jdbcTemplate.query(sql) { rs, _ ->
             Proveedor(
                 id = rs.getInt("id"),
+                usuarios_id = rs.getInt("usuarios_id"),
                 nombre = rs.getString("nombre"),
                 descripcion = rs.getString("descripcion")
             )
@@ -29,6 +30,7 @@ class ProveedorService {
         return jdbcTemplate.query(sql, arrayOf(id)) { rs, _ ->
             Proveedor(
                 id = rs.getInt("id"),
+                usuarios_id = rs.getInt("usuarios_id"),
                 nombre = rs.getString("nombre"),
                 descripcion = rs.getString("descripcion")
             )
@@ -38,12 +40,13 @@ class ProveedorService {
     // Crear nuevo proveedor
     fun crearProveedor(proveedor: Proveedor): Int {
         val sql = """
-            INSERT INTO proveedores (nombre, descripcion)
-            VALUES (?, ?)
+            INSERT INTO proveedores (usuarios_id, nombre, descripcion)
+            VALUES (?, ?, ?)
         """.trimIndent()
 
         return jdbcTemplate.update(
             sql,
+            proveedor.usuarios_id,
             proveedor.nombre,
             proveedor.descripcion
         )
@@ -53,6 +56,7 @@ class ProveedorService {
     fun actualizarProveedor(id: Int, proveedor: Proveedor): Int {
         val sql = """
             UPDATE proveedores SET 
+                usuarios_id = ?,
                 nombre = ?, 
                 descripcion = ?
             WHERE id = ?
@@ -60,6 +64,7 @@ class ProveedorService {
 
         return jdbcTemplate.update(
             sql,
+            proveedor.usuarios_id,
             proveedor.nombre,
             proveedor.descripcion,
             id

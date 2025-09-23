@@ -21,6 +21,6 @@ class ControllerTIpoPago {
 
 
 
-    @GetMapping("/tipospago/id")
+    @GetMapping("/tipospago/{id}")
     fun detalletipopago(@PathVariable id: Int): TipoPago? = serviceTipoPago.Detalletipospago(id)
 }

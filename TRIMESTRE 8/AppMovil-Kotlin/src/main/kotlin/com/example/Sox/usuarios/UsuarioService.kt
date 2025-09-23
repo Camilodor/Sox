@@ -1,6 +1,7 @@
 package com.example.Sox.usuarios.UsuarioService
 
 
+
 import com.example.Sox.usuarios.Usuarios
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
@@ -13,7 +14,7 @@ class UsuarioService {
     @Autowired
     lateinit var jdbcTemplate: JdbcTemplate
     fun obtenerUsuarios(): List<Usuarios> {
-        val sql = "SELECT * FROM usuarios"
+        val sql = "SELECT * FROM users"
         return jdbcTemplate.query(sql) { rs, _ ->
             Usuarios(
                 id = rs.getInt("id"),
@@ -22,18 +23,18 @@ class UsuarioService {
                 apellidos = rs.getString("apellidos"),
                 tipo_documento_id = rs.getInt("tipo_documento_id"),
                 numero_documento = rs.getLong("numero_documento"),
-                telefono = rs.getString("telefono"),
+                celular = rs.getString("celular"),
                 direccion = rs.getString("direccion"),
                 ciudad = rs.getString("ciudad"),
                 email = rs.getString("email"),
                 contrasena = rs.getString("contrasena"),
-                tiposrol_id = rs.getInt("tiposrol_id")
+                tipo_rol_id = rs.getInt("tipo_rol_id")
             )
         }
     }
 
     fun obtenerUsuarioPorId(id: Int): Usuarios? {
-        val sql = "SELECT * FROM usuarios WHERE id = ?"
+        val sql = "SELECT * FROM users WHERE id = ?"
         return jdbcTemplate.query(sql, arrayOf(id)) { rs, _ ->
             Usuarios(
                 id = rs.getInt("id"),
@@ -42,12 +43,12 @@ class UsuarioService {
                 apellidos = rs.getString("apellidos"),
                 tipo_documento_id = rs.getInt("tipo_documento_id"),
                 numero_documento = rs.getLong("numero_documento"),
-                telefono = rs.getString("telefono"),
+                celular = rs.getString("celular"),
                 direccion = rs.getString("direccion"),
                 ciudad = rs.getString("ciudad"),
                 email = rs.getString("email"),
                 contrasena = rs.getString("contrasena"),
-                tiposrol_id = rs.getInt("tiposrol_id")
+                tipo_rol_id = rs.getInt("tipo_rol_id")
             )
         }.firstOrNull()
 
@@ -55,8 +56,8 @@ class UsuarioService {
 
     fun crearUsuario(usuario: Usuarios): Int {
         val sql = """
-            INSERT INTO usuarios 
-            (nombre_usuario, nombres, apellidos, tipo_documento_id, numero_documento, telefono, direccion, ciudad, email, contrasena, tiposrol_id)
+            INSERT INTO users
+            (nombre_usuario, nombres, apellidos, tipo_documento_id, numero_documento, celular, direccion, ciudad, email, contrasena, tipo_rol_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """.trimIndent()
 
@@ -67,20 +68,20 @@ class UsuarioService {
             usuario.apellidos,
             usuario.tipo_documento_id,
             usuario.numero_documento,
-            usuario.telefono,
+            usuario.celular,
             usuario.direccion,
             usuario.ciudad,
             usuario.email,
             usuario.contrasena,
-            usuario.tiposrol_id
+            usuario.tipo_rol_id
         )
     }
     fun actualizarUsuario(id: Int, usuario: Usuarios): Int {
         val sql = """
-            UPDATE usuarios SET 
+            UPDATE users SET 
                 nombre_usuario = ?, nombres = ?, apellidos = ?, 
-                tipo_documento_id = ?, numero_documento = ?, telefono = ?, 
-                direccion = ?, ciudad = ?, email = ?, contrasena = ?, tiposrol_id = ?
+                tipo_documento_id = ?, numero_documento = ?, celular = ?, 
+                direccion = ?, ciudad = ?, email = ?, contrasena = ?, tipo_rol_id = ?
             WHERE id = ?
         """.trimIndent()
 
@@ -91,17 +92,17 @@ class UsuarioService {
             usuario.apellidos,
             usuario.tipo_documento_id,
             usuario.numero_documento,
-            usuario.telefono,
+            usuario.celular,
             usuario.direccion,
             usuario.ciudad,
             usuario.email,
             usuario.contrasena,
-            usuario.tiposrol_id,
+            usuario.tipo_rol_id,
             id
         )
     }
     fun eliminarUsuario(id: Int): Int {
-        val sql = "DELETE FROM usuarios WHERE id = ?"
+        val sql = "DELETE FROM users WHERE id = ?"
         return jdbcTemplate.update(sql, id)
     }
 }
