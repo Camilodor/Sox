@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Adapter.PersonaAdapter
 import com.example.appinterface.Api.DataResponse
 import com.example.appinterface.Api.RetrofitInstance
+import com.google.android.material.card.MaterialCardView
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,100 +35,63 @@ class MainActivity : AppCompatActivity() {
             insets
 
         }
-        val buttonGoToSecondActivity: Button = findViewById(R.id.buttonSegundaActividad)
-        buttonGoToSecondActivity.setOnClickListener {
-            val intent = Intent(this, ProductosActivity::class.java)
-            startActivity(intent)
-        }
-        val buttonGoToThirdActivity: Button = findViewById(R.id.buttonTerceraActividad)
-        buttonGoToThirdActivity.setOnClickListener {
+        val cardUsuarios: MaterialCardView = findViewById(R.id.cardUsuarios)
+        cardUsuarios.setOnClickListener {
             val intent = Intent(this, UsuariosActivity::class.java)
             startActivity(intent)
-        }
-        val buttonGoToRoomActivity: Button = findViewById(R.id.buttonCuartaActividad)
-        buttonGoToRoomActivity.setOnClickListener {
+
+
+
+
+    }
+        val cardProveedores: MaterialCardView = findViewById(R.id.cardProveedores)
+        cardProveedores.setOnClickListener {
             val intent = Intent(this, ProveedoresActivity::class.java)
             startActivity(intent)
+
+
+
+
         }
-        val buttonGoToFirthActivity: Button = findViewById(R.id.buttonQuintaActividad)
-        buttonGoToFirthActivity.setOnClickListener {
+        val cardMercancias: MaterialCardView = findViewById(R.id.cardMercancias)
+        cardMercancias.setOnClickListener {
             val intent = Intent(this, MercanciasActivity::class.java)
             startActivity(intent)
 
+
+
+
+        }
+        val cardDespachos: MaterialCardView = findViewById(R.id.cardDespachos)
+        cardDespachos.setOnClickListener {
+            val intent = Intent(this, DespachosActivity::class.java)
+            startActivity(intent)
+        }
+
+        val cardEntregas: MaterialCardView = findViewById(R.id.cardEntregas)
+        cardEntregas.setOnClickListener {
+            val intent = Intent(this, EntregasActivity::class.java)
+            startActivity(intent)
+        }
+
+    val cardDevoluciones: MaterialCardView = findViewById(R.id.cardDevoluciones)
+    cardDevoluciones.setOnClickListener {
+        val intent = Intent(this, DevolucionesActivity::class.java)
+        startActivity(intent)
+    }
+        val cardSeguimientos: MaterialCardView = findViewById(R.id.cardSeguimientos)
+        cardSeguimientos.setOnClickListener {
+            val intent = Intent(this, SeguimientosActivity::class.java)
+            startActivity(intent)
+        }
+        val cardTipoPago: MaterialCardView = findViewById(R.id.cardTipoPago)
+        cardTipoPago.setOnClickListener {
+            val intent = Intent(this, TipoPagoActivity::class.java)
+            startActivity(intent)
         }
 
 
-        fun crearpersona(v: View) {
 
-            var nombre = findViewById<EditText>(R.id.nombre)
 
-            var edad = findViewById<EditText>(R.id.edad)
-
-            persona = Persona()
-
-            if (!nombre.text.isNullOrEmpty() && !edad.text.isNullOrEmpty())
-                persona.Persona(nombre.text.toString(), edad.text.toString().toInt())
-
-            var imgpersona = findViewById<ImageView>(R.id.imageView)
-            // imgpersona.setImageResource(R.mipmap.marquez)
-
-            RetrofitInstance.api.getHoundImages().enqueue(object : Callback<DataResponse> {
-                override fun onResponse(call: Call<DataResponse>, response: Response<DataResponse>) {
-                    if (response.isSuccessful) {
-                        val images = response.body()?.message
-                        if (!images.isNullOrEmpty()) {
-
-                            Picasso.get().load(images[2]).into(imgpersona)
-                        }
-                    } else {
-                        Toast.makeText(applicationContext, "Error al obtener los datos", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<DataResponse>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Error de conexión", Toast.LENGTH_SHORT).show()
-                }
-            })
-
-            var ppersona = findViewById<TextView>(R.id.textView)
-            DataPersona(ppersona, persona)
-
-        }
-    }
-    private fun DataPersona(ppersona: TextView, persona: Persona) {
-        var description: String = ""
-
-        description += "Nombre " + persona.getNombre() + " "
-        description += "Edad " + persona.getEdad()
-
-        ppersona.text = description
-
-    }
-
-    fun crearmostrarpersonas(v: View) {
-        val recyclerView = findViewById<RecyclerView>(R.id.RecyPersonas)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        RetrofitInstance.api2kotlin.getPersonas().enqueue(object : Callback<List<String>> {
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    if (data != null && data.isNotEmpty()) {
-                        val adapter = PersonaAdapter(data)
-                        recyclerView.adapter = adapter
-                    } else {
-                        Toast.makeText(this@MainActivity, "No hay personas disponibles", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this@MainActivity, "Error en la respuesta de la API", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "Error en la conexión con la API", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-}
+}}
 
