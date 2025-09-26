@@ -1,7 +1,8 @@
 package com.example.appinterface
+import java.io.Serializable
 
 data class Usuarios (
-    val id: Int? = null,
+    val id: Int,
     val nombre_usuario: String,
     val nombres: String,
     val apellidos: String,
@@ -13,5 +14,5 @@ data class Usuarios (
     val email: String,
     val contrasena: String,
     val tipo_rol_id: Int
-)
+) : Serializable
 
