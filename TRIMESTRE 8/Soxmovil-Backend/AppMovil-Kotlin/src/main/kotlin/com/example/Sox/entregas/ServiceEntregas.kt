@@ -22,7 +22,7 @@ class ServiceEntregas {
                 nombre_recibe = rs.getString("nombre_recibe"),
                 numero_celular_recibe = rs.getString("numero_celular_recibe"),
                 observaciones = rs.getString("observaciones"),
-                fecha_entrega = rs.getTimestamp("fecha_entrega").toLocalDateTime(),
+                fecha_entrega = rs.getString("fecha_entrega"),
                 estado_entrega = rs.getString("estado_entrega") ?: "Pendiente",
                 createdAt = rs.getTimestamp("created_at")?.toLocalDateTime().toString(),
                 updatedAt = rs.getTimestamp("updated_at")?.toLocalDateTime().toString()
@@ -63,7 +63,7 @@ class ServiceEntregas {
                 nombre_recibe = rs.getString("nombre_recibe"),
                 numero_celular_recibe = rs.getString("numero_celular_recibe"),
                 observaciones = rs.getString("observaciones"),
-                fecha_entrega = rs.getTimestamp("fecha_entrega").toLocalDateTime(),
+                fecha_entrega = rs.getString("fecha_entrega"),
                 estado_entrega = rs.getString("estado_entrega") ?: "Pendiente",
                 createdAt = rs.getTimestamp("created_at")?.toLocalDateTime().toString(),
                 updatedAt = rs.getTimestamp("updated_at")?.toLocalDateTime().toString()

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:background="#F5F5F5">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+        <!-- Usuario -->
+        <EditText
+                android:id="@+id/etUsuariosP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuario"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="8dp"/>
+
+        <!-- Nombres -->
+        <EditText
+                android:id="@+id/etNombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombres"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Apellidos -->
+        <EditText
+                android:id="@+id/etDescripcionP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Desacripcion"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+
+        <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar Usuario"
+                android:backgroundTint="#27AE60"
+                android:textColor="@android:color/white"
+                android:padding="14dp"
+                android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>

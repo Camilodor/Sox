@@ -1,31 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rowLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
-    <TextView
-            android:id="@+id/Mercancia"
+    <!-- ID -->
+    <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"/>
+
+        <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"/>
+    </LinearLayout>
+
+    <!-- Usuario -->
+    <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Mercancia"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/EstadoS"
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mercancias"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"/>
+
+        <TextView
+                android:id="@+id/tvMercanciaS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mercancia"/>
+    </LinearLayout>
+
+
+    <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Estado"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/EstadoS" android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_weight="2"
+            android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"/>
+
+        <TextView
+                android:id="@+id/tvEstadoS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingresado a bodega"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"/>
+
+        <TextView
+                android:id="@+id/tvObservacionesS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123456789"/>
+    </LinearLayout>
+    <ImageButton
+            android:id="@+id/btnEditarS"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@mipmap/usuario"
+            android:background="@android:drawable/btn_default"
+            android:scaleType="centerInside"
+            android:contentDescription="Editar usuario"/>
+
+    <ImageButton
+            android:id="@+id/btnEliminarS"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@mipmap/eliminarusuario"
+            android:background="@android:drawable/btn_default"
+            android:scaleType="centerInside"
+            android:contentDescription="Eliminar usuario"/>
+
+
+</LinearLayout>
+

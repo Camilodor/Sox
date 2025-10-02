@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Actividades.Mercancias.MercanciaDetalleActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!-- ID -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Mercancía"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etIdMercancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Proveedores -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proveedor"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etProveedores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Usuarios -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etUsuariosM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Fecha ingreso -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de ingreso"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etFechaM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Número remesa -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de remesa"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etRemesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Origen -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Origen"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etOrigen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Destino -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destino"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Nombre remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre remitente"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etNombreR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Documento remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Documento remitente"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etDocumentoR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Dirección remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección remitente"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etDireccionR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Celular remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Celular remitente"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etCelularMR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Nombre destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre destinatario"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etNombreMD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Documento destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Documento destinatario"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etDocumentoD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Dirección destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección destinatario"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etDireccionD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Celular destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Celular destinatario"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etCelularMD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Valor declarado -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor declarado"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etValorD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:enabled="false"/>
+
+        <!-- Valor flete -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor flete"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etValorF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:enabled="false"/>
+
+        <!-- Valor total -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor total"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etValorT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:enabled="false"/>
+
+        <!-- Peso -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peso"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:enabled="false"/>
+
+        <!-- Unidades -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unidades"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etUnidades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:enabled="false"/>
+
+        <!-- Observaciones -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etObservacionesM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+        <!-- Tipo pago -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo de pago"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/spinnerTipopago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+            <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar"/>
+
+            <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancelar"
+                    android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
