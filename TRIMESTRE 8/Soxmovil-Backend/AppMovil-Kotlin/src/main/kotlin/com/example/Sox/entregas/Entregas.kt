@@ -10,7 +10,7 @@ data class Entregas (
     val nombre_recibe: String,
     val numero_celular_recibe: String,
     val observaciones: String? = null,
-    val fecha_entrega: LocalDateTime,
+    val fecha_entrega: String,
     val estado_entrega: String = "Pendiente",
     val createdAt: String? = null,
     val updatedAt: String? = null

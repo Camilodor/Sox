@@ -98,21 +98,27 @@
                 android:layout_height="wrap_content"
                 android:text="123456789"/>
     </LinearLayout>
-
-    <!-- Acciones -->
     <ImageButton
             android:id="@+id/btnEditar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:src="@mipmap/usuario"
-            android:background="@null"
-            android:scaleType="centerInside"/>
+            android:background="@android:drawable/btn_default"
+            android:scaleType="centerInside"
+            android:contentDescription="Editar usuario"/>
 
     <ImageButton
             android:id="@+id/btnEliminar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:src="@mipmap/eliminarusuario"
-            android:background="@null"
-            android:scaleType="centerInside"/>
+            android:background="@android:drawable/btn_default"
+            android:scaleType="centerInside"
+            android:contentDescription="Eliminar usuario"/>
+
+
 </LinearLayout>

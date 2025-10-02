@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Actividades.Seguimientos.SeguimientoDetalleActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!-- ID (solo lectura) -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Seguimientos"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etIdSeguimientos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"/>
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mercancias"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etMercanciasS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="2856"/>
+
+        <!-- Nombres -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estados"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etEstadoS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="En despacho"/>
+        <!-- Apellidos -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textStyle="bold"/>
+        <EditText
+                android:id="@+id/etObservacionesS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="N/A"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+
+            <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancelar"
+                    android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
