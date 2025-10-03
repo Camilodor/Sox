@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:background="#F5F5F5">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+        <!-- Usuario -->
+        <EditText
+                android:id="@+id/etMercanciaE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mercancia"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="8dp"/>
+
+        <!-- Nombres -->
+        <EditText
+                android:id="@+id/etDespachosE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Despachos"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Apellidos -->
+        <EditText
+                android:id="@+id/etUsuariosE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuarios"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Documento -->
+        <EditText
+                android:id="@+id/etNombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quien recibe"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etCelularE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CelularE"
+                android:inputType="phone"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+
+        <EditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha"
+                android:inputType="date"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Ciudad -->
+        <EditText
+                android:id="@+id/etEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Estado"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Correo -->
+        <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Observaciones"
+                android:inputType="textPersonName"
+                android:background="@android:drawable/edit_text"
+                android:backgroundTint="#8E44AD"
+                android:padding="12dp"
+                android:textColor="#2C3E50"
+                android:textColorHint="#7F8C8D"
+                android:layout_marginBottom="12dp"/>
+        >
+        <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar Usuario"
+                android:backgroundTint="#27AE60"
+                android:textColor="@android:color/white"
+                android:padding="14dp"
+                android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>

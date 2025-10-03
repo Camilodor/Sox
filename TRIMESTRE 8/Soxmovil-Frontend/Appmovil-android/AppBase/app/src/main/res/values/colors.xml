@@ -21,4 +21,5 @@
 
 	<color name="background_light">#FAFAFA</color>
 	<color name="background_dark">#121212</color>
+	<color name="background_purpura">#8E44AD</color>
 </resources>
