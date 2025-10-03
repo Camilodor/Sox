@@ -32,7 +32,7 @@ class DespachosActivity : AppCompatActivity(), DespachosAdapter.OnDespachoClickL
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            val accion = result.data?.getStringExtra("accion") ?: "Despacho guardado"
+            val accion = result.data?.getStringExtra("accion") ?: "Despachos guardado"
             cargarDespachos()
             mostrarSnackbarExito(accion)
         }
