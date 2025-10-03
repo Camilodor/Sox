@@ -41,7 +41,7 @@ class DespachosAdapter(
         despachos.clear()
         despachos.addAll(newList)
         notifyDataSetChanged()
-        Log.d("DespachosAdapter", "Lista de despachos actualizada. Total: ${despachos.size}")
+        Log.d("DespachosAdapter", "Lista de despachos actualizada . Total: ${despachos.size}")
     }
 
     class DespachoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
