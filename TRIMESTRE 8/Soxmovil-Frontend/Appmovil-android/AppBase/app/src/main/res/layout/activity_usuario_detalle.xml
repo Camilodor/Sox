@@ -3,99 +3,136 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".UsuarioDetalleActivity">
+            android:background="#F5F5F5"
+            tools:context=".Actividades.Usuarios.UsuarioDetalleActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-        <!-- ID (solo lectura) -->
+        <!-- ID Usuario -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ID Usuario"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginBottom="4dp"/>
         <EditText
                 android:id="@+id/etIdUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"/>
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
 
-        <!-- Nombre de usuario -->
+        <!-- Usuario -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usuario"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="admin"/>
+                android:hint="admin"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
 
         <!-- Nombres -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombres"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etNombres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Juan Camilo"/>
+                android:hint="Juan Camilo"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
         <!-- Apellidos -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Apellidos"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etApellidos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Pérez Gómez"/>
-
+                android:hint="Pérez Gómez"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
 
         <!-- Documento -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Documento"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etDocumento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="123456789"/>
+                android:hint="123456789"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
 
         <!-- Teléfono -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Teléfono"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:hint="3001234567"/>
+                android:hint="3001234567"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
 
         <!-- Rol -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rol"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
         <EditText
                 android:id="@+id/etRol"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Administrador"/>
+                android:hint="Administrador"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
 
         <!-- Botones -->
         <LinearLayout
@@ -105,18 +142,18 @@
                 android:gravity="center"
                 android:layout_marginTop="24dp">
 
-            <Button
-                    android:id="@+id/btnGuardar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Guardar"/>
 
             <Button
                     android:id="@+id/btnCancelar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Cancelar"
-                    android:layout_marginStart="16dp"/>
+                    android:backgroundTint="#E74C3C"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginStart="12dp"
+                    android:padding="12dp"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -16,7 +16,7 @@
 			tools:targetApi="31">
 		<!-- primera Actividad -->
 		<activity
-				android:name=".MainActivity"
+				android:name=".Actividades.Login.LoginActivity"
 				android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
@@ -24,41 +24,80 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".Actividades.Main.MainActivity"
+				  android:exported="true">
+		</activity>
 
 		<!-- Segunda actividad -->
-		<activity android:name=".ProductosActivity"
+
+		<activity android:name=".Actividades.Usuarios.UsuariosActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".UsuariosActivity"
+		<activity android:name=".Actividades.Proveedores.ProveedoresActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".ProveedoresActivity"
+		<activity android:name=".Actividades.Mercancias.MercanciasActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".MercanciasActivity"
+		<activity android:name=".Actividades.Despachos.DespachosActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".DespachosActivity"
+		<activity android:name=".Actividades.Entregas.EntregasActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".EntregasActivity"
+		<activity android:name=".Actividades.Devoluciones.DevolucionesActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".DevolucionesActivity"
+		<activity android:name=".Actividades.Seguimientos.SeguimientosActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".SeguimientosActivity"
+		<activity android:name=".Actividades.TipoPago.TipoPagoActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".TipoPagoActivity"
+		<activity android:name=".Actividades.Usuarios.UsuarioFormActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".UsuarioFormActivity"
+		<activity android:name=".Actividades.Usuarios.UsuarioDetalleActivity"
 				  android:exported="true">
 		</activity>
-		<activity android:name=".UsuarioDetalleActivity"
+		<activity android:name=".Actividades.Entregas.EntregaDetalleActivity"
 				  android:exported="true">
 		</activity>
+		<activity android:name=".Actividades.Entregas.EntregaFormActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Devoluciones.DevolucionDetalleActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Devoluciones.DevolucionFormActivity"
+							 android:exported="true">
+	</activity>
+		<activity android:name=".Actividades.Proveedores.ProveedorFormActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Proveedores.ProveedorDetalleActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Mercancias.MercanciaDetalleActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Mercancias.MercanciaFormActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Despachos.DespachoDetalleActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.TipoPago.TipoPagoDetalleActivity"
+				  android:exported="true">
+		</activity>
+		<activity android:name=".Actividades.Seguimientos.SeguimientoDetalleActivity"
+				  android:exported="true">
+		</activity>
+
+
+
+
+
 
 
 	</application>

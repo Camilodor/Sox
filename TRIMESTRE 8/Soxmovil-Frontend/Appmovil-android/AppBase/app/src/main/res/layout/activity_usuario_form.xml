@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="#F5F5F5"
             android:padding="16dp">
 
     <LinearLayout
@@ -10,21 +11,108 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-        <EditText android:id="@+id/etUsuario" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Usuario" android:inputType="textPersonName" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etNombres" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Nombres" android:inputType="textPersonName" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etApellidos" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Apellidos" android:inputType="textPersonName" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etDocumento" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Número de documento" android:inputType="number" android:layout_marginBottom="10dp"/>
+        <!-- Tarjeta del formulario -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@android:color/white"
+                android:padding="20dp">
 
-        <Spinner android:id="@+id/spinnerTipoDocumento" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <EditText android:id="@+id/etCelular" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Celular" android:inputType="phone" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etDireccion" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Dirección" android:inputType="textPostalAddress" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etCiudad" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Ciudad" android:inputType="textPersonName" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Correo electrónico" android:inputType="textEmailAddress" android:layout_marginBottom="10dp"/>
-        <EditText android:id="@+id/etContrasena" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Contraseña" android:inputType="textPassword" android:layout_marginBottom="10dp"/>
+                <!-- Usuario -->
+                <EditText
+                        android:id="@+id/etUsuario"
+                        style="@style/FormInput"
+                        android:hint="Usuario"
+                        android:inputType="textPersonName" />
 
-        <Spinner android:id="@+id/spinnerRol" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="20dp"/>
+                <!-- Nombres -->
+                <EditText
+                        android:id="@+id/etNombres"
+                        style="@style/FormInput"
+                        android:hint="Nombres"
+                        android:inputType="textPersonName" />
 
-        <Button android:id="@+id/btnGuardar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Guardar Usuario" android:backgroundTint="@android:color/holo_blue_dark" android:textColor="@android:color/white"/>
+                <!-- Apellidos -->
+                <EditText
+                        android:id="@+id/etApellidos"
+                        style="@style/FormInput"
+                        android:hint="Apellidos"
+                        android:inputType="textPersonName" />
+
+                <!-- Documento -->
+                <EditText
+                        android:id="@+id/etDocumento"
+                        style="@style/FormInput"
+                        android:hint="Número de documento"
+                        android:inputType="number" />
+
+                <!-- Tipo Documento -->
+                <Spinner
+                        android:id="@+id/spinnerTipoDocumento"
+                        style="@style/FormSpinner" />
+
+                <!-- Celular -->
+                <EditText
+                        android:id="@+id/etCelular"
+                        style="@style/FormInput"
+                        android:hint="Celular"
+                        android:inputType="phone" />
+
+                <!-- Dirección -->
+                <EditText
+                        android:id="@+id/etDireccion"
+                        style="@style/FormInput"
+                        android:hint="Dirección"
+                        android:inputType="textPostalAddress" />
+
+                <!-- Ciudad -->
+                <EditText
+                        android:id="@+id/etCiudad"
+                        style="@style/FormInput"
+                        android:hint="Ciudad"
+                        android:inputType="textPersonName" />
+
+                <!-- Correo -->
+                <EditText
+                        android:id="@+id/etEmail"
+                        style="@style/FormInput"
+                        android:hint="Correo electrónico"
+                        android:inputType="textEmailAddress" />
+
+                <!-- Contraseña -->
+                <EditText
+                        android:id="@+id/etContrasena"
+                        style="@style/FormInput"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword" />
+
+                <!-- Rol -->
+                <Spinner
+                        android:id="@+id/spinnerRol"
+                        style="@style/FormSpinner" />
+
+                <!-- Botón Guardar -->
+                <Button
+                        android:id="@+id/btnGuardar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Guardar Usuario"
+                        android:backgroundTint="#3AC3CF"
+                        android:textColor="@android:color/white"
+                        android:padding="16dp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:background="@drawable/rounded_button" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            tools:context=".Actividades.Mercancias.MercanciaDetalleActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <!-- ID Mercancía -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Mercancía"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginBottom="4dp"/>
+        <EditText
+                android:id="@+id/etIdMercancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Proveedor -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proveedor"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etProveedores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Usuario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etUsuariosM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Fecha ingreso -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de ingreso"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etFechaM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Número de remesa -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de remesa"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etRemesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Origen -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Origen"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etOrigen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Destino -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destino"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Nombre remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre remitente"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etNombreR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Documento remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Documento remitente"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDocumentoR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Dirección remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección remitente"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDireccionR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Celular remitente -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Celular remitente"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etCelularMR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Nombre destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre destinatario"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etNombreMD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Documento destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Documento destinatario"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDocumentoD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Dirección destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección destinatario"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDireccionD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Celular destinatario -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Celular destinatario"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etCelularMD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Valor declarado -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor declarado"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etValorD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Valor flete -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor flete"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etValorF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Valor total -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor total"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etValorT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Peso -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peso"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Unidades -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unidades"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etUnidades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Observaciones -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etObservacionesM"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Tipo de pago -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo de pago"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/spinnerTipopago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Botones -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+
+
+            <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancelar"
+                    android:backgroundTint="#E74C3C"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginStart="12dp"
+                    android:padding="12dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

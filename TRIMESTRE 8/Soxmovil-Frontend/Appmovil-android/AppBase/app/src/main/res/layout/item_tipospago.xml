@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rowLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical"
+        android:background="#C8E6C9"
+        android:layout_margin="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:backgroundTintMode="src_over"
+        android:backgroundTint="#C8E6C9"
+        android:elevation="2dp">
 
-    <TextView
-            android:id="@+id/tipoid"
+    <!-- ID -->
+    <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"
+                android:layout_marginBottom="2dp"/>
+
+        <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"/>
+    </LinearLayout>
+
+    <!-- Nombre -->
+    <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Id"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
 
-    <TextView
-            android:id="@+id/NombreT"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tipoid" android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#555"
+                android:layout_marginBottom="2dp"/>
 
+        <TextView
+                android:id="@+id/tvNombresP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contado"
+                android:textSize="14sp"
+                android:textColor="#4CAF50"/>
+    </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            tools:context=".Actividades.Entregas.EntregaDetalleActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <!-- ID Entrega -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Entrega"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginBottom="4dp"/>
+        <EditText
+                android:id="@+id/etIdEntrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Mercancia -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mercancia"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etMercanciaE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="2856"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Despachos -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Despachos"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDespachosE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="23"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Usuarios -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuarios"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etUsuariosE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="1013592365"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Nombres -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombres"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etNombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Julian Gomez"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:inputType="textPersonName"/>
+
+        <!-- Celular -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Celular"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etCelularE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="3155698965"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:inputType="phone"/>
+
+        <!-- Fecha -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="30/09/2025"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:inputType="date"/>
+
+        <!-- Estado -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pendiente"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:inputType="text"/>
+
+        <!-- Observaciones -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="na"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:inputType="text"/>
+
+        <!-- Botones -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+
+
+            <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancelar"
+                    android:backgroundTint="#E74C3C"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginStart="12dp"
+                    android:padding="12dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-												   xmlns:app="http://schemas.android.com/apk/res-auto"
-												   xmlns:tools="http://schemas.android.com/tools"
-												   android:id="@+id/main"
-												   android:layout_width="match_parent"
-												   android:layout_height="match_parent"
-												   android:background="#F4FAFA"
-												   tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/main"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#F4FAFA"
+		tools:context=".Actividades.Main.MainActivity">
 
-	<!-- Encabezado -->
+	<!-- Header fijo -->
 	<LinearLayout
 			android:id="@+id/header"
 			android:layout_width="0dp"
@@ -16,10 +17,10 @@
 			android:orientation="horizontal"
 			android:padding="16dp"
 			android:gravity="center_vertical"
+			android:background="#E8F5F3"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			android:background="#E8F5F3">
+			app:layout_constraintEnd_toEndOf="parent">
 
 		<ImageView
 				android:id="@+id/logo"
@@ -29,348 +30,361 @@
 
 		<TextView
 				android:id="@+id/title"
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:text="Panel de Administración Sox"
 				android:textSize="20sp"
 				android:textStyle="bold"
-				android:layout_marginStart="12dp"
-				android:textColor="#003D3B"/>
+				android:textColor="#003D3B"
+				android:ellipsize="end"
+				android:singleLine="true"
+				android:layout_marginStart="12dp"/>
+
+
 	</LinearLayout>
 
-	<!-- Título accesos rápidos -->
-	<TextView
-			android:id="@+id/quickAccessTitle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="⚡ Accesos rápidos"
-			android:textStyle="bold"
-			android:textSize="18sp"
-			android:textColor="#003D3B"
-			app:layout_constraintTop_toBottomOf="@id/header"
-			app:layout_constraintStart_toStartOf="parent"
-			android:layout_margin="16dp"/>
 
-	<!-- Contenedor principal -->
-	<LinearLayout
-			android:id="@+id/quickAccessContainer"
+	<!-- Scrollable content -->
+	<ScrollView
+			android:id="@+id/scrollContent"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:orientation="vertical"
-			android:padding="12dp"
-			app:layout_constraintTop_toBottomOf="@id/quickAccessTitle"
+			android:fillViewport="true"
+			app:layout_constraintTop_toBottomOf="@id/header"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent">
 
-		<!-- Fila 1 -->
 		<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
+				android:orientation="vertical"
+				android:padding="12dp">
+			<TextView
+					android:id="@+id/tvUserInfo"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Cargando..."
+					android:textSize="16sp"
+					android:textColor="#003D3B"
+					app:layout_constraintEnd_toStartOf="@id/btnLogout"
+					app:layout_constraintTop_toTopOf="@id/logo"
+					app:layout_constraintBottom_toBottomOf="@id/logo"
+					android:layout_marginEnd="8dp"/>
 
-			<!-- Usuarios -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardUsuarios"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#0E827A">
 
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
+			<!-- Título accesos rápidos -->
+			<TextView
+					android:id="@+id/quickAccessTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="⚡ Accesos rápidos"
+					android:textStyle="bold"
+					android:textSize="18sp"
+					android:textColor="#003D3B"
+					android:layout_marginBottom="8dp"/>
 
-					<ImageView
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							android:src="@mipmap/usuarioverificado"
-							/>
+			<!-- Fila 1 -->
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:weightSum="2">
 
-					<TextView
-							android:text="Usuarios"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
+				<!-- Usuarios -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardUsuarios"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#0E827A">
 
-			<!-- Proveedores -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardProveedores"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#145DA0">
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
 
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
+						<ImageView
+								android:layout_width="36dp"
+								android:layout_height="36dp"
+								android:src="@mipmap/usuarioverificado"/>
+						<TextView
+								android:text="Usuarios"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
 
-					<ImageView
-							android:src="@mipmap/gestion"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
+				<!-- Proveedores -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardProveedores"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#145DA0">
 
-					<TextView
-							android:text="Proveedores"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/gestion"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Proveedores"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+			</LinearLayout>
+
+			<!-- Fila 2 -->
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+				<!-- Mercancías -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardMercancias"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#2E8B57">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/caja"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Mercancías"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+
+				<!-- Despachos -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardDespachos"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#9932CC">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/despacho"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Despachos"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+			</LinearLayout>
+
+			<!-- Fila 3 -->
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+				<!-- Entregas -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardEntregas"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#FF8C00">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/eltiempodeentrega"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Entregas"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+
+				<!-- Devoluciones -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardDevoluciones"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#DC143C">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/devolucionesfaciles"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Devoluciones"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+			</LinearLayout>
+
+			<!-- Fila 4 -->
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:weightSum="2">
+
+				<!-- Seguimientos -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardSeguimientos"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#228B22">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/archivo"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Seguimientos"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+
+				<!-- Tipos de Pago -->
+				<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cardTipoPago"
+						style="@style/Widget.MaterialComponents.CardView"
+						android:layout_width="0dp"
+						android:layout_height="120dp"
+						android:layout_weight="1"
+						android:layout_margin="8dp"
+						app:cardCornerRadius="16dp"
+						app:cardElevation="6dp"
+						android:backgroundTint="#4682B4">
+
+					<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:orientation="vertical">
+
+						<ImageView
+								android:src="@mipmap/transferenciamovil"
+								android:layout_width="36dp"
+								android:layout_height="36dp"/>
+						<TextView
+								android:text="Tipos de Pago"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:textColor="#FFFFFF"
+								android:textStyle="bold"
+								android:layout_marginTop="8dp"/>
+					</LinearLayout>
+				</com.google.android.material.card.MaterialCardView>
+			</LinearLayout>
+
+			<!-- Botón Logout -->
+			<Button
+					android:id="@+id/btnLogout"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Cerrar sesión"
+					android:layout_marginTop="16dp"
+					android:backgroundTint="#DC143C"
+					android:textColor="#FFFFFF"
+					android:textStyle="bold"/>
+
 		</LinearLayout>
-
-		<!-- Fila 2 -->
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
-
-			<!-- Mercancías -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardMercancias"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#2E8B57">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/caja"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Mercancías"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-
-			<!-- Despachos -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardDespachos"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#9932CC">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/despacho"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Despachos"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-		</LinearLayout>
-
-		<!-- Fila 3 -->
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
-
-			<!-- Entregas -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardEntregas"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#FF8C00">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/eltiempodeentrega"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Entregas"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-
-			<!-- Devoluciones -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardDevoluciones"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#DC143C">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/devolucionesfaciles"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Devoluciones"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-		</LinearLayout>
-
-		<!-- Fila 4 -->
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:weightSum="2">
-
-			<!-- Seguimientos -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardSeguimientos"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#228B22">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/archivo"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Seguimientos"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-
-			<!-- Tipos de Pago -->
-			<com.google.android.material.card.MaterialCardView
-					android:id="@+id/cardTipoPago"
-					style="@style/Widget.MaterialComponents.CardView"
-					android:layout_width="0dp"
-					android:layout_height="120dp"
-					android:layout_weight="1"
-					android:layout_margin="8dp"
-					app:cardCornerRadius="16dp"
-					app:cardElevation="6dp"
-					android:backgroundTint="#4682B4">
-
-				<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:orientation="vertical">
-
-					<ImageView
-							android:src="@mipmap/transferenciamovil"
-							android:layout_width="36dp"
-							android:layout_height="36dp"
-							/>
-
-					<TextView
-							android:text="Tipos de Pago"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#FFFFFF"
-							android:textStyle="bold"
-							android:layout_marginTop="8dp"/>
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
-		</LinearLayout>
-	</LinearLayout>
-	<ScrollView
-			android:layout_width="409dp"
-			android:layout_height="14dp" tools:layout_editor_absoluteY="81dp" tools:layout_editor_absoluteX="1dp">
-		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-					  android:orientation="vertical"/>
 	</ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

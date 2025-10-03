@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            android:padding="16dp">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+        <!-- Tarjeta del formulario -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@android:color/white"
+                android:padding="20dp">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <!-- Mercancia -->
+                <EditText
+                        android:id="@+id/etMercanciaE"
+                        style="@style/FormInput"
+                        android:hint="Mercancia"
+                        android:inputType="textPersonName" />
+
+                <!-- Despachos -->
+                <EditText
+                        android:id="@+id/etDespachosE"
+                        style="@style/FormInput"
+                        android:hint="Despachos"
+                        android:inputType="textPersonName" />
+
+                <!-- Usuarios -->
+                <EditText
+                        android:id="@+id/etUsuariosE"
+                        style="@style/FormInput"
+                        android:hint="Usuarios"
+                        android:inputType="textPersonName" />
+
+                <!-- Quien recibe -->
+                <EditText
+                        android:id="@+id/etNombres"
+                        style="@style/FormInput"
+                        android:hint="Quien recibe"
+                        android:inputType="textPersonName" />
+
+                <!-- Celular -->
+                <EditText
+                        android:id="@+id/etCelularE"
+                        style="@style/FormInput"
+                        android:hint="Celular"
+                        android:inputType="phone" />
+
+                <!-- Fecha -->
+                <EditText
+                        android:id="@+id/etFecha"
+                        style="@style/FormInput"
+                        android:hint="Fecha"
+                        android:inputType="date" />
+
+                <!-- Estado -->
+                <EditText
+                        android:id="@+id/etEstado"
+                        style="@style/FormInput"
+                        android:hint="Estado"
+                        android:inputType="textPersonName" />
+
+                <!-- Observaciones -->
+                <EditText
+                        android:id="@+id/etObservaciones"
+                        style="@style/FormInput"
+                        android:hint="Observaciones"
+                        android:inputType="textPersonName" />
+
+                <!-- Botón Guardar -->
+                <Button
+                        android:id="@+id/btnGuardar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Guardar Entrega"
+                        android:backgroundTint="#3AC3CF"
+                        android:textColor="@android:color/white"
+                        android:padding="16dp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:background="@drawable/rounded_button" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

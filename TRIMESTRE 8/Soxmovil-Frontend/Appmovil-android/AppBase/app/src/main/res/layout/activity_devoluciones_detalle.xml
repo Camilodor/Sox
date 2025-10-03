@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            tools:context=".Actividades.Devoluciones.DevolucionDetalleActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <!-- ID Devolución -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Devolución"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginBottom="4dp"/>
+        <EditText
+                android:id="@+id/etIdDevolucion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:padding="12dp"
+                android:background="@drawable/edittext_disabled_bg"
+                android:textColor="#95A5A6"/>
+
+        <!-- Mercancia -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mercancia"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etMercanciaD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mercancia"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Despachos -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Despachos"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etDespachosD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Despachos"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Usuarios -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuarios"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etUsuariosD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuarios"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Fecha -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etFechaD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha"
+                android:inputType="date"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Motivo -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Motivo"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etMotivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Motivo"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Estado -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etEstadoD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Estado"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Observaciones -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#7F8C8D"
+                android:layout_marginTop="12dp"/>
+        <EditText
+                android:id="@+id/etObservacionesD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Observaciones"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"/>
+
+        <!-- Botones -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="24dp">
+
+
+
+            <Button
+                    android:id="@+id/btnCancelar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancelar"
+                    android:backgroundTint="#E74C3C"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_marginStart="12dp"
+                    android:padding="12dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
